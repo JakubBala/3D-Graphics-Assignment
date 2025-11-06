@@ -84,9 +84,9 @@ public class EngineGLEventListener implements GLEventListener {
         sphere = new Mesh(gl, Sphere.vertices, Sphere.indices);
         light = new Mesh(gl, Sphere.vertices, Sphere.indices);
     
-        shaderSphere = new Shader(gl, "assets/shaders/vs_standard.txt", "assets/shaders/fs_standard_0t.txt");
+        shaderSphere = new Shader(gl, "assets/shaders/vs_standard.vert", "assets/shaders/fs_standard_0.frag");
         
-        shaderLight = new Shader(gl, "assets/shaders/vs_light_01.txt", "assets/shaders/fs_light_01.txt");
+        shaderLight = new Shader(gl, "assets/shaders/vs_light_01.vert", "assets/shaders/fs_light_01.frag");
     }
 
     public void render(GL3 gl){
