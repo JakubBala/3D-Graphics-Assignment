@@ -7,6 +7,9 @@ import engine.gmaths.*;
 import engine.rendering.Mesh;
 import engine.rendering.Shader;
 import engine.components.Camera;
+import engine.loaders.MaterialLoader;
+import engine.loaders.SceneLoader;
+import engine.rendering.Material;
 
 public class EngineGLEventListener implements GLEventListener {
 
@@ -29,6 +32,7 @@ public class EngineGLEventListener implements GLEventListener {
     private Vec3 lightDiffuse = new Vec3(0.0f, 0.9f, 0.9f);
     private Vec3 lightSpecular = new Vec3(0.9f, 0.9f, 0.9f);
 
+    Material cubeMaterial;
 
     public EngineGLEventListener(Camera camera) {
         this.camera = camera;
@@ -83,6 +87,8 @@ public class EngineGLEventListener implements GLEventListener {
 
         sphere = new Mesh(gl, Sphere.vertices, Sphere.indices);
         light = new Mesh(gl, Sphere.vertices, Sphere.indices);
+
+        cubeMaterial = MaterialLoader.Load(gl, "assets/materials/default.yaml");
     
         shaderSphere = new Shader(gl, "assets/shaders/vs_standard.vert", "assets/shaders/fs_standard_0.frag");
         
@@ -112,23 +118,11 @@ public class EngineGLEventListener implements GLEventListener {
 
     // TODO: This would be done in Renderer.java
     private void renderCube(GL3 gl, Shader shader, Mat4 modelMatrix, Mat4 viewMatrix, Mat4 projectionMatrix) {
-        Mat4 mvpMatrix = Mat4.multiply(projectionMatrix, Mat4.multiply(viewMatrix, modelMatrix));
         
-        shader.use(gl);
-        shader.setFloatArray(gl, "model", modelMatrix.toFloatArrayForGLSL());
-        shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
-        
-        shader.setVec3(gl, "viewPos", camera.getPosition());
-
-        shader.setVec3(gl, "light.position", lightPosition);
-        shader.setVec3(gl, "light.ambient", lightAmbient);
-        shader.setVec3(gl, "light.diffuse", lightDiffuse);
-        shader.setVec3(gl, "light.specular", lightSpecular);
-
-        shader.setVec3(gl, "material.ambient", cubeAmbient);
-        shader.setVec3(gl, "material.diffuse", cubeDiffuse);
-        shader.setVec3(gl, "material.specular", cubeSpecular);
-        shader.setFloat(gl, "material.shininess", cubeShininess);
+        cubeMaterial.useShader(gl);
+        cubeMaterial.setTransformUniforms(gl, modelMatrix, viewMatrix, projectionMatrix, camera.getPosition());
+        cubeMaterial.setLightUniforms(gl, lightPosition, lightAmbient, lightDiffuse, lightSpecular);
+        cubeMaterial.apply(gl);
 
         sphere.render(gl);
     }

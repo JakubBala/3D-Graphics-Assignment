@@ -1,0 +1,22 @@
+# metal.yaml
+
+# metadata (optional)
+name: "default"
+id: "default_0"
+
+
+vertex: "assets/shaders/vs_standard.vert"        # vertex shader path
+fragment: "assets/shaders/fs_standard_0.frag"     # fragment shader path
+
+# simple typed uniform overrides
+uniforms:
+  material.diffuse: [1.0, 0.5, 0.31]      # vec3 (albedo/diffuse)
+  material.ambient: [1.0, 0.5, 0.31]
+  material.specular: [0.5, 0.5, 0.5]
+  material.shininess: 32.0                # float
+
+# optional textures (paths relative to project)
+textures:
+  albedo: null
+  specular: null
+  emission: null

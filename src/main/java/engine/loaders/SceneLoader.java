@@ -1,4 +1,4 @@
-package engine.scene;
+package engine.loaders;
 
 public class SceneLoader {
     
