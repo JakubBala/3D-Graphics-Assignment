@@ -3,8 +3,9 @@ package engine.rendering;
 import engine.gmaths.*;
 import java.util.HashMap;
 import com.jogamp.opengl.GL3;
+import com.jogamp.opengl.util.texture.Texture;
+
 import engine.rendering.Shader;
-import engine.gmaths.Vec3;
 
 import java.util.List;
 import java.util.Map;
@@ -17,13 +18,18 @@ import java.util.Map;
 public class Material {
     private final Shader shader;
     private final Map<String, Object> uniforms = new HashMap<>();
+    private final Map<String, Texture> textures = new HashMap<>();
 
     public Material(GL3 gl, String vertexShaderPath, String fragmentShaderPath) {
         this.shader = new Shader(gl, vertexShaderPath, fragmentShaderPath);
     }
 
-     public Shader getShader() {
+    public Shader getShader() {
         return shader;
+    }
+
+    public boolean hasUniform(String name) {
+        return uniforms.containsKey(name);
     }
 
     public void setUniform(String name, Object value) {
@@ -34,15 +40,27 @@ public class Material {
         return uniforms.get(name);
     }
 
+    public void setTexture(String name, Texture texture) {
+        if (texture != null) textures.put(name, texture);
+    }
+
+    public Texture getTexture(String name) {
+        return textures.get(name);
+    }
+
     /**
      * Applies all stored uniform values to the currently bound shader.
      */
     public void apply(GL3 gl) {
+
+        // set scalar/vector uniforms
         for (Map.Entry<String, Object> entry : uniforms.entrySet()) {
             String name = entry.getKey();
             Object value = entry.getValue();
 
-            if (value instanceof Number) {
+            if(value instanceof Integer){
+                shader.setInt(gl, name, ((Integer) value).intValue());
+            } else if (value instanceof Number) {
                 shader.setFloat(gl, name, ((Number) value).floatValue());
             } else if (value instanceof Vec3) {
                 shader.setVec3(gl, name, (Vec3) value);
@@ -55,6 +73,17 @@ public class Material {
                 else if (list.size() == 4)
                     shader.setFloat(gl, name, toFloat(list.get(0)), toFloat(list.get(1)), toFloat(list.get(2)), toFloat(list.get(3)));
             }
+        }
+
+        // bind textures to units
+        int unit = 0;
+        for (var entry : textures.entrySet()) {
+            Texture tex = entry.getValue();
+            if (tex == null) continue;
+            gl.glActiveTexture(GL3.GL_TEXTURE0 + unit);
+            tex.bind(gl);
+            shader.setInt(gl, entry.getKey(), unit); // e.g. "material.diffuseMap" = 0
+            unit++;
         }
     }
 

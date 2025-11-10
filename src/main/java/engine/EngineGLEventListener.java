@@ -2,6 +2,8 @@ package engine;
 
 import com.jogamp.opengl.*;
 
+import assets.models.Cube;
+import assets.models.Pyramid;
 import assets.models.Sphere;
 import engine.gmaths.*;
 import engine.rendering.Mesh;
@@ -28,9 +30,9 @@ public class EngineGLEventListener implements GLEventListener {
     private float cubeShininess = 32.0f;
 
     private Vec3 lightPosition = new Vec3(4f,5f,8f);
-    private Vec3 lightAmbient = new Vec3(0.2f, 0.2f, 0.2f);
-    private Vec3 lightDiffuse = new Vec3(0.0f, 0.9f, 0.9f);
-    private Vec3 lightSpecular = new Vec3(0.9f, 0.9f, 0.9f);
+    private Vec3 lightAmbient = new Vec3(1.0f, 1.0f, 1.0f);
+    private Vec3 lightDiffuse = new Vec3(0.0f, 0.0f, 0.0f);
+    private Vec3 lightSpecular = new Vec3(0.0f, 0.0f, 0.0f);
 
     Material cubeMaterial;
 
@@ -82,15 +84,14 @@ public class EngineGLEventListener implements GLEventListener {
     }
 
     public void initialise(GL3 gl){
+        startTime = getSeconds();
         // TODO: Load your YAML scene here
         // TODO: Call OnStart
 
-        sphere = new Mesh(gl, Sphere.vertices, Sphere.indices);
+        sphere = new Mesh(gl, Pyramid.vertices, Pyramid.indices);
         light = new Mesh(gl, Sphere.vertices, Sphere.indices);
 
-        cubeMaterial = MaterialLoader.Load(gl, "assets/materials/default.yaml");
-    
-        shaderSphere = new Shader(gl, "assets/shaders/vs_standard.vert", "assets/shaders/fs_standard_0.frag");
+        cubeMaterial = MaterialLoader.Load(gl, "assets/materials/lebron.yaml");
         
         shaderLight = new Shader(gl, "assets/shaders/vs_light_01.vert", "assets/shaders/fs_light_01.frag");
     }
@@ -103,7 +104,7 @@ public class EngineGLEventListener implements GLEventListener {
         Mat4 projectionMatrix = camera.getPerspectiveMatrix();
         Mat4 viewMatrix = camera.getViewMatrix();
         
-        renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
+        //renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
         renderCube(gl, shaderSphere, getCubeModelMatrix(), viewMatrix, projectionMatrix);
 
         // TODO: Replace with scene.render(gl)
@@ -111,8 +112,13 @@ public class EngineGLEventListener implements GLEventListener {
 
 
     private Mat4 getCubeModelMatrix() {
+        double elapsedTime = getSeconds() - startTime;
+        float rotationAngle = (float)(elapsedTime * 100); // 50 degrees per second
+        
         Mat4 modelMatrix = new Mat4(1);
-        modelMatrix = Mat4.multiply(Mat4Transform.scale(4f,4f,4f), modelMatrix);
+        modelMatrix = Mat4.multiply(Mat4Transform.scale(10f, 10f, 10f), modelMatrix);
+        modelMatrix = Mat4.multiply(Mat4Transform.rotateAroundY(rotationAngle), modelMatrix);
+        
         return modelMatrix;
     }
 

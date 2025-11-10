@@ -1,9 +1,12 @@
 package engine.loaders;
 
 import com.jogamp.opengl.GL3;
+import com.jogamp.opengl.util.texture.Texture;
+
 import engine.data.MaterialSpec;
 import engine.gmaths.Vec3;
 import engine.rendering.Material;
+import engine.rendering.TextureLibrary;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.LoaderOptions;
@@ -14,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MaterialLoader {
     public static Material Load(GL3 gl, String yamlPath) {
@@ -30,7 +34,7 @@ public class MaterialLoader {
             // Create Material instance
             Material material = new Material(gl, spec.vertex, spec.fragment);
 
-            // Apply uniforms
+            // --- UNIFORMS ---
             if (spec.uniforms != null) {
                 for (Map.Entry<String, Object> entry : spec.uniforms.entrySet()) {
                     String name = entry.getKey();
@@ -57,10 +61,29 @@ public class MaterialLoader {
                 }
             }
 
-            // --- TEXTURES (not implemented yet) ---
-            // if (spec.textures != null) { ... }
+            // --- TEXTURES ---
+            Set<String> textureTypes = Set.of("albedo", "specular", "emission");
 
-            material.apply(gl);
+            if (spec.textures != null) {
+                for (String type : textureTypes) {
+                    String path = spec.textures.get(type);
+
+                    if (path != null && !path.isEmpty()) {
+                        Texture tex = TextureLibrary.LoadTexture(gl, path);
+                        material.setTexture("material." + type + "Map", tex);
+                        material.setUniform("material.has" + capitalize(type) + "Map", 1);
+                    } else {
+                        // No texture found, set flag to 0
+                        material.setUniform("material.has" + capitalize(type) + "Map", 0);
+                    }
+                }
+            } else {
+                // No textures block in YAML — ensure all flags exist
+                for (String type : textureTypes) {
+                    material.setUniform("material.has" + capitalize(type) + "Map", 0);
+                }
+            }
+
             return material;
 
         } catch (Exception e) {
@@ -76,5 +99,10 @@ public class MaterialLoader {
     private static float toFloat(Object o) {
         if (o instanceof Number) return ((Number) o).floatValue();
         return Float.parseFloat(o.toString());
+    }
+
+    private static String capitalize(String s) {
+        if (s == null || s.isEmpty()) return s;
+        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
     }
 }

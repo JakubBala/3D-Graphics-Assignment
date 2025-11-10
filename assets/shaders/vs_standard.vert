@@ -11,6 +11,9 @@ out vec2 aTexCoord;
 uniform mat4 model;
 uniform mat4 mvpMatrix;
 
+uniform vec2 uvScale = vec2(1.0, 1.0);
+uniform vec2 uvOffset = vec2(0.0, 0.0);
+
 void main() {
   gl_Position = mvpMatrix * vec4(position, 1.0);
   aPos = vec3(model*vec4(position, 1.0f));
@@ -22,5 +25,5 @@ void main() {
   //aNormal = mat3(normalMatrix) * norm;
 
   // pass texture on even if no textures used. Shader will ignore it.
-  aTexCoord = texCoord;   
+  aTexCoord = texCoord * uvScale + uvOffset;   
 }
