@@ -22,6 +22,8 @@ public class Mat4 {   // row column formulation
       values[i][i] = f;
     }
   }
+
+
   
   public Mat4(Mat4 m) {
     this.values = new float[4][4];
@@ -47,7 +49,10 @@ public class Mat4 {   // row column formulation
       }
     }
   }
-  
+
+  public static Mat4 identity(){
+    return new Mat4(1);
+  }
   public void transpose() {
     for (int i=0; i<4; ++i) {
       for (int j=i; j<4; ++j) {

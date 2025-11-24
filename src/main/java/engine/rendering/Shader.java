@@ -71,6 +71,15 @@ public class Shader {
     int location = gl.glGetUniformLocation(ID, name);
     gl.glUniform3f(location, v.x, v.y, v.z);
   }
+
+  public void setMat4(GL3 gl, String name, Mat4 matrix) {
+    int location = gl.glGetUniformLocation(ID, name);
+    if (location == -1) {
+        System.err.println("Warning: uniform '" + name + "' not found in shader");
+        return;
+    }
+    gl.glUniformMatrix4fv(location, 1, false, matrix.toFloatArrayForGLSL(), 0);
+  }
   
   private void display() {
     System.out.println("***Vertex shader***");

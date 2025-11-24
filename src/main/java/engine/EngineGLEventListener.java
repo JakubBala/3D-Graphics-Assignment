@@ -9,6 +9,7 @@ import engine.gmaths.*;
 import engine.rendering.Mesh;
 import engine.rendering.Shader;
 import engine.components.Camera;
+import engine.debug.DebugGrid;
 import engine.loaders.MaterialLoader;
 import engine.loaders.SceneLoader;
 import engine.rendering.Material;
@@ -30,6 +31,7 @@ public class EngineGLEventListener implements GLEventListener {
     private Vec3 lightSpecular = new Vec3(0.9f, 0.9f, 0.9f);
 
     Scene activeScene;
+    DebugGrid debugGrid;
 
     public EngineGLEventListener(Camera camera) {
         this.camera = camera;
@@ -86,6 +88,7 @@ public class EngineGLEventListener implements GLEventListener {
         light = new Mesh(gl, Sphere.vertices, Sphere.indices);
         shaderLight = new Shader(gl, "assets/shaders/vs_light_01.vert", "assets/shaders/fs_light_01.frag");
 
+        debugGrid = new DebugGrid(gl);
         activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
     }
 
@@ -99,8 +102,10 @@ public class EngineGLEventListener implements GLEventListener {
         
         renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
 
-        // TODO: Replace with scene.render(gl)
+        activeScene.render(gl, viewMatrix, projectionMatrix,
+             lightAmbient, lightPosition, lightAmbient, lightDiffuse, lightSpecular);
         
+        debugGrid.render(gl, viewMatrix, projectionMatrix);
     }
 
     private Vec3 getLightPosition() {
