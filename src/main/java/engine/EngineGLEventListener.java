@@ -12,6 +12,7 @@ import engine.components.Camera;
 import engine.loaders.MaterialLoader;
 import engine.loaders.SceneLoader;
 import engine.rendering.Material;
+import engine.scene.*;
 
 public class EngineGLEventListener implements GLEventListener {
 
@@ -21,20 +22,14 @@ public class EngineGLEventListener implements GLEventListener {
 
 
     // TODO: This will go into GameObjects themselves
-    private Mesh sphere;
     private Mesh light;
-
-    private Vec3 cubeAmbient = new Vec3(1.0f, 0.5f, 0.31f);
-    private Vec3 cubeDiffuse = new Vec3(1.0f, 0.5f, 0.31f);
-    private Vec3 cubeSpecular = new Vec3(0.5f, 0.5f, 0.5f);
-    private float cubeShininess = 32.0f;
 
     private Vec3 lightPosition = new Vec3(4f,5f,8f);
     private Vec3 lightAmbient = new Vec3(0.2f, 0.2f, 0.2f);
     private Vec3 lightDiffuse = new Vec3(0.0f, 0.9f, 0.9f);
     private Vec3 lightSpecular = new Vec3(0.9f, 0.9f, 0.9f);
 
-    Material cubeMaterial;
+    Scene activeScene;
 
     public EngineGLEventListener(Camera camera) {
         this.camera = camera;
@@ -88,12 +83,10 @@ public class EngineGLEventListener implements GLEventListener {
         // TODO: Load your YAML scene here
         // TODO: Call OnStart
 
-        sphere = new Mesh(gl, Cube.vertices, Cube.indices);
         light = new Mesh(gl, Sphere.vertices, Sphere.indices);
-
-        cubeMaterial = MaterialLoader.Load(gl, "assets/materials/box.yaml");
-        
         shaderLight = new Shader(gl, "assets/shaders/vs_light_01.vert", "assets/shaders/fs_light_01.frag");
+
+        activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
     }
 
     public void render(GL3 gl){
@@ -105,32 +98,9 @@ public class EngineGLEventListener implements GLEventListener {
         Mat4 viewMatrix = camera.getViewMatrix();
         
         renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
-        renderCube(gl, shaderSphere, getCubeModelMatrix(), viewMatrix, projectionMatrix);
 
         // TODO: Replace with scene.render(gl)
-    }
-
-
-    private Mat4 getCubeModelMatrix() {
-        double elapsedTime = getSeconds() - startTime;
-        float rotationAngle = (float)(elapsedTime * 20); // 50 degrees per second
         
-        Mat4 modelMatrix = new Mat4(1);
-        modelMatrix = Mat4.multiply(Mat4Transform.scale(2f, 2f, 2f), modelMatrix);
-        modelMatrix = Mat4.multiply(Mat4Transform.rotateAroundY(rotationAngle), modelMatrix);
-        
-        return modelMatrix;
-    }
-
-    // TODO: This would be done in Renderer.java
-    private void renderCube(GL3 gl, Shader shader, Mat4 modelMatrix, Mat4 viewMatrix, Mat4 projectionMatrix) {
-        
-        cubeMaterial.useShader(gl);
-        cubeMaterial.setTransformUniforms(gl, modelMatrix, viewMatrix, projectionMatrix, camera.getPosition());
-        cubeMaterial.setLightUniforms(gl, lightPosition, lightAmbient, lightDiffuse, lightSpecular);
-        cubeMaterial.apply(gl);
-
-        sphere.render(gl);
     }
 
     private Vec3 getLightPosition() {

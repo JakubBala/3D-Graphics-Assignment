@@ -1,0 +1,12 @@
+name: Testing Scene
+gameObjects:
+  - name: RotatingCube
+
+    components:
+      - type: MeshRenderer
+        mesh: assets/models/Cube.mesh
+        material: assets/materials/box.yaml
+      - type: Transform
+        position: [0, 0, 0]
+        rotation: [0, 0, 0]
+        scale: [5, 5, 5]
