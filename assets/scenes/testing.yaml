@@ -9,4 +9,14 @@ gameObjects:
       - type: Transform
         position: [0, 0, 0]
         rotation: [0, 45, 0]
-        scale: [1, 1, 1]
+        scale: [2, 2, 2]
+    children:
+      - name: SmallerCube
+        components:
+          - type: MeshRenderer
+            mesh: assets/models/Cube.mesh
+            material: assets/materials/box.yaml
+          - type: Transform
+            position: [0, 1, 0]
+            rotation: [0, 0, 0]
+            scale: [0.5, 0.5, 0.5]

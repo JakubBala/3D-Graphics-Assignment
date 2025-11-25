@@ -6,5 +6,6 @@ import java.util.Map;
 public class GameObjectSpec {
     public String name;
     public List<Map<String, Object>> components; // raw component entries
+    public List<GameObjectSpec> children; // child GameObjects
 }
 

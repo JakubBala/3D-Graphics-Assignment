@@ -23,10 +23,21 @@ public class GameObjectLoader {
         GameObject go = new GameObject();
 
         go.setName(spec.name);
+        // Load components
         System.out.println("[GameObjectLoader]: Instantiated GameObject: " + go.getName());
         if (spec.components != null) {
             for (Map<String, Object> c : spec.components) {
                 loadComponent(go, c, gl);
+            }
+        }
+
+        // RECURSIVELY load children
+        if (spec.children != null) {
+            for (GameObjectSpec childSpec : spec.children) {
+                GameObject child = Load(childSpec, gl);  // Recursive call
+                go.addChild(child);
+                System.out.println("[GameObjectLoader]: Added child '" + child.getName() + 
+                    "' to parent '" + go.getName() + "'");
             }
         }
 
