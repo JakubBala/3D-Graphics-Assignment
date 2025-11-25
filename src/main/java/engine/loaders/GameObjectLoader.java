@@ -43,7 +43,7 @@ public class GameObjectLoader {
             case "Transform": {
                 Transform transform = go.getTransform();
 
-                List<?> pos = (List<?>) spec.get("local_position");
+                List<?> pos = (List<?>) spec.get("position");
                 if (pos != null && pos.size() == 3)
                     transform.SetLocalPosition(
                         ((Number)pos.get(0)).floatValue(),
@@ -51,7 +51,7 @@ public class GameObjectLoader {
                         ((Number)pos.get(2)).floatValue()
                     );
 
-                List<?> rot = (List<?>) spec.get("local_rotation");
+                List<?> rot = (List<?>) spec.get("rotation");
                 if (rot != null && rot.size() == 3)
                     transform.SetLocalRotation(
                         ((Number)rot.get(0)).floatValue(),
@@ -59,7 +59,7 @@ public class GameObjectLoader {
                         ((Number)rot.get(2)).floatValue()
                     );
 
-                List<?> scale = (List<?>) spec.get("local_scale");
+                List<?> scale = (List<?>) spec.get("scale");
                 if (scale != null && scale.size() == 3)
                     transform.SetLocalScale(
                         ((Number)scale.get(0)).floatValue(),
@@ -68,6 +68,11 @@ public class GameObjectLoader {
                     );
 
                 System.out.println("[GameObjectLoader]: Loaded Transform Component");
+                System.out.println("[GameObjectLoader]: Transform: " + 
+                    "pos=" + transform.GetPosition() + ", " +
+                    "rot=" + transform.GetRotation() + ", " +
+                    "scale=" + transform.GetScale()
+                );
                 break;
             }
 

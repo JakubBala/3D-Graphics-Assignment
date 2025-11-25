@@ -35,7 +35,7 @@ public class EngineGLEventListener implements GLEventListener {
 
     public EngineGLEventListener(Camera camera) {
         this.camera = camera;
-        this.camera.setPosition(new Vec3(-10, 6, 20));
+        this.camera.setPosition(new Vec3(10, 5, 10));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class EngineGLEventListener implements GLEventListener {
         renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
 
         activeScene.render(gl, viewMatrix, projectionMatrix,
-             lightAmbient, lightPosition, lightAmbient, lightDiffuse, lightSpecular);
+             camera.getPosition(), lightPosition, lightAmbient, lightDiffuse, lightSpecular);
         
         debugGrid.render(gl, viewMatrix, projectionMatrix);
     }

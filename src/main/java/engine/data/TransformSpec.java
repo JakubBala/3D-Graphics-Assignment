@@ -3,7 +3,7 @@ package engine.data;
 import java.util.List;
 
 public class TransformSpec {
-    public List<Float> local_position;
-    public List<Float> local_rotation;
-    public List<Float> local_scale;
+    public List<Float> position;
+    public List<Float> rotation;
+    public List<Float> scale;
 }

@@ -13,8 +13,13 @@ public final class Vec3 {
   public float y;
   public float z;
 
-  public static Vec3 zero = new Vec3(0f,0f,0f);
-  public static Vec3 one = new Vec3(1f, 1f, 1f);
+  public static Vec3 zero() {
+    return new Vec3(0f, 0f, 0f);
+  }
+  
+  public static Vec3 one() {
+    return new Vec3(1f, 1f, 1f);
+  }
   
   public Vec3() {
     this(0,0,0);

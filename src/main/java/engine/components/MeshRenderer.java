@@ -22,7 +22,7 @@ public class MeshRenderer extends Component implements Renderable{
     public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, 
         Vec3 lightPosition, Vec3 lightAmbient, Vec3 lightDiffuse, Vec3 lightSpecular
     ) {
-        Mat4 model = gameObject.getTransform().getModelMatrix();
+        Mat4 model = gameObject.getTransform().GetModelMatrix();
         material.useShader(gl);
         material.setTransformUniforms(gl, model, view, projection, cameraPosition);
         material.setLightUniforms(gl, lightPosition, lightAmbient, lightDiffuse, lightSpecular);

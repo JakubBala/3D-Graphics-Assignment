@@ -17,9 +17,9 @@ public class Transform extends Component{
     }
 
     public Transform(){
-        local_position = Vec3.zero;
-        local_rotation = Vec3.zero;
-        local_scale = Vec3.one;
+        local_position = Vec3.zero();
+        local_rotation = Vec3.zero();
+        local_scale = Vec3.one();
     }
 
     public void SetLocalPosition(float x, float y, float z){
@@ -40,15 +40,32 @@ public class Transform extends Component{
         local_scale.z = z;
     }
 
+    public Vec3 GetPosition(){
+        return local_position;
+    }
 
-    public Mat4 getModelMatrix() {
-        Mat4 model = Mat4Transform.translate(local_position);
-        // apply rotation (around x, y, z) and scale here
-        // e.g.
-        model = Mat4.multiply(model, Mat4Transform.rotateAroundX(local_rotation.x));
-        model = Mat4.multiply(model, Mat4Transform.rotateAroundY(local_rotation.y));
-        model = Mat4.multiply(model, Mat4Transform.rotateAroundZ(local_rotation.z));
-        model = Mat4.multiply(model, Mat4Transform.scale(local_scale.x, local_scale.y, local_scale.z));
+    public Vec3 GetRotation(){
+        return local_rotation;
+    }
+
+    public Vec3 GetScale(){
+        return local_scale;
+    }
+
+
+    public Mat4 GetModelMatrix() {
+        Mat4 scaleMatrix = Mat4Transform.scale(local_scale.x, local_scale.y, local_scale.z);
+        
+        Mat4 rotXMatrix = Mat4Transform.rotateAroundX(local_rotation.x);
+        Mat4 rotYMatrix = Mat4Transform.rotateAroundY(local_rotation.y);
+        Mat4 rotZMatrix = Mat4Transform.rotateAroundZ(local_rotation.z);
+        Mat4 rotationMatrix = Mat4.multiply(rotZMatrix, Mat4.multiply(rotYMatrix, rotXMatrix)); // Z * Y * X
+        
+        Mat4 translationMatrix = Mat4Transform.translate(local_position);
+        
+        // T * R * S
+        Mat4 model = Mat4.multiply(translationMatrix, Mat4.multiply(rotationMatrix, scaleMatrix));
+        
         return model;
     }
 }
