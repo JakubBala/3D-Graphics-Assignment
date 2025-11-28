@@ -22,13 +22,22 @@ public class SceneLoader {
         try (InputStream in = Files.newInputStream(Paths.get(yamlPath))) {
 
             LoaderOptions options = new LoaderOptions();
-            Yaml yaml = new Yaml(new Constructor(SceneSpec.class, options));
+            PolymorphicYamlConstructor constructor = new PolymorphicYamlConstructor(
+                SceneSpec.class, options);
+            SpecRegistry.registerAllTypes(constructor);
+
+            Yaml yaml = new Yaml(constructor);
             SceneSpec spec = yaml.load(in);
+
+            if (spec == null) {
+                throw new IllegalArgumentException("Failed to parse YAML: " + yamlPath);
+            }
             
             Scene scene = new Scene(spec.name);
 
             System.out.println("[SceneLoader] Instantiated Scene: " + scene.getName());
 
+            // Load GameObjects (ComponentSpecs are already deserialized and typed)
             for (GameObjectSpec gameObjectSpec : spec.gameObjects) {
                 GameObject loadedGameObject = GameObjectLoader.Load(gameObjectSpec, gl);
                 scene.AddGameObject(loadedGameObject);

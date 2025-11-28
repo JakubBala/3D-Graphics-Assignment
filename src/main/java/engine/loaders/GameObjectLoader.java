@@ -6,10 +6,12 @@ import java.util.List;
 import com.jogamp.opengl.GL3;
 
 import engine.scene.GameObject;
+import engine.data.ComponentSpec;
 import engine.data.GameObjectSpec;
 import engine.data.TransformSpec;
 
 import engine.components.Transform;
+import engine.components.core.Component;
 import engine.components.MeshRenderer;
 import engine.loaders.MaterialLoader;
 import engine.rendering.Material;
@@ -18,93 +20,47 @@ import engine.gmaths.*;
 
 public class GameObjectLoader {
 
-    public static GameObject Load(GameObjectSpec spec, GL3 gl) {
+    public static GameObject Load(GameObjectSpec gameObjSpec, GL3 gl) {
 
-        GameObject go = new GameObject();
+        GameObject newGameObj = new GameObject();
 
-        go.setName(spec.name);
+        newGameObj.setName(gameObjSpec.name);
         // Load components
-        System.out.println("[GameObjectLoader]: Instantiated GameObject: " + go.getName());
-        if (spec.components != null) {
-            for (Map<String, Object> c : spec.components) {
-                loadComponent(go, c, gl);
+        System.out.println("[GameObjectLoader]: Instantiated GameObject: " + newGameObj.getName());
+        if (gameObjSpec.components != null) {
+            for (ComponentSpec componentSpec : gameObjSpec.components) {
+                loadComponent(newGameObj, componentSpec, gl);
             }
         }
 
         // RECURSIVELY load children
-        if (spec.children != null) {
-            for (GameObjectSpec childSpec : spec.children) {
+        if (gameObjSpec.children != null) {
+            for (GameObjectSpec childSpec : gameObjSpec.children) {
                 GameObject child = Load(childSpec, gl);  // Recursive call
-                go.addChild(child);
+                newGameObj.addChild(child);
                 System.out.println("[GameObjectLoader]: Added child '" + child.getName() + 
-                    "' to parent '" + go.getName() + "'");
+                    "' to parent '" + newGameObj.getName() + "'");
             }
         }
 
-        return go;
+        return newGameObj;
     }
 
-    private static void loadComponent(GameObject go, Map<String, Object> spec, GL3 gl) {
+    private static void loadComponent(GameObject newGameObject, ComponentSpec componentSpec, GL3 gl) {
 
-        String type = (String) spec.get("type");
-        if (type == null) return;
-
-        switch (type) {
-
-            case "Transform": {
-                Transform transform = go.getTransform();
-
-                List<?> pos = (List<?>) spec.get("position");
-                if (pos != null && pos.size() == 3)
-                    transform.SetLocalPosition(
-                        ((Number)pos.get(0)).floatValue(),
-                        ((Number)pos.get(1)).floatValue(),
-                        ((Number)pos.get(2)).floatValue()
-                    );
-
-                List<?> rot = (List<?>) spec.get("rotation");
-                if (rot != null && rot.size() == 3)
-                    transform.SetLocalRotation(
-                        ((Number)rot.get(0)).floatValue(),
-                        ((Number)rot.get(1)).floatValue(),
-                        ((Number)rot.get(2)).floatValue()
-                    );
-
-                List<?> scale = (List<?>) spec.get("scale");
-                if (scale != null && scale.size() == 3)
-                    transform.SetLocalScale(
-                        ((Number)scale.get(0)).floatValue(),
-                        ((Number)scale.get(1)).floatValue(),
-                        ((Number)scale.get(2)).floatValue()
-                    );
-
-                System.out.println("[GameObjectLoader]: Loaded Transform Component");
-                System.out.println("[GameObjectLoader]: Transform: " + 
-                    "pos=" + transform.GetPosition() + ", " +
-                    "rot=" + transform.GetRotation() + ", " +
-                    "scale=" + transform.GetScale()
-                );
-                break;
-            }
-
-
-            case "MeshRenderer": {
-                String meshPath = (String) spec.get("mesh");
-                String materialPath = (String) spec.get("material");
-
-                var mesh = MeshLibrary.Load(meshPath, gl);
-                var material = MaterialLoader.Load(gl, materialPath);
-
-                go.addComponent(new MeshRenderer(mesh, material));
-                System.out.println("[GameObjectLoader]: Loaded MeshRenderer Component");
-                break;
-            }
-
-            // other component loaders can be added later:
-            //
-            // case "Light": ...
-            // case "Camera": ...
-            // case "Script": ...
+        // Create the component from the spec
+        Component component = componentSpec.createComponent(newGameObject, gl);
+        
+        // Special handling for Transform (already exists on GameObject by default)
+        if (componentSpec instanceof TransformSpec) {
+            // Transform is already added to GameObject in constructor
+            // The spec just configures it, no need to add again
+            System.out.println("[GameObjectLoader]: Configured Transform component");
+        } else {
+            // All other components need to be added
+            newGameObject.addComponent(component);
+            System.out.println("[GameObjectLoader]: Added " + 
+                component.getClass().getSimpleName() + " component");
         }
     }
 }
