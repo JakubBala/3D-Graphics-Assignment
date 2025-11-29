@@ -9,14 +9,7 @@ import engine.scene.GameObject;
 import engine.data.ComponentSpec;
 import engine.data.GameObjectSpec;
 import engine.data.TransformSpec;
-
-import engine.components.Transform;
 import engine.components.core.Component;
-import engine.components.MeshRenderer;
-import engine.loaders.MaterialLoader;
-import engine.rendering.Material;
-import engine.rendering.MeshLibrary;
-import engine.gmaths.*;
 
 public class GameObjectLoader {
 

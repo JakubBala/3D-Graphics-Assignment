@@ -52,8 +52,15 @@ public class MaterialLoader {
                         } else {
                             material.setUniform(name, list);
                         }
-                    } else if (value instanceof Number) {
-                        material.setUniform(name, ((Number) value).floatValue());
+                    } 
+                    else if (value instanceof Number) {
+                        Number num = (Number) value;
+                        // Preserve integer values for uniform int; convert others to float
+                        if (num instanceof Integer || num.doubleValue() == Math.floor(num.doubleValue())) {
+                            material.setUniform(name, num.intValue());
+                        } else {
+                            material.setUniform(name, num.floatValue());
+                        }
                     } else {
                         // fallback: string or other
                         material.setUniform(name, value);

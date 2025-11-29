@@ -1,8 +1,8 @@
 name: "Blue Steel"
 id: "bluesteel_01"
 
-vertex: "assets/shaders/vs_standard.vert"
-fragment: "assets/shaders/fs_standard_0.frag"
+vertex: "assets/shaders/vs_standard_old.vert"
+fragment: "assets/shaders/fs_standard_old.frag"
 
 uniforms:
   material.diffuse: [0.1, 0.3, 0.6]        # deep blue tone
@@ -11,6 +11,6 @@ uniforms:
   material.shininess: 64.0                 # sharper highlights (more metallic)
 
 textures:
-  albedo: null
-  specular: null
-  emission: null
+  albedo: "assets/textures/container2.jpg"
+  specular: "assets/textures/container2_specular.jpg"
+  emission: "assets/textures/matrix.jpg"

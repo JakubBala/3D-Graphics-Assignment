@@ -87,19 +87,20 @@ public class EngineGLEventListener implements GLEventListener {
 
         light = new Mesh(gl, Sphere.vertices, Sphere.indices);
         shaderLight = new Shader(gl, "assets/shaders/vs_light_01.vert", "assets/shaders/fs_light_01.frag");
-
+        
         debugGrid = new DebugGrid(gl);
         activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
     }
 
     public void render(GL3 gl){
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-        
+
         lightPosition = getLightPosition();  // changing light position each frame
 
         Mat4 projectionMatrix = camera.getPerspectiveMatrix();
         Mat4 viewMatrix = camera.getViewMatrix();
-        
+
+        //activeScene.render(gl, viewMatrix, projectionMatrix, camera.getPosition());
         renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
 
         activeScene.render(gl, viewMatrix, projectionMatrix,

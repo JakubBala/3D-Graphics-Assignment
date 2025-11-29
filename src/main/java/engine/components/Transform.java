@@ -70,18 +70,21 @@ public class Transform extends Component{
         local_position.x = x;
         local_position.y = y;
         local_position.z = z;
+        markDirty();
     }
 
     public void SetLocalRotation(float x, float y, float z){
         local_rotation.x = x;
         local_rotation.y = y;
         local_rotation.z = z;
+        markDirty();
     }
 
     public void SetLocalScale(float x, float y, float z){
         local_scale.x = x;
         local_scale.y = y;
         local_scale.z = z;
+        markDirty();
     }
 
     public Vec3 GetPosition(){
@@ -94,6 +97,29 @@ public class Transform extends Component{
 
     public Vec3 GetScale(){
         return local_scale;
+    }
+    
+    public Vec3 GetWorldPosition(){
+        Mat4 world = getWorldMatrix();
+        return new Vec3(world.get(0,3), world.get(1,3), world.get(2,3));
+    }
+
+    // Direction vectors in WORLD space
+    // Forward is considered to be -Z in local space
+    public Vec3 GetForward() {
+        Mat4 world = getWorldMatrix();
+
+        // Forward column (Z axis)
+        Vec3 f = new Vec3(
+            world.get(0, 2),
+            world.get(1, 2),
+            world.get(2, 2)
+        );
+
+        // Forward is -Z in coordinate system:
+        f = Vec3.multiply(f, -1f);
+
+        return Vec3.normalize(f);
     }
 
     // Mark this transform and all children as dirty

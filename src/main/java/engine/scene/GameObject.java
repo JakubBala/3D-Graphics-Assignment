@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.jogamp.opengl.GL3;
 
+import engine.components.Light;
 import engine.components.Transform;
 import engine.components.core.Component;
 import engine.components.core.Renderable;
@@ -71,7 +72,23 @@ public class GameObject {
         }
     }
 
-    public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition,
+    public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, List<Light> lights) {
+
+        // Render this GameObject's components
+        for (Component c : components) {
+            if (c instanceof Renderable) {
+                // ((Renderable) c).render(gl, view, projection, cameraPosition, lights);
+            }
+        }
+
+        // Recursively render all children
+        for (GameObject child : children) {
+            child.render(gl, view, projection, cameraPosition, lights);
+        }
+    }
+
+    public void render(GL3 gl, Mat4 view, Mat4 projection,
+        Vec3 cameraPosition, 
         Vec3 lightPosition, Vec3 lightAmbient, Vec3 lightDiffuse, Vec3 lightSpecular) {
 
         // Render this GameObject's components
@@ -83,8 +100,8 @@ public class GameObject {
 
         // Recursively render all children
         for (GameObject child : children) {
-            child.render(gl, view, projection, cameraPosition, 
-                lightPosition, lightAmbient, lightDiffuse, lightSpecular);
+            child.render(gl, view, projection, cameraPosition,
+             lightPosition, lightAmbient, lightDiffuse, lightSpecular);
         }
     }
 

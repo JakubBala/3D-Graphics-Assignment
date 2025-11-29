@@ -1,5 +1,7 @@
 package engine.components;
 
+import java.util.List;
+
 import com.jogamp.opengl.GL3;
 
 import engine.components.core.Component;
@@ -16,6 +18,17 @@ public class MeshRenderer extends Component implements Renderable{
     public MeshRenderer(Mesh mesh, Material material) {
         this.mesh = mesh;
         this.material = material;
+    }
+
+    @Override
+    public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, List<Light> lights
+    ) {
+        Mat4 model = gameObject.getTransform().getWorldMatrix();
+        material.useShader(gl);
+        material.setTransformUniforms(gl, model, view, projection, cameraPosition);
+        //material.setLightsUniform(gl, lights);
+        material.apply(gl);
+        mesh.render(gl);
     }
 
     @Override

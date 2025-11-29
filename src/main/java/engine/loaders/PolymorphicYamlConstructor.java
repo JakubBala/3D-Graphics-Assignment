@@ -65,7 +65,7 @@ public class PolymorphicYamlConstructor extends Constructor {
                         // Route to the correct subclass
                         node.setType(concreteClass);
                         System.out.println("[PolymorphicYamlConstructor] Routing '" + 
-                            discriminatorValue + "' → " + concreteClass.getSimpleName());
+                            discriminatorValue + "' -> " + concreteClass.getSimpleName());
                         break;
                     }
                 }
