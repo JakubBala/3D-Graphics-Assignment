@@ -56,7 +56,7 @@ public class MaterialLoader {
                     else if (value instanceof Number) {
                         Number num = (Number) value;
                         // Preserve integer values for uniform int; convert others to float
-                        if (num instanceof Integer || num.doubleValue() == Math.floor(num.doubleValue())) {
+                        if (num instanceof Integer) {
                             material.setUniform(name, num.intValue());
                         } else {
                             material.setUniform(name, num.floatValue());
