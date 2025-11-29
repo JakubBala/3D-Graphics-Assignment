@@ -100,11 +100,11 @@ public class EngineGLEventListener implements GLEventListener {
         Mat4 projectionMatrix = camera.getPerspectiveMatrix();
         Mat4 viewMatrix = camera.getViewMatrix();
 
-        //activeScene.render(gl, viewMatrix, projectionMatrix, camera.getPosition());
-        renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
+        activeScene.render(gl, viewMatrix, projectionMatrix, camera.getPosition());
+        // renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
 
-        activeScene.render(gl, viewMatrix, projectionMatrix,
-             camera.getPosition(), lightPosition, lightAmbient, lightDiffuse, lightSpecular);
+        // activeScene.render(gl, viewMatrix, projectionMatrix,
+        //      camera.getPosition(), lightPosition, lightAmbient, lightDiffuse, lightSpecular);
         
         debugGrid.render(gl, viewMatrix, projectionMatrix);
     }

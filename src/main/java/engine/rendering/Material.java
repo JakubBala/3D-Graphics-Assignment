@@ -88,41 +88,41 @@ public class Material {
         }
     }
 
-    // public void setLightsUniform(GL3 gl, List<Light> lights) {
-    //     int numLights = Math.min(lights.size(), 8); // Max 8 lights
-    //     shader.setInt(gl, "numActiveLights", numLights);
-    //     for (int i = 0; i < numLights; i++) {
-    //         Light light = lights.get(i);
-    //         String prefix = "lights[" + i + "].";
+    public void setLightsUniform(GL3 gl, List<Light> lights) {
+        int numLights = Math.min(lights.size(), 8); // Max 8 lights
+        shader.setInt(gl, "numActiveLights", numLights);
+        for (int i = 0; i < numLights; i++) {
+            Light light = lights.get(i);
+            String prefix = "lights[" + i + "].";
             
-    //         shader.setVec3(gl, prefix + "position", light.getPosition());
-    //         shader.setVec3(gl, prefix + "ambient", 
-    //             Vec3.multiply(light.getAmbient(), light.getIntensity()));
-    //         shader.setVec3(gl, prefix + "diffuse", 
-    //             Vec3.multiply(light.getDiffuse(), light.getIntensity()));
-    //         shader.setVec3(gl, prefix + "specular", 
-    //             Vec3.multiply(light.getSpecular(), light.getIntensity()));
+            shader.setVec3(gl, prefix + "position", light.getPosition());
+            shader.setVec3(gl, prefix + "ambient", 
+                Vec3.multiply(light.getAmbient(), light.getIntensity()));
+            shader.setVec3(gl, prefix + "diffuse", 
+                Vec3.multiply(light.getDiffuse(), light.getIntensity()));
+            shader.setVec3(gl, prefix + "specular", 
+                Vec3.multiply(light.getSpecular(), light.getIntensity()));
             
-    //         shader.setInt(gl, prefix + "type", light.getType().ordinal());
+            shader.setInt(gl, prefix + "type", light.getType().ordinal());
             
-    //         // Attenuation
-    //         shader.setFloat(gl, prefix + "constant", light.getConstant());
-    //         shader.setFloat(gl, prefix + "linear", light.getLinear());
-    //         shader.setFloat(gl, prefix + "quadratic", light.getQuadratic());
+            // Attenuation
+            shader.setFloat(gl, prefix + "constant", light.getConstant());
+            shader.setFloat(gl, prefix + "linear", light.getLinear());
+            shader.setFloat(gl, prefix + "quadratic", light.getQuadratic());
             
-    //         // Spotlight
-    //         // Always set a direction so the shader can use it for spot/directional lights
-    //         shader.setVec3(gl, prefix + "direction", light.getDirection());
+            // Spotlight
+            // Always set a direction so the shader can use it for spot/directional lights
+            shader.setVec3(gl, prefix + "direction", light.getDirection());
 
-    //         if (light.getType() == Light.LightType.SPOT) {
-    //             shader.setVec3(gl, prefix + "direction", light.getDirection());
-    //             shader.setFloat(gl, prefix + "cutOff", 
-    //                 (float)Math.cos(Math.toRadians(light.getCutOff())));
-    //             shader.setFloat(gl, prefix + "outerCutOff", 
-    //                 (float)Math.cos(Math.toRadians(light.getOuterCutOff())));
-    //         }
-    //     }
-    // }
+            if (light.getType() == Light.LightType.SPOT) {
+                shader.setVec3(gl, prefix + "direction", light.getDirection());
+                shader.setFloat(gl, prefix + "cutOff", 
+                    (float)Math.cos(Math.toRadians(light.getCutOff())));
+                shader.setFloat(gl, prefix + "outerCutOff", 
+                    (float)Math.cos(Math.toRadians(light.getOuterCutOff())));
+            }
+        }
+    }
 
     public void setLightUniforms(GL3 gl,
         Vec3 lightPos,

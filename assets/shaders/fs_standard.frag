@@ -78,6 +78,8 @@ vec3 calculateLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     
     // --- Ambient ---
     vec3 ambient = light.ambient * material.ambient;
+
+    // TODO: Make Ambient always apply, then mix with light ambient contributions.
     
     // --- Diffuse ---
     float diff = max(dot(normal, lightDir), 0.0);
@@ -88,12 +90,9 @@ vec3 calculateLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     vec3 diffuse = light.diffuse * diff * baseColor;
     
     // --- Specular ---
-    float spec = 0.0;
-    if (diff > 0.0) {
-        // Blinn-Phong reflection: uses half-vector
-        vec3 halfDir = normalize(lightDir + viewDir);
-        spec = pow(max(dot(normal, halfDir), 0.0), material.shininess);
-    }
+    // Blinn-Phong reflection: uses half-vector
+    vec3 halfDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(normal, halfDir), 0.0), material.shininess);
 
     // Choose either constant spec color or from specular map
     vec3 specColor = material.specular;
@@ -101,14 +100,14 @@ vec3 calculateLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
         specColor = texture(material.specularMap, aTexCoord).rgb;
     }
 
-    vec3 specular = vec3(1.0) * spec;
+    vec3 specular = light.specular * specColor * spec;
     
     // Apply attenuation
     ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
     
-    return (specular);
+    return (ambient + diffuse + specular);
 }
 
 void main() {
@@ -122,9 +121,9 @@ void main() {
     }
     
     // --- Emission (not affected by lights) ---
-    // if (material.hasEmissionMap == 1) {
-    //     result += texture(material.emissionMap, aTexCoord).rgb;
-    // }
+    if (material.hasEmissionMap == 1) {
+        result += texture(material.emissionMap, aTexCoord).rgb;
+    }
     
     fragColor = vec4(result, 1.0);
 }
