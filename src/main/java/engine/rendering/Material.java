@@ -124,18 +124,6 @@ public class Material {
         }
     }
 
-    public void setLightUniforms(GL3 gl,
-        Vec3 lightPos,
-        Vec3 lightAmbient,
-        Vec3 lightDiffuse,
-        Vec3 lightSpecular) 
-    {
-        shader.setVec3(gl, "light.position", lightPos);
-        shader.setVec3(gl, "light.ambient", lightAmbient);
-        shader.setVec3(gl, "light.diffuse", lightDiffuse);
-        shader.setVec3(gl, "light.specular", lightSpecular);
-    }
-
     public void setTransformUniforms(GL3 gl, 
         Mat4 modelMatrix, 
         Mat4 viewMatrix, 

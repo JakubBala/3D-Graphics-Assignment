@@ -78,8 +78,6 @@ vec3 calculateLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     
     // --- Ambient ---
     vec3 ambient = light.ambient * material.ambient;
-
-    // TODO: Make Ambient always apply, then mix with light ambient contributions.
     
     // --- Diffuse ---
     float diff = max(dot(normal, lightDir), 0.0);
@@ -103,7 +101,6 @@ vec3 calculateLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
     vec3 specular = light.specular * specColor * spec;
     
     // Apply attenuation
-    ambient *= attenuation;
     diffuse *= attenuation;
     specular *= attenuation;
     

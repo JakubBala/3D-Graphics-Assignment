@@ -17,18 +17,8 @@ import engine.scene.*;
 
 public class EngineGLEventListener implements GLEventListener {
 
-    private Shader shaderSphere, shaderLight;
     private final Camera camera;
     private double startTime;
-
-
-    // TODO: This will go into GameObjects themselves
-    private Mesh light;
-
-    private Vec3 lightPosition = new Vec3(4f,5f,8f);
-    private Vec3 lightAmbient = new Vec3(0.2f, 0.2f, 0.2f);
-    private Vec3 lightDiffuse = new Vec3(0.0f, 0.9f, 0.9f);
-    private Vec3 lightSpecular = new Vec3(0.9f, 0.9f, 0.9f);
 
     Scene activeScene;
     DebugGrid debugGrid;
@@ -84,10 +74,6 @@ public class EngineGLEventListener implements GLEventListener {
         startTime = getSeconds();
         // TODO: Load your YAML scene here
         // TODO: Call OnStart
-
-        light = new Mesh(gl, Sphere.vertices, Sphere.indices);
-        shaderLight = new Shader(gl, "assets/shaders/vs_light_01.vert", "assets/shaders/fs_light_01.frag");
-        
         debugGrid = new DebugGrid(gl);
         activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
     }
@@ -95,47 +81,11 @@ public class EngineGLEventListener implements GLEventListener {
     public void render(GL3 gl){
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
-        lightPosition = getLightPosition();  // changing light position each frame
 
         Mat4 projectionMatrix = camera.getPerspectiveMatrix();
         Mat4 viewMatrix = camera.getViewMatrix();
 
         activeScene.render(gl, viewMatrix, projectionMatrix, camera.getPosition());
-        // renderLight(gl, shaderLight, getLightModelMatrix(), viewMatrix, projectionMatrix);
-
-        // activeScene.render(gl, viewMatrix, projectionMatrix,
-        //      camera.getPosition(), lightPosition, lightAmbient, lightDiffuse, lightSpecular);
-        
         debugGrid.render(gl, viewMatrix, projectionMatrix);
     }
-
-    private Vec3 getLightPosition() {
-        double elapsedTime = getSeconds()-startTime;
-        Vec3 lightPosition = new Vec3();
-        lightPosition.x = 5.0f*(float)(Math.sin(Math.toRadians(elapsedTime*50)));
-        lightPosition.y = 3.0f;
-        lightPosition.z = 5.0f*(float)(Math.cos(Math.toRadians(elapsedTime*50)));
-        return lightPosition;
-    }
-
-    private Mat4 getLightModelMatrix() {
-        Mat4 modelMatrix = new Mat4(1);
-        modelMatrix = Mat4.multiply(Mat4Transform.scale(0.3f,0.3f,0.3f), modelMatrix);
-        modelMatrix = Mat4.multiply(Mat4Transform.translate(lightPosition), modelMatrix);
-        return modelMatrix;
-    }
-    
-    private void renderLight(GL3 gl, Shader shader, Mat4 modelMatrix, Mat4 view, Mat4 projection) {
-        Mat4 mvpMatrix = Mat4.multiply(projection, Mat4.multiply(view, modelMatrix));
-        
-        shader.use(gl);
-        shader.setFloatArray(gl, "model", modelMatrix.toFloatArrayForGLSL());
-        shader.setFloatArray(gl, "mvpMatrix", mvpMatrix.toFloatArrayForGLSL());
-
-        // use diffuse value of light Material as colour appearance of light
-        shader.setVec3(gl, "lightColor", lightDiffuse);
-
-        light.render(gl);
-    }
-
 }

@@ -86,25 +86,7 @@ public class GameObject {
             child.render(gl, view, projection, cameraPosition, lights);
         }
     }
-
-    // public void render(GL3 gl, Mat4 view, Mat4 projection,
-    //     Vec3 cameraPosition, 
-    //     Vec3 lightPosition, Vec3 lightAmbient, Vec3 lightDiffuse, Vec3 lightSpecular) {
-
-    //     // Render this GameObject's components
-    //     for (Component c : components) {
-    //         if (c instanceof Renderable) {
-    //             ((Renderable) c).render(gl, view, projection, cameraPosition, lightPosition, lightAmbient, lightDiffuse, lightSpecular);
-    //         }
-    //     }
-
-    //     // Recursively render all children
-    //     for (GameObject child : children) {
-    //         child.render(gl, view, projection, cameraPosition,
-    //          lightPosition, lightAmbient, lightDiffuse, lightSpecular);
-    //     }
-    // }
-
+    
     public String getName(){ return name; }
     public Transform getTransform(){ return transform; }
     public GameObject getParent(){ return parent; }

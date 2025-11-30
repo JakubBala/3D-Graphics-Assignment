@@ -30,16 +30,4 @@ public class MeshRenderer extends Component implements Renderable{
         material.apply(gl);
         mesh.render(gl);
     }
-
-    // @Override
-    // public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, 
-    //     Vec3 lightPosition, Vec3 lightAmbient, Vec3 lightDiffuse, Vec3 lightSpecular
-    // ) {
-    //     Mat4 model = gameObject.getTransform().getWorldMatrix();
-    //     material.useShader(gl);
-    //     material.setTransformUniforms(gl, model, view, projection, cameraPosition);
-    //     material.setLightUniforms(gl, lightPosition, lightAmbient, lightDiffuse, lightSpecular);
-    //     material.apply(gl);
-    //     mesh.render(gl);
-    // }
 }
