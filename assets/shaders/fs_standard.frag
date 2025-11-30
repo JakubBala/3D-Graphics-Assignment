@@ -27,6 +27,7 @@ struct Light {
     vec3 direction;
     float cutOff;
     float outerCutOff;
+    float intensity;
 };
 
 uniform Light lights[MAX_LIGHTS];
@@ -49,78 +50,99 @@ struct Material {
 
 uniform Material material;
 
-// Calculate lighting for one light source
-vec3 calculateLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir) {
+vec3 ApplyLight(
+    Light light,
+    vec3 normal,
+    vec3 fragPos,
+    vec3 viewDir,
+    vec3 ambientBase,
+    vec3 diffuseBase,
+    vec3 specularBase
+) {
     vec3 lightDir;
     float attenuation = 1.0;
-    
-    // --- Calculate light direction and attenuation ---
+
     if (light.type == 0) {
         // Directional light
         lightDir = normalize(-light.direction);
-    } else {
-        // Point or Spot light
-        lightDir = normalize(light.position - fragPos);
-        
-        // Attenuation
-        float distance = length(light.position - fragPos);
-        attenuation = 1.0 / (light.constant + light.linear * distance + 
-                            light.quadratic * (distance * distance));
-        
-        // Spotlight intensity
+    }
+    else {
+        // Point or spot
+        vec3 L = light.position - fragPos;
+        float distance = length(L);
+        lightDir = L / distance;
+
+        attenuation = 1.0 / (light.constant +
+                             light.linear * distance +
+                             light.quadratic * distance * distance);
+
         if (light.type == 2) {
-            float angle = dot(lightDir, normalize(-light.direction));
-            float cutoffRange = light.cutOff - light.outerCutOff;
-            float intensity = clamp((angle - light.outerCutOff) / cutoffRange, 0.0, 1.0);
+            // Spotlight intensity
+            float theta = dot(lightDir, normalize(-light.direction));
+            float epsilon = light.cutOff - light.outerCutOff;
+            float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
             attenuation *= intensity;
         }
     }
-    
-    // --- Ambient ---
-    vec3 ambient = light.ambient * material.ambient;
-    
-    // --- Diffuse ---
+
+    // Ambient
+    vec3 ambient = light.ambient * ambientBase;
+
+    // Diffuse
     float diff = max(dot(normal, lightDir), 0.0);
-    vec3 baseColor = material.diffuse;
-    if (material.hasAlbedoMap == 1) {
-        baseColor = texture(material.albedoMap, aTexCoord).rgb;
-    }
-    vec3 diffuse = light.diffuse * diff * baseColor;
-    
-    // --- Specular ---
-    // Blinn-Phong reflection: uses half-vector
+    vec3 diffuse = light.diffuse * diff * diffuseBase;
+
+    // Blinn-Phong specular
     vec3 halfDir = normalize(lightDir + viewDir);
     float spec = pow(max(dot(normal, halfDir), 0.0), material.shininess);
+    vec3 specular = light.specular * spec * specularBase;
 
-    // Choose either constant spec color or from specular map
-    vec3 specColor = material.specular;
-    if (material.hasSpecularMap == 1) {
-        specColor = texture(material.specularMap, aTexCoord).rgb;
-    }
-
-    vec3 specular = light.specular * specColor * spec;
-    
-    // Apply attenuation
+    ambient *= attenuation; 
     diffuse *= attenuation;
     specular *= attenuation;
-    
-    return (ambient + diffuse + specular);
+
+    // Apply per-light intensity (makes directional lights scale correctly)
+    return (ambient + diffuse + specular) * light.intensity;
 }
 
 void main() {
-    vec3 norm = normalize(aNormal);
+    vec3 normal = normalize(aNormal);
     vec3 viewDir = normalize(viewPos - aPos);
-    
-    // Accumulate lighting from all lights
-    vec3 result = vec3(0.0);
+
+    // --- BASE MATERIAL VALUES ---
+    vec3 ambientBase  = material.ambient;
+    vec3 diffuseBase  = material.diffuse;
+    vec3 specularBase = material.specular;
+
+    if (material.hasAlbedoMap == 1) {
+        vec3 tex = texture(material.albedoMap, aTexCoord).rgb;
+        ambientBase *= tex;
+        diffuseBase *= tex;
+    }
+
+    if (material.hasSpecularMap == 1) {
+        specularBase *= texture(material.specularMap, aTexCoord).rgb;
+    }
+
+    // --- LIGHT ACCUMULATION ---
+    vec3 color = vec3(0.0);
+
     for (int i = 0; i < numActiveLights; i++) {
-        result += calculateLight(lights[i], norm, aPos, viewDir);
+        color += ApplyLight(
+            lights[i],
+            normal,
+            aPos,
+            viewDir,
+            ambientBase,
+            diffuseBase,
+            specularBase
+        );
     }
-    
-    // --- Emission (not affected by lights) ---
+
+    // --- EMISSION DOES NOT RECEIVE LIGHT ---
     if (material.hasEmissionMap == 1) {
-        result += texture(material.emissionMap, aTexCoord).rgb;
+        color += texture(material.emissionMap, aTexCoord).rgb;
     }
-    
-    fragColor = vec4(result, 1.0);
+
+    fragColor = vec4(color, 1.0);
 }

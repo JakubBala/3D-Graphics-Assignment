@@ -33,6 +33,8 @@ public class MeshLibrary {
                 return new Mesh(gl, Pyramid.vertices, Pyramid.indices);
             case "assets/models/Sphere.mesh":
                 return new Mesh(gl, Sphere.vertices, Sphere.indices);
+            case "assets/models/Plane.mesh":
+                return new Mesh(gl, Plane.vertices, Plane.indices);
 
             // fallback:
             default:

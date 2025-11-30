@@ -96,12 +96,11 @@ public class Material {
             String prefix = "lights[" + i + "].";
             
             shader.setVec3(gl, prefix + "position", light.getPosition());
-            shader.setVec3(gl, prefix + "ambient", 
-                Vec3.multiply(light.getAmbient(), light.getIntensity()));
-            shader.setVec3(gl, prefix + "diffuse", 
-                Vec3.multiply(light.getDiffuse(), light.getIntensity()));
-            shader.setVec3(gl, prefix + "specular", 
-                Vec3.multiply(light.getSpecular(), light.getIntensity()));
+            // Send raw color components; shader will scale by light.intensity
+            shader.setVec3(gl, prefix + "ambient", light.getAmbient());
+            shader.setVec3(gl, prefix + "diffuse", light.getDiffuse());
+            shader.setVec3(gl, prefix + "specular", light.getSpecular());
+            shader.setFloat(gl, prefix + "intensity", light.getIntensity());
             
             shader.setInt(gl, prefix + "type", light.getType().ordinal());
             

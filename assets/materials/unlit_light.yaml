@@ -1,0 +1,8 @@
+name: "Unlit Light Shader"
+id: "unlit_light_lol_001"
+
+vertex: "assets/shaders/vs_unlit_standard.vert"
+fragment: "assets/shaders/fs_unlit_standard.frag"
+
+uniforms:
+  material.color: [0.96, 0.8, 0.25]   

@@ -1,0 +1,11 @@
+name: "White Ground Plane"
+id: "ground_white_001"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.8, 0.8, 0.8]     # Pure white - shows light colors accurately
+  material.ambient: [0.1, 0.1, 0.1]     # Moderate ambient so it's not pitch black
+  material.specular: [0.1, 0.1, 0.1]    # Subtle specular (matte finish)
+  material.shininess: 8.0               # Low shininess = diffuse surface
