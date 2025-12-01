@@ -122,6 +122,51 @@ public class Transform extends Component{
         return Vec3.normalize(f);
     }
 
+    public Vec3 GetRight() {
+        Mat4 world = getWorldMatrix();
+
+        Vec3 r = new Vec3(
+            world.get(0, 0),
+            world.get(1, 0),
+            world.get(2, 0)
+        );
+
+        return Vec3.normalize(r);
+    }
+
+    public Vec3 GetUp() {
+        Mat4 world = getWorldMatrix();
+
+        Vec3 u = new Vec3(
+            world.get(0, 1),
+            world.get(1, 1),
+            world.get(2, 1)
+        );
+
+        return Vec3.normalize(u);
+    }
+
+    public void Translate(Vec3 delta) {
+        local_position = Vec3.add(local_position, delta);
+        markDirty();
+    }
+
+    // Rotate local Euler angles (degrees) around local axes and mark dirty
+    public void RotateLocalX(float degrees) {
+        local_rotation.x += degrees;
+        markDirty();
+    }
+
+    public void RotateLocalY(float degrees) {
+        local_rotation.y += degrees;
+        markDirty();
+    }
+
+    public void RotateLocalZ(float degrees) {
+        local_rotation.z += degrees;
+        markDirty();
+    }
+
     // Mark this transform and all children as dirty
     public void markDirty() {
         isDirty = true;

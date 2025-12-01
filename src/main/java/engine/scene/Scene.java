@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import com.jogamp.opengl.GL3;
 
+import engine.components.Camera;
 import engine.components.Light;
 import engine.gmaths.*;
 
@@ -12,6 +13,7 @@ import engine.gmaths.*;
 public class Scene {
     private String name;
     private List<GameObject> gameObjects = new ArrayList<>();
+    private Camera mainCamera;
 
     public Scene(String name){
         this.name = name;
@@ -30,6 +32,17 @@ public class Scene {
         return name;
     }
 
+    public void render(GL3 gl) {
+
+        Mat4 viewMatrix = mainCamera.getViewMatrix();
+        Mat4 projectionMatrix = mainCamera.getPerspectiveMatrix();
+        Vec3 camPos = mainCamera.getGameObject().getTransform().GetWorldPosition();
+
+        for (GameObject gameObject : gameObjects){
+            gameObject.render(gl, viewMatrix, projectionMatrix, camPos, getActiveLights());
+        }
+    }
+
     public List<Light> getActiveLights(){
         List<Light> lights = new ArrayList<>();
         collectLights(gameObjects, lights);
@@ -46,20 +59,40 @@ public class Scene {
         }
     }
 
-    public void render(GL3 gl, Mat4 view, Mat4 proj, Vec3 cameraPos) {
-
-        for (GameObject gameObject : gameObjects){
-            gameObject.render(gl, view, proj, cameraPos, getActiveLights());
+    public void findAndSetMainCamera() {
+        for (GameObject gameObject : gameObjects) {
+            Camera camera = gameObject.getComponent(Camera.class);
+            if (camera != null && camera.isMainCamera()) {
+                mainCamera = camera;
+                return;
+            }
         }
+        System.err.println("Warning: No main camera found in scene '" + name + "'");
+        mainCamera = null; // No main camera found
     }
 
-    // public void render(GL3 gl, Mat4 view, Mat4 proj,
-    //     Vec3 cameraPos, 
-    //     Vec3 lightPosition, Vec3 ambient, Vec3 diffuse, Vec3 specular) {
-    //     for (GameObject gameObject : gameObjects){
-    //         gameObject.render(gl, view, proj, cameraPos, lightPosition, ambient, diffuse, specular);
-    //     }
-    // }
+    public Camera getMainCameraInstance() {
+        if(mainCamera == null) {
+            findAndSetMainCamera();
+        }
+        return mainCamera;
+    } 
 
-    
+    public void keyboardInput(Camera.Movement movement) {
+        mainCamera.move(movement);
+    }
+
+    public void mouseInput(float dx, float dy) {
+        mainCamera.updateYawPitch(dx, dy);
+    }
+
+    public void windowResized(float width, float height) {
+        if(mainCamera == null) {
+            findAndSetMainCamera();
+        }
+        if(mainCamera == null) return; // No main camera to control
+        float aspect = width / height;
+        mainCamera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect));
+
+    }
 }

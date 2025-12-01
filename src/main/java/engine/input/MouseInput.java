@@ -2,14 +2,16 @@ package engine.input;
 
 import java.awt.*;
 import java.awt.event.*;
+
+import engine.EngineGLEventListener;
 import engine.components.Camera;
 
 public class MouseInput extends MouseMotionAdapter {
     private Point lastPoint;
-    private final Camera camera;
+    private final EngineGLEventListener context;
 
-    public MouseInput(Camera camera) {
-        this.camera = camera;
+    public MouseInput(EngineGLEventListener context) {
+        this.context = context;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class MouseInput extends MouseMotionAdapter {
         float dx = (float) (ms.x - lastPoint.x) * sensitivity;
         float dy = (float) (ms.y - lastPoint.y) * sensitivity;
         if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0)
-            camera.updateYawPitch(dx, -dy);
+            context.mouseInput(-dx, -dy);
         lastPoint = ms;
     }
 

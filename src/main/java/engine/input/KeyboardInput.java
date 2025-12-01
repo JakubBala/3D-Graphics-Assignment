@@ -1,18 +1,20 @@
 package engine.input;
 
 import java.awt.event.*;
+
+import engine.EngineGLEventListener;
 import engine.components.Camera;
 
 public class KeyboardInput extends KeyAdapter {
-    private final Camera camera;
+    private final EngineGLEventListener context;
 
-    public KeyboardInput(Camera camera) {
-        this.camera = camera;
+    public KeyboardInput(EngineGLEventListener context) {
+        this.context = context;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Camera.Movement m = Camera.Movement.NO_MOVEMENT;
+        Camera.Movement m = Camera.Movement.NONE;
 
         if (e.isShiftDown()) {
             switch (e.getKeyCode()) {
@@ -34,6 +36,6 @@ public class KeyboardInput extends KeyAdapter {
             }
         }
 
-        camera.keyboardInput(m);
+        context.keyboardInput(m);
     }
 }

@@ -1,6 +1,19 @@
 name: Testing Scene
 gameObjects:
 
+  # Main Camera
+  - name: MainCamera
+    components:
+      - type: Camera
+        isMainCamera: true
+        # fov: 60.0
+        # nearPlane: 0.1
+        # farPlane: 100.0
+      - type: Transform
+        position: [0, 5, 0]
+        rotation: [0, -90, 0]
+        scale: [1, 1, 1]
+
   # Main Directional light
   - name: Sun
     components:

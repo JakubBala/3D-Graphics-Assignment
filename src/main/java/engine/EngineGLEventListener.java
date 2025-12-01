@@ -17,15 +17,12 @@ import engine.scene.*;
 
 public class EngineGLEventListener implements GLEventListener {
 
-    private final Camera camera;
     private double startTime;
 
     Scene activeScene;
     DebugGrid debugGrid;
 
-    public EngineGLEventListener(Camera camera) {
-        this.camera = camera;
-        this.camera.setPosition(new Vec3(10, 5, 10));
+    public EngineGLEventListener() {
     }
 
     @Override
@@ -46,12 +43,10 @@ public class EngineGLEventListener implements GLEventListener {
 
     @Override
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-
-        // TODO: This can be for the most part moved to the Camera.
         GL3 gl = drawable.getGL().getGL3();
         gl.glViewport(x, y, width, height);
-        float aspect = (float) width / height;
-        camera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect));
+
+        activeScene.windowResized(width, height);
     }
 
     @Override
@@ -74,18 +69,25 @@ public class EngineGLEventListener implements GLEventListener {
         startTime = getSeconds();
         // TODO: Load your YAML scene here
         // TODO: Call OnStart
-        debugGrid = new DebugGrid(gl);
         activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
+        activeScene.findAndSetMainCamera();
+        debugGrid = new DebugGrid(gl);
     }
 
     public void render(GL3 gl){
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
+        activeScene.render(gl);
 
-        Mat4 projectionMatrix = camera.getPerspectiveMatrix();
-        Mat4 viewMatrix = camera.getViewMatrix();
+        Camera mainCamera = activeScene.getMainCameraInstance();
+        debugGrid.render(gl, mainCamera.getViewMatrix(), mainCamera.getPerspectiveMatrix());
+    }
 
-        activeScene.render(gl, viewMatrix, projectionMatrix, camera.getPosition());
-        debugGrid.render(gl, viewMatrix, projectionMatrix);
+    public void keyboardInput(Camera.Movement movement) {
+        activeScene.keyboardInput(movement);
+    }
+
+    public void mouseInput(float dx, float dy) {
+        activeScene.mouseInput(dx, dy);
     }
 }

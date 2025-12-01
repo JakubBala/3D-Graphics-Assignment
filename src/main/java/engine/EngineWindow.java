@@ -13,18 +13,16 @@ public class EngineWindow extends JFrame {
     private GLCanvas canvas;
     private EngineGLEventListener glListener;
     private final FPSAnimator animator;
-    private final Camera camera;
 
     public EngineWindow(String title, int width, int height) {
         super(title);
         GLCapabilities glcapabilities = new GLCapabilities(GLProfile.get(GLProfile.GL3));
 
         canvas = new GLCanvas(glcapabilities);
-        camera = new Camera(Camera.DEFAULT_POSITION, Camera.DEFAULT_TARGET, Camera.DEFAULT_UP);
-        glListener = new EngineGLEventListener(camera);
+        glListener = new EngineGLEventListener();
         canvas.addGLEventListener(glListener);
-        canvas.addMouseMotionListener(new MouseInput(camera));
-        canvas.addKeyListener(new KeyboardInput(camera));
+        canvas.addMouseMotionListener(new MouseInput(glListener));
+        canvas.addKeyListener(new KeyboardInput(glListener));
 
         add(canvas, BorderLayout.CENTER);
 
