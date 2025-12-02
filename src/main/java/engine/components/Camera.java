@@ -135,8 +135,6 @@ public class Camera extends Component{
         float newYaw = localRot.y + deltaYaw * mouseSensitivity;
         float newPitch = localRot.x + deltaPitch * mouseSensitivity;
 
-        System.err.println("Pitch: " + newPitch + ", Yaw: " + newYaw);
-
         // Clamp vertical rotation (in degrees)
         newPitch = Math.max(-89f, Math.min(89f, newPitch));
 

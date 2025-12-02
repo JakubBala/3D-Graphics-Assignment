@@ -22,7 +22,7 @@ public class MouseInput extends MouseMotionAdapter {
         float dx = (float) (ms.x - lastPoint.x) * sensitivity;
         float dy = (float) (ms.y - lastPoint.y) * sensitivity;
         if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) != 0)
-            context.mouseInput(-dx, -dy);
+            context.mouseInput(dx, -dy);
         lastPoint = ms;
     }
 

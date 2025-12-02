@@ -92,8 +92,8 @@ public final class Mat4Transform  {   // row column formulation
     Mat4 m = new Mat4(1);
     angle = (float)(angle*Math.PI/180.0);
     m.set(0,0, (float)Math.cos(angle));
-    m.set(0,2, (float)Math.sin(angle));
-    m.set(2,0, -(float)Math.sin(angle));
+    m.set(0,2, -(float)Math.sin(angle));
+    m.set(2,0, (float)Math.sin(angle));
     m.set(2,2, (float)Math.cos(angle));
     return m;
   }
