@@ -1,0 +1,10 @@
+name: "Gradient Skybox"
+id: "skybox_001"
+
+vertex: "assets/shaders/vs_skybox.vert"
+fragment: "assets/shaders/fs_skybox_gradient.frag"
+
+uniforms:
+  skyColorTop: [0.1, 0.3, 0.8]      # Deep blue sky
+  skyColorHorizon: [0.5, 0.7, 0.9]  # Light blue horizon
+  skyColorBottom: [0.7, 0.8, 0.85]  # Almost white/pale blue bottom

@@ -1,4 +1,5 @@
 name: Testing Scene
+skybox: assets/materials/skybox.yaml
 gameObjects:
 
   # Main Camera

@@ -8,7 +8,9 @@ import com.jogamp.opengl.GL3;
 
 import engine.data.GameObjectSpec;
 import engine.data.SceneSpec;
+import engine.rendering.Material;
 import engine.scene.Scene;
+import engine.scene.Skybox;
 import engine.scene.GameObject;
 
 import java.nio.file.Files;
@@ -42,6 +44,14 @@ public class SceneLoader {
                 GameObject loadedGameObject = GameObjectLoader.Load(gameObjectSpec, gl);
                 scene.AddGameObject(loadedGameObject);
                 System.out.println("[SceneLoader] Added GameObject: " + loadedGameObject.getName());
+            }
+
+            // Load Skybox (if specified)
+            if (spec.skybox != null && !spec.skybox.isEmpty()) {
+                Material skyMaterial = MaterialLoader.Load(gl, spec.skybox);
+                Skybox skybox = new Skybox(gl, skyMaterial);
+                scene.SetSkybox(skybox);
+                System.out.println("[SceneLoader] Loaded Skybox: " + spec.skybox);
             }
 
             return scene;

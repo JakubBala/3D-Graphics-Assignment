@@ -13,6 +13,7 @@ import engine.gmaths.*;
 public class Scene {
     private String name;
     private List<GameObject> gameObjects = new ArrayList<>();
+    private Skybox skybox;
     private Camera mainCamera;
 
     public Scene(String name){
@@ -32,12 +33,21 @@ public class Scene {
         return name;
     }
 
+    public void SetSkybox(Skybox skybox){
+        this.skybox = skybox;
+    }
+
     public void render(GL3 gl) {
+        // 1. Render skybox FIRST (if it exists)
+        if (skybox != null) {
+            skybox.render(gl, mainCamera.getViewMatrix(), mainCamera.getPerspectiveMatrix());
+        }
 
         Mat4 viewMatrix = mainCamera.getViewMatrix();
         Mat4 projectionMatrix = mainCamera.getPerspectiveMatrix();
         Vec3 camPos = mainCamera.getGameObject().getTransform().GetWorldPosition();
 
+        // 2. Render all GameObjects
         for (GameObject gameObject : gameObjects){
             gameObject.render(gl, viewMatrix, projectionMatrix, camPos, getActiveLights());
         }
@@ -92,7 +102,7 @@ public class Scene {
         }
         if(mainCamera == null) return; // No main camera to control
         float aspect = width / height;
-        mainCamera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect));
+        mainCamera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect, 0.1f, 300f));
 
     }
 }
