@@ -95,6 +95,10 @@ public class Skybox{
         gl.glDepthFunc(GL3.GL_LESS);
         gl.glEnable(GL3.GL_CULL_FACE); // Re-enable face culling for normal objects
     }
+
+    public void SetTimeOfDay(float timeOfDay){
+        skyboxMaterial.setUniform("timeOfDay", timeOfDay);
+    }
     
     private Mat4 removeTranslation(Mat4 view) {
         // Create a copy and zero out the translation column (4th column = indices 3, 7, 11)

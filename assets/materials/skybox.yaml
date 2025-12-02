@@ -2,9 +2,32 @@ name: "Gradient Skybox"
 id: "skybox_001"
 
 vertex: "assets/shaders/vs_skybox.vert"
-fragment: "assets/shaders/fs_skybox_gradient.frag"
+fragment: "assets/shaders/fs_skybox_daycycle.frag"
 
 uniforms:
-  skyColorTop: [0.1, 0.3, 0.8]      # Deep blue sky
-  skyColorHorizon: [0.5, 0.7, 0.9]  # Light blue horizon
-  skyColorBottom: [0.7, 0.8, 0.85]  # Almost white/pale blue bottom
+  timeOfDay: 0.75  # 0.0 = midnight, 0.25 = dawn, 0.5 = midday, 0.75 = dusk, 1.0 = midnight
+    
+  # Midnight colors
+  nightColorTop: [0.01, 0.01, 0.05]
+  nightColorHorizon: [0.05, 0.05, 0.1]
+  nightColorBottom: [0.02, 0.02, 0.08]
+  
+  # Dawn colors
+  dawnColorTop: [0.4, 0.5, 0.8]
+  dawnColorHorizon: [1.0, 0.6, 0.4]
+  dawnColorBottom: [0.8, 0.7, 0.6]
+  
+  # Midday colors
+  dayColorTop: [0.1, 0.3, 0.8]
+  dayColorHorizon: [0.5, 0.7, 0.9]
+  dayColorBottom: [0.7, 0.8, 0.85]
+  
+  # Dusk colors
+  duskColorTop: [0.2, 0.1, 0.3]
+  duskColorHorizon: [1.0, 0.4, 0.2]
+  duskColorBottom: [0.8, 0.6, 0.4]
+  
+  # Star settings
+  starDensity: 0.035
+  starBrightness: 4.0
+  starSize: 0.10

@@ -37,6 +37,10 @@ public class Scene {
         this.skybox = skybox;
     }
 
+    public Skybox GetSkybox(){
+        return skybox;
+    }
+
     public void render(GL3 gl) {
         // 1. Render skybox FIRST (if it exists)
         if (skybox != null) {
