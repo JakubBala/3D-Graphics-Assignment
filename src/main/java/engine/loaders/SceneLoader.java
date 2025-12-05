@@ -42,6 +42,7 @@ public class SceneLoader {
             // Load GameObjects (ComponentSpecs are already deserialized and typed)
             for (GameObjectSpec gameObjectSpec : spec.gameObjects) {
                 GameObject loadedGameObject = GameObjectLoader.Load(gameObjectSpec, gl);
+                loadedGameObject.setScene(scene); // Set scene reference
                 scene.AddGameObject(loadedGameObject);
                 System.out.println("[SceneLoader] Added GameObject: " + loadedGameObject.getName());
             }
@@ -53,6 +54,11 @@ public class SceneLoader {
                 scene.SetSkybox(skybox);
                 System.out.println("[SceneLoader] Loaded Skybox: " + spec.skybox);
             }
+
+            // Resolve all references after scene is fully loaded
+            scene.resolveAllReferences();
+            System.out.println("[SceneLoader] Resolved all references");
+
 
             return scene;
 

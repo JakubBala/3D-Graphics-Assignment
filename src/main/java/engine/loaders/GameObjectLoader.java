@@ -18,6 +18,10 @@ public class GameObjectLoader {
         GameObject newGameObj = new GameObject();
 
         newGameObj.setName(gameObjSpec.name);
+        if (gameObjSpec.id != null) {
+            newGameObj.setId(gameObjSpec.id);
+        }
+
         // Load components
         System.out.println("[GameObjectLoader]: Instantiated GameObject: " + newGameObj.getName());
         if (gameObjSpec.components != null) {
@@ -43,6 +47,11 @@ public class GameObjectLoader {
 
         // Create the component from the spec
         Component component = componentSpec.createComponent(newGameObject, gl);
+
+        // Set component ID if provided
+        if (componentSpec.id != null) {
+            component.setId(componentSpec.id);
+        }
         
         // Special handling for Transform (already exists on GameObject by default)
         if (componentSpec instanceof TransformSpec) {

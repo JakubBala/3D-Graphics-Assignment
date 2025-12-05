@@ -22,6 +22,9 @@ public class BehaviourSpec extends ComponentSpec {
     
     // All other YAML fields go here as a map
     public Map<String, Object> properties;
+
+    // References to other objects/components by ID
+    public Map<String, String> refs; 
     
     @Override
     public Component createComponent(GameObject gameObject, GL3 gl) {
@@ -54,6 +57,11 @@ public class BehaviourSpec extends ComponentSpec {
                                          "' not found in script " + script);
                     }
                 }
+            }
+
+            // Store refs for later resolution (after scene is fully loaded)
+            if (refs != null && !refs.isEmpty()) {
+                behaviour.setPendingReferences(refs);
             }
             
             System.out.println("[BehaviourSpec]: Created " + script + " behaviour");

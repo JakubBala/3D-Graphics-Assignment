@@ -69,6 +69,8 @@ gameObjects:
           someBoolean: true
           someVec2: [0.5, 0.75]
           someVec3: [1.0, 2.0, 3.0]
+        refs:
+          referencedScript: ref_script_001
     children:
       - name: SmallerCube
         components:
@@ -79,6 +81,9 @@ gameObjects:
             position: [0, 1, 0]
             rotation: [0, 0, 0]
             scale: [0.5, 0.5, 0.5]
+          - type: Behaviour
+            id: ref_script_001
+            script: ReferencedScript
 
   - name: Ground
     components:

@@ -14,6 +14,7 @@ public class TestScript extends Behaviour{
     public boolean someBoolean;
     public Vec3 someVec3;
     public Vec2 someVec2;
+    public ReferencedScript referencedScript;
 
     public void Start() {
         System.out.println("TestScript Start called!");
@@ -23,5 +24,8 @@ public class TestScript extends Behaviour{
         System.out.println("someBoolean = " + someBoolean);
         System.out.println("someVec3 = " + someVec3);
         System.out.println("someVec2 = " + someVec2);
+
+        float referencedValue = referencedScript.getSomeValue();
+        System.out.println("referencedScript.someValue = " + referencedValue);
     }
 }

@@ -17,6 +17,7 @@ import engine.gmaths.Vec3;
 public class GameObject {
 
     // SERIALIZED
+    private String id; 
     private String name;
     private Transform transform;
     private List<Component> components;
@@ -24,6 +25,7 @@ public class GameObject {
 
     // INSTANCED
     private GameObject parent;
+    private Scene scene; //owner scene
 
     // TODO: Initialize GameObject with components already set up
 
@@ -56,6 +58,25 @@ public class GameObject {
         }
     }
 
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+        // Recursively set scene for all children
+        for (GameObject child : children) {
+            child.setScene(scene);
+        }
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
     // Add a child
     public void addChild(GameObject child) {
         if (child.parent != null) {
@@ -85,6 +106,10 @@ public class GameObject {
             if (clazz.isInstance(c)) return clazz.cast(c);
         }
         return null;
+    }
+
+    public List<Component> getComponents() {
+        return components;
     }
 
     public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, List<Light> lights) {

@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 import com.jogamp.opengl.GL3;
 
+import engine.components.Behaviour;
 import engine.components.Camera;
 import engine.components.Light;
+import engine.components.core.Component;
 import engine.gmaths.*;
 
 // TODO: Must have a MainCamera that is available to all GameObjects
@@ -113,5 +115,78 @@ public class Scene {
         float aspect = width / height;
         mainCamera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect, 0.1f, 300f));
 
+    }
+
+    /**
+     * Find a GameObject by its ID
+     */
+    public GameObject findGameObjectById(String id) {
+        if (id == null) return null;
+        
+        for (GameObject go : gameObjects) {
+            GameObject found = findGameObjectByIdRecursive(go, id);
+            if (found != null) return found;
+        }
+        return null;
+    }
+    
+    private GameObject findGameObjectByIdRecursive(GameObject go, String id) {
+        if (id.equals(go.getId())) {
+            return go;
+        }
+        
+        for (GameObject child : go.getChildren()) {
+            GameObject found = findGameObjectByIdRecursive(child, id);
+            if (found != null) return found;
+        }
+        
+        return null;
+    }
+
+    /**
+     * Find a Component by its ID (searches all GameObjects and their components)
+     */
+    public Component findComponentById(String id) {
+        if (id == null) return null;
+        
+        for (GameObject go : gameObjects) {
+            Component found = findComponentByIdRecursive(go, id);
+            if (found != null) return found;
+        }
+        return null;
+    }
+    
+    private Component findComponentByIdRecursive(GameObject go, String id) {
+        // Check all components on this GameObject
+        for (Component c : go.getComponents()) {
+            if (id.equals(c.getId())) {
+                return c;
+            }
+        }
+        
+        // Check children
+        for (GameObject child : go.getChildren()) {
+            Component found = findComponentByIdRecursive(child, id);
+            if (found != null) return found;
+        }
+        
+        return null;
+    }
+
+    public void resolveAllReferences() {
+        for (GameObject go : gameObjects) {
+            resolveReferencesRecursive(go);
+        }
+    }
+
+    private void resolveReferencesRecursive(GameObject go) {
+        for (Component c : go.getComponents()) {
+            if (c instanceof Behaviour) {
+                ((Behaviour) c).resolveReferences();
+            }
+        }
+        for (GameObject child : go.getChildren()) {
+            resolveReferencesRecursive(child);
+        }
     }
 }

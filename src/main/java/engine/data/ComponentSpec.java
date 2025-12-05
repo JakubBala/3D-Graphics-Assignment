@@ -7,6 +7,7 @@ import engine.scene.GameObject;
 
 public abstract class ComponentSpec {
     public String type;  // Still needed for YAML deserialization routing
+    public String id;    // Optional ID for referencing
     
     /**
      * Factory method: each spec knows how to create its component
