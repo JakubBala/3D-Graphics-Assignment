@@ -71,6 +71,7 @@ public class EngineGLEventListener implements GLEventListener {
         // TODO: Call OnStart
         activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
         activeScene.findAndSetMainCamera();
+        activeScene.Start();
         debugGrid = new DebugGrid(gl);
     }
 
@@ -79,7 +80,6 @@ public class EngineGLEventListener implements GLEventListener {
 
         
         float dayLightCycle = (float)((getSeconds() - startTime) / 20.0 % 1.0); // 60 seconds for full cycle
-        System.out.println("Daylight cycle time: " + dayLightCycle);
         activeScene.GetSkybox().SetTimeOfDay(dayLightCycle);
 
         activeScene.render(gl);

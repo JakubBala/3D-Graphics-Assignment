@@ -28,6 +28,7 @@ public class SpecRegistry {
         componentTypes.put("MeshRenderer", MeshRendererSpec.class);
         componentTypes.put("Light", LightSpec.class);
         componentTypes.put("Camera", CameraSpec.class);
+        componentTypes.put("Behaviour", BehaviourSpec.class);
         
         // Future components -> add here:
         // componentTypes.put("Camera", CameraSpec.class);

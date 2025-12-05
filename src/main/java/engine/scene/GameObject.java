@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.jogamp.opengl.GL3;
 
+import engine.components.Behaviour;
 import engine.components.Light;
 import engine.components.Transform;
 import engine.components.core.Component;
@@ -31,6 +32,28 @@ public class GameObject {
         this.components = new ArrayList<>();
         this.transform.setGameObject(this);
         components.add(transform);
+    }
+
+    public void Start() {
+        for (Component c : components) {
+            if (c instanceof Behaviour) {
+                ((Behaviour) c).Start();
+            }
+        }
+        for (GameObject child : children) {
+            child.Start();
+        }
+    }
+
+    public void Update() {
+        for (Component c : components) {
+            if (c instanceof Updatable) {
+                ((Updatable) c).Update();
+            }
+        }
+        for (GameObject child : children) {
+            child.Update();
+        }
     }
 
     // Add a child
@@ -62,14 +85,6 @@ public class GameObject {
             if (clazz.isInstance(c)) return clazz.cast(c);
         }
         return null;
-    }
-
-    public void update() {
-        for (Component c : components) {
-            if (c instanceof Updatable) {
-                ((Updatable) c).update();
-            }
-        }
     }
 
     public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, List<Light> lights) {

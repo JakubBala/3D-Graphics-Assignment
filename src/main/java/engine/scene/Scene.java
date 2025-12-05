@@ -24,9 +24,14 @@ public class Scene {
         gameObjects.add(go);
     }
 
+    public void Start() {
+        for (GameObject go : gameObjects)
+            go.Start();
+    }
+
     public void Update() {
         for (GameObject go : gameObjects)
-            go.update();
+            go.Update();
     }
 
     public String getName(){

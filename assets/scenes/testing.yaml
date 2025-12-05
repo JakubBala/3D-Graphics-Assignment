@@ -60,6 +60,15 @@ gameObjects:
         position: [0, 0, 0]
         rotation: [0, 45, 0]
         scale: [2, 2, 2]
+      - type: Behaviour
+        script: TestScript
+        properties:
+          someFloat: 2.5
+          someInt: 7
+          someString: "Hello from YAML!"
+          someBoolean: true
+          someVec2: [0.5, 0.75]
+          someVec3: [1.0, 2.0, 3.0]
     children:
       - name: SmallerCube
         components:
@@ -69,7 +78,7 @@ gameObjects:
           - type: Transform
             position: [0, 1, 0]
             rotation: [0, 0, 0]
-            scale: [1, 1, 1]
+            scale: [0.5, 0.5, 0.5]
 
   - name: Ground
     components:

@@ -1,0 +1,27 @@
+package engine.scripts;
+
+import java.util.Vector;
+
+import engine.components.Behaviour;
+import engine.gmaths.Vec2;
+import engine.gmaths.Vec3;
+
+public class TestScript extends Behaviour{
+
+    public float someFloat;
+    public int someInt;
+    public String someString;
+    public boolean someBoolean;
+    public Vec3 someVec3;
+    public Vec2 someVec2;
+
+    public void Start() {
+        System.out.println("TestScript Start called!");
+        System.out.println("someFloat = " + someFloat);
+        System.out.println("someInt = " + someInt);
+        System.out.println("someString = " + someString);
+        System.out.println("someBoolean = " + someBoolean);
+        System.out.println("someVec3 = " + someVec3);
+        System.out.println("someVec2 = " + someVec2);
+    }
+}
