@@ -28,4 +28,10 @@ public class TestScript extends Behaviour{
         float referencedValue = referencedScript.getSomeValue();
         System.out.println("referencedScript.someValue = " + referencedValue);
     }
+
+    @Override
+    public void Update() {
+        Vec3 targetPosition = new Vec3(5, 5, 5);
+        getGameObject().getTransform().LookAt(targetPosition, new Vec3(0, 1, 0));
+    }
 }

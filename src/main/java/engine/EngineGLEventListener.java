@@ -83,6 +83,7 @@ public class EngineGLEventListener implements GLEventListener {
         float dayLightCycle = (float)((getSeconds() - startTime) / 20.0 % 1.0); // 60 seconds for full cycle
         activeScene.GetSkybox().SetTimeOfDay(dayLightCycle);
 
+        activeScene.Update();
         activeScene.render(gl);
 
         Camera mainCamera = activeScene.getMainCameraInstance();

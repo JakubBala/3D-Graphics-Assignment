@@ -3,19 +3,21 @@ package engine.components;
 import java.util.Map;
 
 import engine.components.core.Component;
+import engine.components.core.Updatable;
 import engine.scene.GameObject;
 import engine.scene.Scene;
 
 import java.lang.reflect.Field;
 
-public class Behaviour extends Component {
+public class Behaviour extends Component implements Updatable {
     private Map<String, String> pendingReferences;
 
     public void Start() {
         // Called when the component is first initialized
     }
 
-    public void Update(float deltaTime) {
+    @Override
+    public void Update() {
         // Called every frame with the time since last frame
     }
     

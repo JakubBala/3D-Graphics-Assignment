@@ -182,5 +182,43 @@ public final class Mat4Transform  {   // row column formulation
     Mat4 result = Mat4.multiply(view, cam);
     return result;
   }
+
+  public static Mat4 inverse(Mat4 m) {
+    // Extract rotation part
+    float r00 = m.get(0,0), r01 = m.get(0,1), r02 = m.get(0,2);
+    float r10 = m.get(1,0), r11 = m.get(1,1), r12 = m.get(1,2);
+    float r20 = m.get(2,0), r21 = m.get(2,1), r22 = m.get(2,2);
+
+    // Extract translation part
+    float tx = m.get(0,3);
+    float ty = m.get(1,3);
+    float tz = m.get(2,3);
+
+    // Inverse rotation is transpose (only when no shear)
+    Mat4 inv = new Mat4(1);
+
+    inv.set(0,0, r00); inv.set(0,1, r10); inv.set(0,2, r20);
+    inv.set(1,0, r01); inv.set(1,1, r11); inv.set(1,2, r21);
+    inv.set(2,0, r02); inv.set(2,1, r12); inv.set(2,2, r22);
+
+    // Inverse translation = -R^T * T
+    float itx = -(inv.get(0,0)*tx + inv.get(0,1)*ty + inv.get(0,2)*tz);
+    float ity = -(inv.get(1,0)*tx + inv.get(1,1)*ty + inv.get(1,2)*tz);
+    float itz = -(inv.get(2,0)*tx + inv.get(2,1)*ty + inv.get(2,2)*tz);
+
+    inv.set(0,3, itx);
+    inv.set(1,3, ity);
+    inv.set(2,3, itz);
+
+    return inv;
+  }
+
+  public static Vec3 multiplyDirection(Mat4 m, Vec3 v) {
+    return new Vec3(
+        m.get(0,0)*v.x + m.get(0,1)*v.y + m.get(0,2)*v.z,
+        m.get(1,0)*v.x + m.get(1,1)*v.y + m.get(1,2)*v.z,
+        m.get(2,0)*v.x + m.get(2,1)*v.y + m.get(2,2)*v.z
+    );
+  }
   
 } // end of class

@@ -61,7 +61,7 @@ public class Transform extends Component{
             // No parent, local = world
             worldMatrix = localMatrix;
         } else {
-            // World = Parent's World × Local
+            // World = Parent's World x Local
             Mat4 parentWorld = parent.getTransform().getWorldMatrix();
             worldMatrix = Mat4.multiply(parentWorld, localMatrix);
         }
@@ -179,6 +179,47 @@ public class Transform extends Component{
         local_rotation.z += degrees;
         markDirty();
     }
+
+    public void LookAt(Vec3 worldTarget, Vec3 worldUp) {
+        // 1. Get world position of this object
+        Vec3 worldPos = GetWorldPosition();
+
+        // 2. Compute desired forward direction (world space)
+        Vec3 worldDir = Vec3.subtract(worldTarget, worldPos);
+        if (worldDir.length() < 0.0001f) return;   // Prevent NaN
+        worldDir.normalize();
+
+        // 3. Convert world direction into local space
+        Mat4 parentWorld =
+                (getGameObject().getParent() != null)
+                ? getGameObject().getParent().getTransform().getWorldMatrix()
+                : Mat4.identity();
+
+        Mat4 parentInv = Mat4Transform.inverse(parentWorld);
+
+        // Direction -> vec4 with w = 0
+        Vec3 localDir = Mat4Transform.multiplyDirection(parentInv, worldDir);
+        localDir.normalize();
+
+        // 4. engine uses forward = -Z, so invert
+        Vec3 f = localDir;  // f = desired local forward
+
+        // 5. Compute yaw and pitch for rotation order (Rz * Ry * Rx)
+        // Yaw 
+        float yaw = (float)Math.toDegrees(Math.atan2(f.x, -f.z));
+
+        // Pitch 
+        // angle between forward and XZ plane
+        float pitch = (float)Math.toDegrees(
+                Math.atan2(f.y, Math.sqrt(f.x * f.x + f.z * f.z))
+        );
+
+        float roll = 0f;
+
+        // 6. Apply result
+        SetLocalRotation(pitch, yaw, roll);
+    }
+
 
     // Mark this transform and all children as dirty
     public void markDirty() {
