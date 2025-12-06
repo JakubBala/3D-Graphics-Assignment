@@ -91,6 +91,11 @@ public class MaterialLoader {
                 }
             }
 
+             // --- DOUBLE SIDED ---
+            if (spec.doubleSided != null) {
+                material.setDoubleSided(spec.doubleSided);
+            }
+
             return material;
 
         } catch (Exception e) {

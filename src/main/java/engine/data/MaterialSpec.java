@@ -10,4 +10,5 @@ public class MaterialSpec {
   public Map<String, String> textures; // logical name -> filepath
   public String name;
   public String id;
+  public Boolean doubleSided;
 }

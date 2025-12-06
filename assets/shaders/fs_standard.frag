@@ -109,15 +109,22 @@ void main() {
     vec3 normal = normalize(aNormal);
     vec3 viewDir = normalize(viewPos - aPos);
 
+    float alpha = 1.0;
+
     // --- BASE MATERIAL VALUES ---
     vec3 ambientBase  = material.ambient;
     vec3 diffuseBase  = material.diffuse;
     vec3 specularBase = material.specular;
 
     if (material.hasAlbedoMap == 1) {
-        vec3 tex = texture(material.albedoMap, aTexCoord).rgb;
-        ambientBase *= tex;
-        diffuseBase *= tex;
+        vec4 tex = texture(material.albedoMap, aTexCoord);
+        ambientBase *= tex.rgb;
+        diffuseBase *= tex.rgb;
+        alpha = tex.a;
+    }
+
+    if(alpha < 0.1) {
+        discard;
     }
 
     if (material.hasSpecularMap == 1) {
@@ -144,5 +151,5 @@ void main() {
         color += texture(material.emissionMap, aTexCoord).rgb;
     }
 
-    fragColor = vec4(color, 1.0);
+    fragColor = vec4(color, alpha);
 }

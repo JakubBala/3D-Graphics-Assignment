@@ -9,3 +9,6 @@ uniforms:
   material.ambient: [0.1, 0.1, 0.1]     # Moderate ambient so it's not pitch black
   material.specular: [0.1, 0.1, 0.1]    # Subtle specular (matte finish)
   material.shininess: 8.0               # Low shininess = diffuse surface
+
+textures:
+  albedo: "assets/textures/alpha_test.png"

@@ -34,6 +34,8 @@ public class EngineGLEventListener implements GLEventListener {
         gl.glDepthFunc(GL.GL_LESS);
         gl.glFrontFace(GL.GL_CCW);    // default is 'CCW'
         gl.glEnable(GL.GL_CULL_FACE); // default is 'not enabled'
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         gl.glCullFace(GL.GL_BACK);    // default is 'back', assuming CCW
 
         initialise(gl);

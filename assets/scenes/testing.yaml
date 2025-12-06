@@ -86,6 +86,16 @@ gameObjects:
             id: ref_script_001
             script: ReferencedScript
 
+  - name: Sphere
+    components:
+      - type: MeshRenderer
+        mesh: assets/models/Sphere.mesh
+        material: assets/materials/sphere.yaml
+      - type: Transform
+        position: [-4, 0, 0]
+        rotation: [0, 0, 0]
+        scale: [1, 4, 1]
+
   - name: Ground
     components:
       - type: MeshRenderer

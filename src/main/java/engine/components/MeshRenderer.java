@@ -29,5 +29,6 @@ public class MeshRenderer extends Component implements Renderable{
         material.setLightsUniform(gl, lights);
         material.apply(gl);
         mesh.render(gl);
+        material.restore(gl);
     }
 }

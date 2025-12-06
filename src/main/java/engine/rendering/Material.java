@@ -20,10 +20,19 @@ public class Material {
     private final Shader shader;
     private final Map<String, Object> uniforms = new HashMap<>();
     private final Map<String, Texture> textures = new HashMap<>();
+    private boolean doubleSided = false;
 
     public Material(GL3 gl, String vertexShaderPath, String fragmentShaderPath) {
         this.shader = new Shader(gl, vertexShaderPath, fragmentShaderPath);
     }
+
+    public void setDoubleSided(boolean doubleSided) {
+        this.doubleSided = doubleSided;
+    }
+
+    public boolean isDoubleSided() {
+        return doubleSided;
+    }   
 
     public Shader getShader() {
         return shader;
@@ -53,6 +62,11 @@ public class Material {
      * Applies all stored uniform values to the currently bound shader.
      */
     public void apply(GL3 gl) {
+
+        // Disable culling if doublesided
+        if (doubleSided) {
+            gl.glDisable(GL3.GL_CULL_FACE);
+        }
 
         // set scalar/vector uniforms
         for (Map.Entry<String, Object> entry : uniforms.entrySet()) {
@@ -143,5 +157,12 @@ public class Material {
 
     public void useShader(GL3 gl){
         shader.use(gl);
+    }
+
+    // Call this after rendering to restore culling
+    public void restore(GL3 gl) {
+        if (doubleSided) {
+            gl.glEnable(GL3.GL_CULL_FACE);
+        }
     }
 }
