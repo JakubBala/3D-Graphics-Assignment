@@ -90,6 +90,17 @@ public class Material {
             }
         }
 
+        // Read tiling uniform (if present) so we can decide texture wrap.
+        float tileU = 1.0f, tileV = 1.0f;
+        Object tilingObj = uniforms.get("material.tiling");
+        if (tilingObj instanceof List<?>) {
+            List<?> l = (List<?>) tilingObj;
+            if (l.size() >= 2) {
+                tileU = toFloat(l.get(0));
+                tileV = toFloat(l.get(1));
+            }
+        }
+
         // bind textures to units
         int unit = 0;
         for (var entry : textures.entrySet()) {
@@ -98,6 +109,17 @@ public class Material {
             gl.glActiveTexture(GL3.GL_TEXTURE0 + unit);
             tex.bind(gl);
             shader.setInt(gl, entry.getKey(), unit); // e.g. "material.diffuseMap" = 0
+
+            // set wrap mode according to tiling
+            if (tileU != 1.0f || tileV != 1.0f) {
+                gl.glTexParameteri(GL3.GL_TEXTURE_2D, GL3.GL_TEXTURE_WRAP_S, GL3.GL_REPEAT);
+                gl.glTexParameteri(GL3.GL_TEXTURE_2D, GL3.GL_TEXTURE_WRAP_T, GL3.GL_REPEAT);
+            } else {
+                shader.setFloat(gl, "material.tiling", 1.0f, 1.0f);
+                gl.glTexParameteri(GL3.GL_TEXTURE_2D, GL3.GL_TEXTURE_WRAP_S, GL3.GL_CLAMP_TO_EDGE);
+                gl.glTexParameteri(GL3.GL_TEXTURE_2D, GL3.GL_TEXTURE_WRAP_T, GL3.GL_CLAMP_TO_EDGE);
+            }
+
             unit++;
         }
     }

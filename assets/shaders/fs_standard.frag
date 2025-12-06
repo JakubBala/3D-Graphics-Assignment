@@ -46,6 +46,8 @@ struct Material {
   int hasAlbedoMap;
   int hasSpecularMap;
   int hasEmissionMap;
+
+  vec2 tiling;
 };
 
 uniform Material material;
@@ -111,13 +113,15 @@ void main() {
 
     float alpha = 1.0;
 
+    vec2 uv = aTexCoord * material.tiling;
+
     // --- BASE MATERIAL VALUES ---
     vec3 ambientBase  = material.ambient;
     vec3 diffuseBase  = material.diffuse;
     vec3 specularBase = material.specular;
 
     if (material.hasAlbedoMap == 1) {
-        vec4 tex = texture(material.albedoMap, aTexCoord);
+        vec4 tex = texture(material.albedoMap, uv);
         ambientBase *= tex.rgb;
         diffuseBase *= tex.rgb;
         alpha = tex.a;
@@ -128,7 +132,7 @@ void main() {
     }
 
     if (material.hasSpecularMap == 1) {
-        specularBase *= texture(material.specularMap, aTexCoord).rgb;
+        specularBase *= texture(material.specularMap, uv).rgb;
     }
 
     // --- LIGHT ACCUMULATION ---
@@ -148,7 +152,7 @@ void main() {
 
     // --- EMISSION DOES NOT RECEIVE LIGHT ---
     if (material.hasEmissionMap == 1) {
-        color += texture(material.emissionMap, aTexCoord).rgb;
+        color += texture(material.emissionMap, uv).rgb;
     }
 
     fragColor = vec4(color, alpha);
