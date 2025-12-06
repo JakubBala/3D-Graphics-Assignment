@@ -7,7 +7,9 @@ import com.jogamp.opengl.GL3;
 import engine.components.Behaviour;
 import engine.components.Camera;
 import engine.components.Light;
+import engine.components.Transform;
 import engine.components.core.Component;
+import engine.debug.DebugAxes;
 import engine.gmaths.*;
 
 // TODO: Must have a MainCamera that is available to all GameObjects
@@ -17,6 +19,8 @@ public class Scene {
     private List<GameObject> gameObjects = new ArrayList<>();
     private Skybox skybox;
     private Camera mainCamera;
+
+    private DebugAxes debugAxesRenderer;
 
     public Scene(String name){
         this.name = name;
@@ -48,20 +52,28 @@ public class Scene {
         return skybox;
     }
 
+    public void initDebugRenderers(GL3 gl) {
+        this.debugAxesRenderer = new DebugAxes(gl, 0.2f);
+    }
+
     public void render(GL3 gl) {
-        // 1. Render skybox FIRST (if it exists)
+        // 1. Render skybox first (if it exists)
         if (skybox != null) {
             skybox.render(gl, mainCamera.getViewMatrix(), mainCamera.getPerspectiveMatrix());
         }
 
         Mat4 viewMatrix = mainCamera.getViewMatrix();
-        Mat4 projectionMatrix = mainCamera.getPerspectiveMatrix();
+        Mat4 perspectiveMatrix = mainCamera.getPerspectiveMatrix();
         Vec3 camPos = mainCamera.getGameObject().getTransform().GetWorldPosition();
 
         // 2. Render all GameObjects
         for (GameObject gameObject : gameObjects){
-            gameObject.render(gl, viewMatrix, projectionMatrix, camPos, getActiveLights());
+            gameObject.render(gl, viewMatrix, perspectiveMatrix, camPos, getActiveLights());
         }
+
+        // 3. Render debug axes for Transforms that have it enabled
+        Vec3 cameraPos = mainCamera.getGameObject().getTransform().GetWorldPosition();
+        renderDebugAxes(gl, viewMatrix, perspectiveMatrix, cameraPos);
     }
 
     public List<Light> getActiveLights(){
@@ -187,6 +199,24 @@ public class Scene {
         }
         for (GameObject child : go.getChildren()) {
             resolveReferencesRecursive(child);
+        }
+    }
+
+    private void renderDebugAxes(GL3 gl, Mat4 view, Mat4 perspective, Vec3 cameraPos) {
+        for (GameObject go : gameObjects) {
+            renderDebugAxesRecursive(gl, go, view, perspective, cameraPos);
+        }
+    }
+    
+    private void renderDebugAxesRecursive(GL3 gl, GameObject go, Mat4 view, Mat4 perspective, Vec3 cameraPos) {
+        Transform transform = go.getTransform();
+        if (transform.isDebugAxesEnabled()) {
+            debugAxesRenderer.render(gl, transform.getWorldMatrix(), view, perspective, cameraPos, true);
+        }
+        
+        // Recurse to children
+        for (GameObject child : go.getChildren()) {
+            renderDebugAxesRecursive(gl, child, view, perspective, cameraPos);
         }
     }
 }

@@ -14,6 +14,7 @@ public class TransformSpec extends ComponentSpec {
     public float[] position;  // [x, y, z]
     public float[] rotation;  // [x, y, z]
     public float[] scale;     // [x, y, z]
+    public boolean debugAxes;
 
     @Override
     public Component createComponent(GameObject gameObject, GL3 gl) {
@@ -30,6 +31,10 @@ public class TransformSpec extends ComponentSpec {
         
         if (scale != null && scale.length == 3) {
             transform.SetLocalScale(scale[0], scale[1], scale[2]);
+        }
+
+        if(debugAxes) {
+            transform.enableDebugAxes();
         }
         
         System.out.println("[TransformSpec]: Configured transform");

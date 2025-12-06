@@ -71,6 +71,7 @@ public class EngineGLEventListener implements GLEventListener {
         // TODO: Call OnStart
         activeScene = SceneLoader.Load("assets/scenes/testing.yaml", gl);
         activeScene.findAndSetMainCamera();
+        activeScene.initDebugRenderers(gl);
         activeScene.Start();
         debugGrid = new DebugGrid(gl);
     }

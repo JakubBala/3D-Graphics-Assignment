@@ -1,5 +1,7 @@
 package engine.components;
 
+import com.jogamp.opengl.GL3;
+
 import engine.components.core.Component;
 import engine.gmaths.Mat4;
 import engine.gmaths.Mat4Transform;
@@ -11,6 +13,7 @@ public class Transform extends Component{
     private Vec3 local_position = new Vec3(0, 0, 0);
     private Vec3 local_rotation = new Vec3(0, 0, 0); // Euler angles
     private Vec3 local_scale = new Vec3(1, 1, 1);
+    private boolean debugAxesEnabled = false;
 
     // WORLD space (cached, recalculated when dirty)
     private Mat4 worldMatrix;
@@ -85,6 +88,16 @@ public class Transform extends Component{
         local_scale.y = y;
         local_scale.z = z;
         markDirty();
+    }
+
+    public void enableDebugAxes() {
+        if (!debugAxesEnabled) {
+            debugAxesEnabled = true;
+        }
+    }
+
+    public boolean isDebugAxesEnabled() {
+        return debugAxesEnabled;
     }
 
     public Vec3 GetPosition(){

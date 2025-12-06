@@ -1,8 +1,5 @@
 package engine.loaders;
 
-import java.util.Map;
-import java.util.List;
-
 import com.jogamp.opengl.GL3;
 
 import engine.scene.GameObject;
