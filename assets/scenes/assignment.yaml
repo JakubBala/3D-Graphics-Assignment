@@ -123,6 +123,41 @@ gameObjects:
           scale: [1,0.9,1]
           debugAxes: true
         children:
+        - name: RightWing_Pivot
+          components:
+          - type: Transform
+            position: [0.3,0,0.45]
+            rotation: [0,0,-30]
+            scale: [1,1,1]
+            debugAxes: true
+          children:
+            - name: RightWing
+              components:
+              - type: MeshRenderer
+                mesh: assets/models/Sphere.mesh
+                material: assets/materials/bee/wing.yaml
+              - type: Transform
+                position: [0.5,0,0]
+                rotation: [0,0,0]
+                scale: [1.4,0.7,0.1]
+        - name: LeftWing_Pivot
+          components:
+          - type: Transform
+            position: [-0.3,0,0.45]
+            rotation: [0,0,210]
+            scale: [1,1,1]
+            debugAxes: true
+          children:
+            - name: LeftWing
+              components:
+              - type: MeshRenderer
+                mesh: assets/models/Sphere.mesh
+                material: assets/materials/bee/wing.yaml
+              - type: Transform
+                position: [0.5,0,0]
+                rotation: [0,0,0]
+                scale: [1.4,0.7,0.1]
+
         - name: BeeButt_Pivot
           components:
           - type: Transform
@@ -156,7 +191,7 @@ gameObjects:
               position: [0,0.1,0]
               rotation: [0,0,0]
               scale: [0.75,0.75,0.75]
-              debugAxes: true
+              debugAxes: false
             children:
             - name: LeftEye
               components:
@@ -179,38 +214,102 @@ gameObjects:
             - name: LeftAntenna_Pivot
               components:
                 - type: Transform
-                  position: [-0.15,-0.1,0.2]
-                  rotation: [0,0,0]
+                  position: [-0.15,-0.1,0.4]
+                  rotation: [0,20,0]
                   scale: [1,1,1] 
-                  debugAxes: true
+                  debugAxes: false
               children:
               - name: LeftAntenna
                 components:
                 - type: MeshRenderer
-                  mesh: assets/models/Cylinder5.mesh
+                  mesh: assets/models/Cylinder10.mesh
                   material: assets/materials/bee/bee_black_2.yaml
                 - type: Transform
-                  position: [0,0,0.5]
+                  position: [0,0,0.25]
                   rotation: [90,0,0]
-                  scale: [0.1,0.1,0.1]
+                  scale: [0.05,0.05,0.05]
                 children:
                 - name: LeftAntenna2_Pivot
                   components: 
+                  - type: MeshRenderer
+                    mesh: assets/models/Sphere.mesh
+                    material: assets/materials/bee/bee_black_2.yaml
                   - type: Transform
-                    position: [0,2.5,0]
-                    rotation: [0,0,0]
+                    position: [0,5,0]
+                    rotation: [-45,0,30]
                     scale: [1,1,1]
-                    debugAxes: true
-                  # children: 
-                  #   - name: LeftAntenna2
-                  #     components:
-                  #     - type: MeshRenderer
-                  #       mesh: assets/models/Sphere.mesh
-                  #       material: assets/materials/bee/bee_black_2.yaml
-                  #     - type: Transform
-                  #       position: [0,0,0.5]
-                  #       rotation: [0,0,0]
-                  #       scale: [1.0,1.0,1.0]
+                    debugAxes: false
+                  children: 
+                    - name: LeftAntenna
+                      components:
+                      - type: MeshRenderer
+                        mesh: assets/models/Cylinder5.mesh
+                        material: assets/materials/bee/bee_black_2.yaml
+                      - type: Transform
+                        position: [0,2.5,0]
+                        rotation: [0,0,0]
+                        scale: [1.0,1.0,1.0]
+                      children:
+                        - name: LeftAntennaEnd
+                          components:
+                          - type: MeshRenderer
+                            mesh: assets/models/Sphere.mesh
+                            material: assets/materials/bee/bee_black_2.yaml
+                          - type: Transform
+                            position: [0,2.5,0]
+                            rotation: [0,0,0]
+                            scale: [1.0,1.0,1.0] 
+                            debugAxes: false
+            - name: RightAntenna_Pivot
+              components:
+                - type: Transform
+                  position: [0.15,-0.1,0.4]
+                  rotation: [0,-20,0]
+                  scale: [1,1,1] 
+                  debugAxes: false
+              children:
+              - name: RightAntenna
+                components:
+                - type: MeshRenderer
+                  mesh: assets/models/Cylinder10.mesh
+                  material: assets/materials/bee/bee_black_2.yaml
+                - type: Transform
+                  position: [0,0,0.25]
+                  rotation: [90,0,0]
+                  scale: [0.05,0.05,0.05]
+                children:
+                - name: RightAntenna2_Pivot
+                  components: 
+                  - type: MeshRenderer
+                    mesh: assets/models/Sphere.mesh
+                    material: assets/materials/bee/bee_black_2.yaml
+                  - type: Transform
+                    position: [0,5,0]
+                    rotation: [-45,0,-30]
+                    scale: [1,1,1]
+                    debugAxes: false
+                  children: 
+                    - name: RightAntenna
+                      components:
+                      - type: MeshRenderer
+                        mesh: assets/models/Cylinder5.mesh
+                        material: assets/materials/bee/bee_black_2.yaml
+                      - type: Transform
+                        position: [0,2.5,0]
+                        rotation: [0,0,0]
+                        scale: [1.0,1.0,1.0]
+                      children:
+                        - name: RightAntennaEnd
+                          components:
+                          - type: MeshRenderer
+                            mesh: assets/models/Sphere.mesh
+                            material: assets/materials/bee/bee_black_2.yaml
+                          - type: Transform
+                            position: [0,2.5,0]
+                            rotation: [0,0,0]
+                            scale: [1.0,1.0,1.0] 
+                            debugAxes: false          
+
 
 
                 

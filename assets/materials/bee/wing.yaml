@@ -1,0 +1,13 @@
+# beewing.yaml
+
+name: "Bee Wing Mat"
+id: "beewingmat"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.8, 0.8, 0.8]       
+  material.ambient: [0.3, 0.3, 0.3]       
+  material.specular: [0.3, 0.3, 0.3]   
+  material.shininess: 32.0               
