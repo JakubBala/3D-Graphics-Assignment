@@ -1,0 +1,16 @@
+name: "CloudLayer"
+id: "cloud_001"
+
+vertex: "assets/shaders/vs_cloud.vert"
+fragment: "assets/shaders/fs_cloud.frag"
+
+uniforms:
+  material.tint: [1.0, 1.0, 1.0]
+  material.opacity: 0.3                            
+  tiling: [4.0, 4.0]
+
+textures:
+  albedo: "assets/textures/CloudTile_1.png"
+
+transparent: true
+doubleSided: true

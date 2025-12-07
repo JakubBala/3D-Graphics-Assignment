@@ -102,6 +102,16 @@ gameObjects:
         mesh: assets/models/Plane.mesh
         material: assets/materials/ground.yaml
       - type: Transform
-        position: [0, -3, 0]
+        position: [0, -5, 0]
+        rotation: [0, 0, 0]
+        scale: [20, 1, 20]
+
+  - name: Clouds
+    components:
+      - type: MeshRenderer
+        mesh: assets/models/Plane.mesh
+        material: assets/materials/clouds.yaml
+      - type: Transform
+        position: [0, 15, 0]
         rotation: [0, 0, 0]
         scale: [20, 1, 20]

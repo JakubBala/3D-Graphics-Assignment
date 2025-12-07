@@ -11,4 +11,5 @@ public class MaterialSpec {
   public String name;
   public String id;
   public Boolean doubleSided;
+  public Boolean transparent;
 }

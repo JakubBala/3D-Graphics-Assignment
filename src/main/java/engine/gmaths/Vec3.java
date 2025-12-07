@@ -102,6 +102,13 @@ public final class Vec3 {
   public static Vec3 crossProduct(Vec3 a, Vec3 b) {
     return new Vec3(a.y*b.z-a.z*b.y, a.z*b.x-a.x*b.z, a.x*b.y-a.y*b.x);
   }
+
+  public float distance(Vec3 other) {
+    float dx = this.x - other.x;
+    float dy = this.y - other.y;
+    float dz = this.z - other.z;
+    return (float)Math.sqrt(dx*dx + dy*dy + dz*dz);
+  }
  
   public String toString() {
     return "("+x+","+y+","+z+")";

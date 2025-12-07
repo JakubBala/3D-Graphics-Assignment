@@ -20,6 +20,10 @@ public class MeshRenderer extends Component implements Renderable{
         this.material = material;
     }
 
+    public Material getMaterial() {
+        return material;
+    }
+
     @Override
     public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, List<Light> lights
     ) {

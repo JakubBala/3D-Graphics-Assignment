@@ -7,6 +7,7 @@ import com.jogamp.opengl.GL3;
 import engine.components.Behaviour;
 import engine.components.Camera;
 import engine.components.Light;
+import engine.components.MeshRenderer;
 import engine.components.Transform;
 import engine.components.core.Component;
 import engine.debug.BezierVisualizer;
@@ -70,8 +71,34 @@ public class Scene {
         Vec3 camPos = mainCamera.getGameObject().getTransform().GetWorldPosition();
 
         // 2. Render all GameObjects
-        for (GameObject gameObject : gameObjects){
-            gameObject.render(gl, viewMatrix, perspectiveMatrix, camPos, getActiveLights());
+        List<GameObject> opaque = new ArrayList<>();
+        List<GameObject> transparent = new ArrayList<>();
+
+        for (GameObject obj : gameObjects) {
+            MeshRenderer mr = obj.getComponent(MeshRenderer.class);
+            if (mr == null) continue;
+
+            if (mr.getMaterial().isTransparent())
+                transparent.add(obj);
+            else
+                opaque.add(obj);
+        }
+
+        // --- PASS 1: OPAQUE OBJECTS ---
+        for (GameObject obj : opaque) {
+            obj.render(gl, viewMatrix, perspectiveMatrix, camPos, getActiveLights());
+        }
+
+        // --- PASS 2: TRANSPARENT OBJECTS (sorted back->front) ---
+        transparent.sort((a, b) -> {
+            float da = a.getTransform().GetWorldPosition().distance(camPos);
+            float db = b.getTransform().GetWorldPosition().distance(camPos);
+            return Float.compare(db, da);
+        });
+
+        for (GameObject obj : transparent) {
+            System.err.println("Rendering transparent object: " + obj.getName());
+            obj.render(gl, viewMatrix, perspectiveMatrix, camPos, getActiveLights());
         }
 
         // 3. Render debug axes for Transforms that have it enabled

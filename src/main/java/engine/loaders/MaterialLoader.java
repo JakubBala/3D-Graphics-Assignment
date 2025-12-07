@@ -85,7 +85,7 @@ public class MaterialLoader {
                     }
                 }
             } else {
-                // No textures block in YAML — ensure all flags exist
+                // No textures block in YAML - ensure all flags exist
                 for (String type : textureTypes) {
                     material.setUniform("material.has" + capitalize(type) + "Map", 0);
                 }
@@ -94,6 +94,11 @@ public class MaterialLoader {
              // --- DOUBLE SIDED ---
             if (spec.doubleSided != null) {
                 material.setDoubleSided(spec.doubleSided);
+            }
+
+            // --- TRANSPARENCY ---
+            if (spec.transparent != null) {
+                material.setTransparent(spec.transparent);
             }
 
             return material;

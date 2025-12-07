@@ -21,6 +21,7 @@ public class Material {
     private final Map<String, Object> uniforms = new HashMap<>();
     private final Map<String, Texture> textures = new HashMap<>();
     private boolean doubleSided = false;
+    private boolean transparent = false;
 
     public Material(GL3 gl, String vertexShaderPath, String fragmentShaderPath) {
         this.shader = new Shader(gl, vertexShaderPath, fragmentShaderPath);
@@ -33,6 +34,14 @@ public class Material {
     public boolean isDoubleSided() {
         return doubleSided;
     }   
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }
+    
+    public boolean isTransparent() {
+        return transparent;
+    }
 
     public Shader getShader() {
         return shader;
@@ -68,6 +77,13 @@ public class Material {
             gl.glDisable(GL3.GL_CULL_FACE);
         }
 
+        // Disable depth writes if transparent
+        if (transparent) {
+            gl.glEnable(GL3.GL_BLEND);
+            gl.glBlendFunc(GL3.GL_SRC_ALPHA, GL3.GL_ONE_MINUS_SRC_ALPHA);
+            gl.glDepthMask(false); 
+        }
+
         // set scalar/vector uniforms
         for (Map.Entry<String, Object> entry : uniforms.entrySet()) {
             String name = entry.getKey();
@@ -92,7 +108,7 @@ public class Material {
 
         // Read tiling uniform (if present) so we can decide texture wrap.
         float tileU = 1.0f, tileV = 1.0f;
-        Object tilingObj = uniforms.get("material.tiling");
+        Object tilingObj = uniforms.get("tiling");
         if (tilingObj instanceof List<?>) {
             List<?> l = (List<?>) tilingObj;
             if (l.size() >= 2) {
@@ -185,6 +201,10 @@ public class Material {
     public void restore(GL3 gl) {
         if (doubleSided) {
             gl.glEnable(GL3.GL_CULL_FACE);
+        }
+        if (transparent) {
+            gl.glDisable(GL3.GL_BLEND);
+            gl.glDepthMask(true);
         }
     }
 }

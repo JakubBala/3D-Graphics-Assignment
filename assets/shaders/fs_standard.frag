@@ -125,10 +125,10 @@ void main() {
         ambientBase *= tex.rgb;
         diffuseBase *= tex.rgb;
         alpha = tex.a;
-    }
 
-    if(alpha < 0.1) {
-        discard;
+        if(alpha < 0.01) {
+            discard;
+        }
     }
 
     if (material.hasSpecularMap == 1) {
