@@ -2,6 +2,7 @@ package engine.debug;
 
 import com.jogamp.opengl.GL3;
 import engine.gmaths.Mat4;
+import engine.gmaths.Mat4Transform;
 import engine.gmaths.Vec3;
 import engine.rendering.Shader;
 import java.nio.FloatBuffer;
@@ -105,14 +106,19 @@ public class DebugAxes {
         // adjust multiplier to change screen size
         float distanceScale = distance * screenSpaceSize * 0.1f;
         
-        // Scale axes
-        Mat4 scale = Mat4.identity();
-        scale.set(0, 0, distanceScale);
-        scale.set(1, 1, distanceScale);
-        scale.set(2, 2, distanceScale);
+        // Extract rotation and translation without scale
+        Mat4 rotation = Mat4.identity();
+        Vec3 translation = new Vec3();
+        Mat4.extractRotationTranslation(transformWorld, rotation, translation);
         
-        Mat4 model = Mat4.multiply(transformWorld, scale);
+        // Build clean model matrix without inherited scale
+        Mat4 translationMatrix = Mat4Transform.translate(translation);
+        Mat4 scaleMatrix = Mat4Transform.scale(distanceScale, distanceScale, distanceScale);
+        Mat4 model = Mat4.multiply(translationMatrix, Mat4.multiply(rotation, scaleMatrix));
+
+        // Calculate final MVP matrix
         Mat4 mvp = Mat4.multiply(projection, Mat4.multiply(view, model));
+        shader.setFloatArray(gl, "mvpMatrix", mvp.toFloatArrayForGLSL());
         
         shader.setFloatArray(gl, "mvpMatrix", mvp.toFloatArrayForGLSL());
         

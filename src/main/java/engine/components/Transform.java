@@ -55,13 +55,13 @@ public class Transform extends Component{
 
     private void updateWorldMatrix() {
         Mat4 localMatrix = getLocalMatrix();
-        
+    
         GameObject parent = getGameObject().getParent();
         if (parent == null) {
             // No parent, local = world
             worldMatrix = localMatrix;
         } else {
-            // World = Parent's World x Local
+            // World = Parent's World × Local
             Mat4 parentWorld = parent.getTransform().getWorldMatrix();
             worldMatrix = Mat4.multiply(parentWorld, localMatrix);
         }
@@ -218,6 +218,17 @@ public class Transform extends Component{
 
         // 6. Apply result
         SetLocalRotation(pitch, yaw, roll);
+    }
+
+    public Vec3 getWorldScale() {
+        if (isDirty) updateWorldMatrix();
+
+        // Extract scale from worldMatrix columns
+        float sx = new Vec3(worldMatrix.get(0,0), worldMatrix.get(1,0), worldMatrix.get(2,0)).magnitude();
+        float sy = new Vec3(worldMatrix.get(0,1), worldMatrix.get(1,1), worldMatrix.get(2,1)).magnitude();
+        float sz = new Vec3(worldMatrix.get(0,2), worldMatrix.get(1,2), worldMatrix.get(2,2)).magnitude();
+
+        return new Vec3(sx, sy, sz);
     }
 
 

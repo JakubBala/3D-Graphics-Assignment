@@ -179,38 +179,38 @@ gameObjects:
             - name: LeftAntenna_Pivot
               components:
                 - type: Transform
-                  position: [-0.25,-0.1,0.3]
-                  rotation: [0,70,0]
+                  position: [-0.15,-0.1,0.2]
+                  rotation: [0,0,0]
                   scale: [1,1,1] 
                   debugAxes: true
               children:
               - name: LeftAntenna
                 components:
                 - type: MeshRenderer
-                  mesh: assets/models/Sphere.mesh
+                  mesh: assets/models/Cylinder5.mesh
                   material: assets/materials/bee/bee_black_2.yaml
                 - type: Transform
-                  position: [0,0,0.25]
-                  rotation: [0,0,0]
-                  scale: [0.05,0.05,0.5]
+                  position: [0,0,0.5]
+                  rotation: [90,0,0]
+                  scale: [0.1,0.1,0.1]
                 children:
                 - name: LeftAntenna2_Pivot
                   components: 
                   - type: Transform
-                    position: [0,0,0.5]
-                    rotation: [0,45,0]
+                    position: [0,2.5,0]
+                    rotation: [0,0,0]
                     scale: [1,1,1]
                     debugAxes: true
-                  children: 
-                    - name: LeftAntenna2
-                      components:
-                      - type: MeshRenderer
-                        mesh: assets/models/Sphere.mesh
-                        material: assets/materials/bee/bee_black_2.yaml
-                      - type: Transform
-                        position: [0,0,0.5]
-                        rotation: [0,0,0]
-                        scale: [1.0,1.0,1.0]
+                  # children: 
+                  #   - name: LeftAntenna2
+                  #     components:
+                  #     - type: MeshRenderer
+                  #       mesh: assets/models/Sphere.mesh
+                  #       material: assets/materials/bee/bee_black_2.yaml
+                  #     - type: Transform
+                  #       position: [0,0,0.5]
+                  #       rotation: [0,0,0]
+                  #       scale: [1.0,1.0,1.0]
 
 
                 

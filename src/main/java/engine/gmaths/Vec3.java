@@ -50,10 +50,15 @@ public final class Vec3 {
   }
   
   public void normalize() {
-    float mag = magnitude();   // fails if mag = 0
-    x /= mag;
-    y /= mag;
-    z /= mag;
+    float mag = magnitude();
+    if (mag < 1e-8f) { // treat tiny as zero
+        x = y = z = 0f;
+        return;
+    }
+    float inv = 1.0f / mag;
+    x *= inv;
+    y *= inv;
+    z *= inv;
   }
   
   public static Vec3 normalize(Vec3 v) {

@@ -133,5 +133,31 @@ public class Mat4 {   // row column formulation
     return s;
   }
 
+  public static void extractRotationTranslation(Mat4 transform, Mat4 outRotation, Vec3 outTranslation) {
+    // --- Extract Translation (row-major) ---
+    outTranslation.x = transform.get(0, 3);
+    outTranslation.y = transform.get(1, 3);
+    outTranslation.z = transform.get(2, 3);
+
+    // --- Extract Rotation (row-major 3x3) ---
+    Vec3 row0 = new Vec3(transform.get(0, 0), transform.get(0, 1), transform.get(0, 2));
+    Vec3 row1 = new Vec3(transform.get(1, 0), transform.get(1, 1), transform.get(1, 2));
+    Vec3 row2 = new Vec3(transform.get(2, 0), transform.get(2, 1), transform.get(2, 2));
+
+    // Normalize rows to remove scale
+    row0.normalize();
+    row1.normalize();
+    row2.normalize();
+
+    // Put rows back into a 4x4 rotation matrix
+    outRotation.set(0, 0, row0.x); outRotation.set(0, 1, row0.y); outRotation.set(0, 2, row0.z); outRotation.set(0, 3, 0);
+    outRotation.set(1, 0, row1.x); outRotation.set(1, 1, row1.y); outRotation.set(1, 2, row1.z); outRotation.set(1, 3, 0);
+    outRotation.set(2, 0, row2.x); outRotation.set(2, 1, row2.y); outRotation.set(2, 2, row2.z); outRotation.set(2, 3, 0);
+
+    outRotation.set(3, 0, 0);
+    outRotation.set(3, 1, 0);
+    outRotation.set(3, 2, 0);
+    outRotation.set(3, 3, 1);
+  }
   
 } // end of Mat4 class

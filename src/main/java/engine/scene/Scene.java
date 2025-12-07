@@ -57,7 +57,7 @@ public class Scene {
     }
 
     public void initDebugRenderers(GL3 gl) {
-        this.debugAxesRenderer = new DebugAxes(gl, 0.5f);
+        this.debugAxesRenderer = new DebugAxes(gl, 0.25f);
     }
 
     public void render(GL3 gl) {
