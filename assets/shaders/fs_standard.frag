@@ -47,8 +47,8 @@ struct Material {
   int hasSpecularMap;
   int hasEmissionMap;
 
-  vec2 tiling;
 };
+uniform vec2 tiling;
 
 uniform Material material;
 
@@ -113,7 +113,7 @@ void main() {
 
     float alpha = 1.0;
 
-    vec2 uv = aTexCoord * material.tiling;
+    vec2 uv = aTexCoord * tiling;
 
     // --- BASE MATERIAL VALUES ---
     vec3 ambientBase  = material.ambient;

@@ -57,6 +57,17 @@ gameObjects:
         rotation: [0, 0, 0]
         scale: [1.0, 1.0, 1.0]
 
+  # Ground Plane
+  - name: GroundPlane
+    components:
+      - type: MeshRenderer
+        mesh: assets/models/Plane.mesh
+        material: assets/materials/grassground.yaml
+      - type: Transform
+        position: [0, -1, 0]
+        rotation: [0, 0, 0]
+        scale: [20, 1, 20]
+
   
   - name: RotatingCube
     components:
