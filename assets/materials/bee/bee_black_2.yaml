@@ -1,0 +1,13 @@
+# bee eye.yaml
+
+name: "Bee Eye Mat"
+id: "beeeyemat"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.05, 0.05, 0.05]       
+  material.ambient: [0.03, 0.03, 0.03]       
+  material.specular: [0.4, 0.4, 0.4]   
+  material.shininess: 32.0               
