@@ -1,5 +1,6 @@
 package engine.scripts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jogamp.opengl.GL3;
@@ -11,6 +12,7 @@ import engine.components.core.Renderable;
 import engine.debug.BezierVisualizer;
 import engine.gmaths.Mat4;
 import engine.gmaths.Vec3;
+import engine.math.ArcLengthTable;
 import engine.math.BezierCurve;
 import engine.math.BezierPath;
 
@@ -18,6 +20,9 @@ public class BeeController extends Behaviour implements Renderable{
 
     BezierVisualizer bezierVisualizer;
     BezierPath beePath;
+    List<ArcLengthTable> arcLengthTables = new ArrayList<>();
+    List<Float> pathLengths = new ArrayList<>();
+    float totalPathLength = 0;
 
     @Override
     public void Start(){
@@ -30,7 +35,44 @@ public class BeeController extends Behaviour implements Renderable{
 
     @Override
     public void Update(){
+        UpdateBeePosition();
     }
+
+    private void UpdateBeePosition(){
+        float time = (float) GameController.getElapsedTime();
+        float circuitTime = 20.0f; // seconds per full loop
+        float normalized = (time % circuitTime) / circuitTime;  // 0 -> 1
+
+        // Convert normalized time to distance along path
+        float distance = normalized * totalPathLength;
+
+        // Find correct curve index and distance along that curve
+        int curveIndex = 0;
+        float remaining = distance;
+
+        while (curveIndex < pathLengths.size() &&
+               remaining > pathLengths.get(curveIndex)) {
+            remaining -= pathLengths.get(curveIndex);
+            curveIndex++;
+        }
+
+        // Clamp for safety
+        curveIndex = Math.min(curveIndex, pathLengths.size() - 1);
+
+        // Use arc-length table to convert distance to u parameter
+        ArcLengthTable table = arcLengthTables.get(curveIndex);
+        float localU = table.distanceToU(remaining);
+
+        // Evaluate actual curve
+        BezierCurve curve = beePath.getCurve(curveIndex);
+        Vec3 bezierPos = curve.evaluate(localU);
+
+        // Set bee position
+        getGameObject().getTransform().SetLocalPosition(
+            bezierPos.x, bezierPos.y, bezierPos.z
+        );
+    }
+
 
     private void BuildBezierPath(){
         beePath = new BezierPath();
@@ -91,6 +133,17 @@ public class BeeController extends Behaviour implements Renderable{
         );
         beePath.addCurve(curve8);
         beePath.setClosed(true);
+
+        // Build arclength tables for each curve
+        int tableSamples = 50;
+        for (BezierCurve c : beePath.getCurves()) {
+            ArcLengthTable table = c.buildArcLengthTable(tableSamples);
+            arcLengthTables.add(table);
+            
+            float L = table.getTotalLength();
+            pathLengths.add(L);
+            totalPathLength += L;
+        }
     }
 
     private void InitializeBezierVisualizer(){

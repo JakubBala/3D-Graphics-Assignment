@@ -212,5 +212,9 @@ public class BezierCurve{
         return new BezierCurve(newP0, newP1, newP2, newP3);
     }
 
-    
+    public ArcLengthTable buildArcLengthTable(int samples) {
+        return new ArcLengthTable(this, samples);
+    }
+
 }
+
