@@ -105,31 +105,31 @@ public class Scene {
         renderDebugAxes(gl, viewMatrix, perspectiveMatrix, cameraPos);
 
         // Create a path
-        BezierPath path = new BezierPath();
+        // BezierPath path = new BezierPath();
 
-        BezierCurve curve1 = new BezierCurve(
-            new Vec3(0, 0, 0),
-            new Vec3(2, 2, 0),
-            new Vec3(4, 2, 0),
-            new Vec3(6, 0, 0)
-        );
-        path.addCurve(curve1);
+        // BezierCurve curve1 = new BezierCurve(
+        //     new Vec3(0, 0, 0),
+        //     new Vec3(2, 2, 0),
+        //     new Vec3(4, 2, 0),
+        //     new Vec3(6, 0, 0)
+        // );
+        // path.addCurve(curve1);
 
-        BezierCurve curve2 = BezierCurve.createC1Continuation(
-            curve1,
-            new Vec3(10, -2, 0),
-            new Vec3(12, 0, 0)
-        );
-        path.addCurve(curve2);
+        // BezierCurve curve2 = BezierCurve.createC1Continuation(
+        //     curve1,
+        //     new Vec3(10, -2, 0),
+        //     new Vec3(12, 0, 0)
+        // );
+        // path.addCurve(curve2);
 
-        // Visualize
-        BezierVisualizer visualizer = new BezierVisualizer(gl);
-        visualizer.setLineColor(1.0f, 0.5f, 0.0f); // Orange line
-        visualizer.setSamplesPerCurve(50); // Smoothness
-        visualizer.updatePath(gl, path);
+        // // Visualize
+        // BezierVisualizer visualizer = new BezierVisualizer(gl);
+        // visualizer.setLineColor(1.0f, 0.5f, 0.0f); // Orange line
+        // visualizer.setSamplesPerCurve(50); // Smoothness
+        // visualizer.updatePath(gl, path);
 
-        // In render loop
-        visualizer.render(gl, viewMatrix, perspectiveMatrix);
+        // // In render loop
+        // visualizer.render(gl, viewMatrix, perspectiveMatrix);
     }
 
     public List<Light> getActiveLights(){

@@ -8,6 +8,10 @@ uniforms:
   material.tint: [1.0, 1.0, 1.0]
   material.opacity: 0.3                            
   tiling: [6.0, 6.0]
+  nightTint: [0.2, 0.2, 0.4]    # Darker blueish clouds
+  dawnTint: [1.0, 0.3, 0.3]     # red dawn clouds
+  dayTint: [0.9, 0.9, 1.0]      # Neutral white 
+  duskTint: [0.4, 0.3, 0.7]     # blue-purple dusk clouds
 
 textures:
   albedo: "assets/textures/CloudTile_2.png"

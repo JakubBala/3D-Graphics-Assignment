@@ -92,7 +92,9 @@ public class Material {
             if(value instanceof Integer){
                 shader.setInt(gl, name, ((Integer) value).intValue());
             } else if (value instanceof Number) {
-                shader.setFloat(gl, name, ((Number) value).floatValue());
+                shader.setFloat(gl, name, ((Number) value).floatValue());                
+            }else if (value instanceof Vec2) {
+                shader.setFloat(gl, name, ((Vec2) value).x, ((Vec2) value).y);
             } else if (value instanceof Vec3) {
                 shader.setVec3(gl, name, (Vec3) value);
             } else if (value instanceof List<?>) {
