@@ -11,8 +11,8 @@ gameObjects:
         # nearPlane: 0.1
         # farPlane: 100.0
       - type: Transform
-        position: [10, 5, 10]
-        rotation: [-18, -45, 0]
+        position: [0, 5, -10]
+        rotation: [-18, 180, 0]
         scale: [1, 1, 1]
 
   # Main Directional light
@@ -29,7 +29,7 @@ gameObjects:
         material: assets/materials/unlit_light.yaml
       - type: Transform
         position: [0, 8, 10]
-        rotation: [-45, 0, 0]
+        rotation: [-45, 180, 0]
         scale: [0.3, 0.3, 0.6]
 
   # Clouds Plane
@@ -64,18 +64,42 @@ gameObjects:
         mesh: assets/models/Plane.mesh
         material: assets/materials/grassground.yaml
       - type: Transform
-        position: [0, -1, 0]
+        position: [0, -0.1, 0]
         rotation: [0, 0, 0]
         scale: [20, 1, 20]
 
-  
-  - name: RotatingCube
+  # Menhirs
+  - name: Menhirs
     components:
-      - type: MeshRenderer
-        mesh: assets/models/Cube.mesh
-        material: assets/materials/box.yaml
       - type: Transform
         position: [0, 0, 0]
         rotation: [0, 0, 0]
-        scale: [2, 2, 2]
-        debugAxes: true
+        scale: [1, 1, 1]
+    children:
+      - name: Stone
+        components:
+          - type: MeshRenderer
+            mesh: assets/models/Sphere.mesh
+            material: assets/materials/menhir_stone.yaml
+          - type: Transform
+            position: [0, 0.5, 0]
+            rotation: [0, 0, 0]
+            scale: [1, 2, 0.7]
+      - name: Wood
+        components:
+          - type: MeshRenderer
+            mesh: assets/models/Sphere.mesh
+            material: assets/materials/menhir_wood.yaml
+          - type: Transform
+            position: [2, 0.5, 2]
+            rotation: [0, 0, 0]
+            scale: [1, 2, 0.7]
+      - name: Metal
+        components:
+          - type: MeshRenderer
+            mesh: assets/models/Sphere.mesh
+            material: assets/materials/menhir_metal.yaml
+          - type: Transform
+            position: [3, 0.5, -2]
+            rotation: [0, 0, 0]
+            scale: [1, 2, 0.7]

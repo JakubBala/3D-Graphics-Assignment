@@ -76,7 +76,12 @@ public class Scene {
 
         for (GameObject obj : gameObjects) {
             MeshRenderer mr = obj.getComponent(MeshRenderer.class);
-            if (mr == null) continue;
+            if (mr == null){
+                // we will still need to render empties
+                // because of their children
+                opaque.add(obj);
+                continue;
+            } 
 
             if (mr.getMaterial().isTransparent())
                 transparent.add(obj);

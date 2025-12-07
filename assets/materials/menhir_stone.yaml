@@ -1,0 +1,19 @@
+# menhir_stone.yaml
+
+name: "Stone Menhir Mat"
+id: "menhir_stone_001"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.5, 0.5, 0.5]       # Neutral gray for stone base
+  material.ambient: [0.1, 0.1, 0.1]       # Low ambient to keep it subtle
+  material.specular: [0.4, 0.4, 0.4]      # Low specular for rough surface
+  material.shininess: 16.0                  # Low shininess for a dull finish       
+  emissionStrength: 0.5
+
+textures:
+  albedo: "assets/textures/desert_stone_color.png"
+  specular: "assets/textures/desert_stone_specular.png"
+  emission: "assets/textures/menhir_faces/stone/0.png"

@@ -1,0 +1,19 @@
+# menhir_wood.yaml
+
+name: "wood Menhir Mat"
+id: "menhir_wood_001"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.5, 0.5, 0.5]       
+  material.ambient: [0.1, 0.1, 0.1]       
+  material.specular: [0.4, 0.35, 0.3]     # Slightly warm specular for subtle shine
+  material.shininess: 32.0                # Moderate shininess for smooth wood surface  
+  emissionStrength: 0.5 
+
+textures:
+  albedo: "assets/textures/wood_color.png"
+  specular: "assets/textures/wood_specular.png"
+  emission: "assets/textures/menhir_faces/wood/0.png"

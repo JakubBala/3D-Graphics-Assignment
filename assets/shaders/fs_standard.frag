@@ -46,9 +46,9 @@ struct Material {
   int hasAlbedoMap;
   int hasSpecularMap;
   int hasEmissionMap;
-
 };
 uniform vec2 tiling;
+uniform float emissionStrength = 1.0;
 
 uniform Material material;
 
@@ -152,7 +152,7 @@ void main() {
 
     // --- EMISSION DOES NOT RECEIVE LIGHT ---
     if (material.hasEmissionMap == 1) {
-        color += texture(material.emissionMap, uv).rgb;
+        color += texture(material.emissionMap, uv).rgb * emissionStrength;
     }
 
     fragColor = vec4(color, alpha);
