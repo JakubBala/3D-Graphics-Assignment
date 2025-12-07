@@ -97,7 +97,6 @@ public class Scene {
         });
 
         for (GameObject obj : transparent) {
-            System.err.println("Rendering transparent object: " + obj.getName());
             obj.render(gl, viewMatrix, perspectiveMatrix, camPos, getActiveLights());
         }
 
@@ -182,7 +181,7 @@ public class Scene {
         }
         if(mainCamera == null) return; // No main camera to control
         float aspect = width / height;
-        mainCamera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect, 0.1f, 300f));
+        mainCamera.setPerspectiveMatrix(Mat4Transform.perspective(45, aspect, 0.1f, 10000f));
 
     }
 
