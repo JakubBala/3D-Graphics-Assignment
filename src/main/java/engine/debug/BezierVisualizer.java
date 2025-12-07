@@ -124,7 +124,7 @@ public class BezierVisualizer {
     public void render(GL3 gl, Mat4 view, Mat4 projection) {
         if (vertexCount == 0) return;
         
-        gl.glDisable(GL3.GL_DEPTH_TEST);
+        //gl.glDisable(GL3.GL_DEPTH_TEST);
         gl.glLineWidth(2.0f);
         
         shader.use(gl);

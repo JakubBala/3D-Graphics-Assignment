@@ -26,6 +26,14 @@ public class Scene {
 
     private DebugAxes debugAxesRenderer;
 
+    private GL3 glContext;
+    public void passGLcontext(GL3 gl){
+        glContext = gl;
+    }
+    public GL3 getGLcontext(){
+        return glContext;
+    }
+
     public Scene(String name){
         this.name = name;
     }
@@ -108,33 +116,6 @@ public class Scene {
         // 3. Render debug axes for Transforms that have it enabled
         Vec3 cameraPos = mainCamera.getGameObject().getTransform().GetWorldPosition();
         renderDebugAxes(gl, viewMatrix, perspectiveMatrix, cameraPos);
-
-        // Create a path
-        // BezierPath path = new BezierPath();
-
-        // BezierCurve curve1 = new BezierCurve(
-        //     new Vec3(0, 0, 0),
-        //     new Vec3(2, 2, 0),
-        //     new Vec3(4, 2, 0),
-        //     new Vec3(6, 0, 0)
-        // );
-        // path.addCurve(curve1);
-
-        // BezierCurve curve2 = BezierCurve.createC1Continuation(
-        //     curve1,
-        //     new Vec3(10, -2, 0),
-        //     new Vec3(12, 0, 0)
-        // );
-        // path.addCurve(curve2);
-
-        // // Visualize
-        // BezierVisualizer visualizer = new BezierVisualizer(gl);
-        // visualizer.setLineColor(1.0f, 0.5f, 0.0f); // Orange line
-        // visualizer.setSamplesPerCurve(50); // Smoothness
-        // visualizer.updatePath(gl, path);
-
-        // // In render loop
-        // visualizer.render(gl, viewMatrix, perspectiveMatrix);
     }
 
     public List<Light> getActiveLights(){

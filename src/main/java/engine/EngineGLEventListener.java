@@ -73,6 +73,7 @@ public class EngineGLEventListener implements GLEventListener {
         // TODO: Call OnStart
         activeScene = SceneLoader.Load("assets/scenes/assignment.yaml", gl);
         activeScene.findAndSetMainCamera();
+        activeScene.passGLcontext(gl);
         activeScene.initDebugRenderers(gl);
         activeScene.Start();
         debugGrid = new DebugGrid(gl);
@@ -81,7 +82,7 @@ public class EngineGLEventListener implements GLEventListener {
     public void render(GL3 gl){
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
-        
+        activeScene.passGLcontext(gl);
         // float dayLightCycle = (float)((getSeconds() - startTime) / 20.0 % 1.0); // 60 seconds for full cycle
         // activeScene.GetSkybox().SetTimeOfDay(dayLightCycle);
 

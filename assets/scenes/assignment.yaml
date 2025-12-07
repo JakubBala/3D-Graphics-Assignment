@@ -107,6 +107,8 @@ gameObjects:
   # El Bombus
   - name: Bee
     components:
+      - type: Behaviour
+        script: BeeController
       - type: Transform
         position: [0, 3, 0]
         rotation: [0,-90,0]

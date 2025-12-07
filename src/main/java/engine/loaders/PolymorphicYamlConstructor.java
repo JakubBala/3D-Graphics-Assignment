@@ -17,9 +17,7 @@ import org.yaml.snakeyaml.nodes.ScalarNode;
  * based on a discriminator field ("type").
  * 
  * Use this for ANY spec hierarchy that needs type-based routing:
- * - ComponentSpec → TransformSpec, MeshRendererSpec, etc.
- * - AssetSpec → TextureSpec, ModelSpec, AudioSpec, etc.
- * - BehaviorSpec → AISpec, PhysicsSpec, AnimationSpec, etc.
+ * - ComponentSpec -> TransformSpec, MeshRendererSpec, etc.
  */
 public class PolymorphicYamlConstructor extends Constructor {
     private final Map<Class<?>, TypeRegistry<?>> registries = new HashMap<>();
@@ -33,7 +31,7 @@ public class PolymorphicYamlConstructor extends Constructor {
      * 
      * @param baseClass The base class (e.g., ComponentSpec.class)
      * @param discriminatorField The field used for routing (e.g., "type")
-     * @param registry Map of discriminator values → concrete classes
+     * @param registry Map of discriminator values -> concrete classes
      */
     public <T> void registerPolymorphicType(
             Class<T> baseClass,
