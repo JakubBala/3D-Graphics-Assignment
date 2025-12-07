@@ -8,6 +8,7 @@ import com.jogamp.opengl.GL3;
 import engine.components.Behaviour;
 import engine.components.Camera;
 import engine.components.Light;
+import engine.components.Transform;
 import engine.components.core.Renderable;
 import engine.debug.BezierVisualizer;
 import engine.gmaths.Mat4;
@@ -18,6 +19,12 @@ import engine.math.BezierPath;
 
 public class BeeController extends Behaviour implements Renderable{
 
+    // SERIALIZED
+    public Transform leftWingPivot;
+    public Transform rightWingPivot;
+    public Transform buttPivot;
+
+    // INTERNAL
     BezierVisualizer bezierVisualizer;
     BezierPath beePath;
     List<ArcLengthTable> arcLengthTables = new ArrayList<>();
@@ -35,10 +42,12 @@ public class BeeController extends Behaviour implements Renderable{
 
     @Override
     public void Update(){
-        UpdateBeePosition();
+        BeeFollowBezier();
+        BeeOscillateVertically();
+        BeeAnimationPassive();
     }
 
-    private void UpdateBeePosition(){
+    private void BeeFollowBezier(){
         float time = (float) GameController.getElapsedTime();
         float circuitTime = 20.0f; // seconds per full loop
         float normalized = (time % circuitTime) / circuitTime;  // 0 -> 1
@@ -71,6 +80,58 @@ public class BeeController extends Behaviour implements Renderable{
         getGameObject().getTransform().SetLocalPosition(
             bezierPos.x, bezierPos.y, bezierPos.z
         );
+
+        // Orient bee to face forward along the path
+        Vec3 tangent = curve.tangentNormalized(localU);
+        Vec3 lookTarget = Vec3.add(bezierPos, tangent);  // Point ahead along tangent
+        lookTarget.y = bezierPos.y;
+        
+        getGameObject().getTransform().LookAt(
+            lookTarget,        
+            new Vec3(0, 1, 0)// world up vector
+        );
+    }
+
+    // adds extra y oscilation
+    private void BeeOscillateVertically(){
+        float time = (float) GameController.getElapsedTime();
+        float bobSpeed   = 4f;
+        float bobAmount  = 0.3f;
+        float delta = (float)Math.sin(time * bobSpeed) * bobAmount;
+        // apply vertical translation
+        getGameObject().getTransform().Translate(new Vec3(0, delta, 0));
+    }
+
+    // Bee constantly animates this unconditionally.
+    private void BeeAnimationPassive(){
+        float time = (float) GameController.getElapsedTime();
+
+        // --- WINGS ---
+        float flapSpeed = 60f;
+        float amplitude = 30f; // degrees
+        float wave = (float)Math.sin(time * flapSpeed);
+        float leftY  = wave * amplitude;
+        float rightY = wave * amplitude;   // mirror
+        // LEFT WING
+        Vec3 leftRot = leftWingPivot.GetRotation();
+        leftWingPivot.SetLocalRotation(leftRot.x, leftY, leftRot.z);
+
+        // RIGHT WING
+        Vec3 rightRot = rightWingPivot.GetRotation();
+        rightWingPivot.SetLocalRotation(rightRot.x, rightY, rightRot.z);
+
+        // --- BUTT WAGGLE ---
+        float buttSpeed = 4f;
+        float buttMin = 15f;
+        float buttMax = 25f;
+        float buttBase = (buttMin + buttMax) * 0.5f;
+        float buttAmp = (buttMax - buttMin) * 0.5f;
+
+        float buttWave = (float)Math.sin(time * buttSpeed);
+        float buttX = buttBase + buttWave * buttAmp;
+
+        Vec3 bRot = buttPivot.GetRotation();
+        buttPivot.SetLocalRotation(buttX, bRot.y, bRot.z);
     }
 
 
