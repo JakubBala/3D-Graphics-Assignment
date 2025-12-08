@@ -147,7 +147,7 @@ public class BeeController extends Behaviour implements Renderable{
 
         BezierCurve curve2 = BezierCurve.createC1Continuation(
             curve1,
-            new Vec3(3f, 2f, 5f),
+            new Vec3(3f, 2f, 3f),
             new Vec3(0, 2f, 5f)
         );
         beePath.addCurve(curve2);

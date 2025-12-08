@@ -23,7 +23,7 @@ gameObjects:
         ambient: [0.9, 0.9, 0.9]
         diffuse: [0.9, 0.9, 0.9]
         specular: [0.9, 0.9, 0.9]
-        intensity: 1.0
+        intensity: 0.1
       - type: MeshRenderer
         mesh: assets/models/Cube.mesh
         material: assets/materials/unlit_light.yaml
@@ -68,6 +68,16 @@ gameObjects:
         rotation: [0, 0, 0]
         scale: [20, 1, 20]
 
+  # - name: Spotlight
+  #   components:
+  #     - type: spotlight
+
+  #     - type: Transform
+  #       position: [0, 8, 10]
+  #       rotation: [-45, 180, 0]
+  #       scale: [0.3, 0.3, 0.6]
+
+
   # Menhirs
   - name: Menhirs
     components:
@@ -76,39 +86,85 @@ gameObjects:
         rotation: [0, 0, 0]
         scale: [1, 1, 1]
     children:
-      - name: Stone
+      - name: Stone_Pivot
         components:
-          - type: MeshRenderer
-            mesh: assets/models/Sphere.mesh
-            material: assets/materials/menhir_stone.yaml
           - type: Transform
-            position: [0, 0.5, 0]
+            id: stone_pivot
+            position: [-3, 1, 2]
+            rotation: [0, 0, 0]
+            scale: [1, 1, 1]
+            debugAxes: true
+        children: 
+        - name: Stone
+          components:
+            - type: MeshRenderer
+              mesh: assets/models/Sphere.mesh
+              material: assets/materials/menhir_stone.yaml
+            - type: Behaviour
+              script: MenhirController
+              refs:
+                beeController: beeController
+                pivot: stone_pivot
+            - type: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+              debugAxes: true
+      - name: Wood_Pivot
+        components: 
+          - type: Transform
+            id: wood_pivot
+            position: [5, -1, 5]
+            rotation: [0, 0, 0]
+            scale: [2, 4, 0.7]
+            debugAxes: true
+        children:
+        - name: Wood
+          components:
+            - type: MeshRenderer
+              mesh: assets/models/Sphere.mesh
+              material: assets/materials/menhir_wood.yaml
+            - type: Behaviour
+              script: MenhirController
+              refs:
+                beeController: beeController
+                pivot: wood_pivot
+            - type: Transform
+              position: [0, 0.5, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+              debugAxes: true
+      - name: Metal_Pivot
+        components: 
+          - type: Transform
+            id: metal_pivot
+            position: [2, 0.5, -2]
             rotation: [0, 0, 0]
             scale: [1, 2, 0.7]
-      - name: Wood
-        components:
-          - type: MeshRenderer
-            mesh: assets/models/Sphere.mesh
-            material: assets/materials/menhir_wood.yaml
-          - type: Transform
-            position: [2, 0.5, 2]
-            rotation: [0, 0, 0]
-            scale: [1, 2, 0.7]
-      - name: Metal
-        components:
-          - type: MeshRenderer
-            mesh: assets/models/Sphere.mesh
-            material: assets/materials/menhir_metal.yaml
-          - type: Transform
-            position: [3, 0.5, -2]
-            rotation: [0, 0, 0]
-            scale: [1, 2, 0.7]
+            debugAxes: true
+        children:
+        - name: Metal
+          components:
+            - type: MeshRenderer
+              mesh: assets/models/Sphere.mesh
+              material: assets/materials/menhir_metal.yaml
+            - type: Behaviour
+              script: MenhirController
+              refs:
+                beeController: beeController
+                pivot: metal_pivot
+            - type: Transform
+              position: [0, 0.5, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+              debugAxes: true
 
   # El Bombus
   - name: Bee
     components:
       - type: Behaviour
         script: BeeController
+        id: beeController
         refs:
           leftWingPivot: leftWingPivotTransform
           rightWingPivot: rightWingPivotTransform

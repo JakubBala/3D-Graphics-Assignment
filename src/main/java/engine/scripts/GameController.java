@@ -7,6 +7,9 @@ public class GameController extends Behaviour {
     private static double startTime = 0f;
     private static float dayLightCycle = 0f;
 
+    private static double prevTime = 0f;
+    private static double deltaTime = 0f;
+
     @Override
     public void Start() {
         startTime = getSeconds();
@@ -16,6 +19,11 @@ public class GameController extends Behaviour {
 
     @Override
     public void Update() {
+        double time = getElapsedTime();
+        deltaTime = time - prevTime;
+        prevTime = time;
+
+
         updateDayLightCycle();
     }
 
@@ -35,5 +43,9 @@ public class GameController extends Behaviour {
 
     public static double getElapsedTime() {
         return getSeconds() - startTime;
+    }
+
+    public static float getDeltaTime(){
+        return (float)deltaTime;
     }
 }
