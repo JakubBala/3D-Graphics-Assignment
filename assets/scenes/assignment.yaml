@@ -118,6 +118,11 @@ gameObjects:
               refs:
                 beeController: beeController
                 pivot: stone_pivot
+              properties:
+                frameStrings: ["assets/textures/menhir_faces/stone/0.png",
+                 "assets/textures/menhir_faces/stone/1.png",
+                 "assets/textures/menhir_faces/stone/2.png",
+                 "assets/textures/menhir_faces/stone/3.png"]
             - type: Transform
               position: [0, 0, 0]
               rotation: [0, 0, 0]
@@ -127,7 +132,7 @@ gameObjects:
         components: 
           - type: Transform
             id: wood_pivot
-            position: [5, -1, 5]
+            position: [4, -1, 5]
             rotation: [0, 0, 0]
             scale: [2, 4, 0.7]
             debugAxes: true
@@ -172,10 +177,10 @@ gameObjects:
                 beeController: beeController
                 pivot: metal_pivot
               properties:
-                frameStrings: ["assets/textures/menhir_faces/wood/0.png",
-                 "assets/textures/menhir_faces/wood/1.png",
-                 "assets/textures/menhir_faces/wood/2.png",
-                 "assets/textures/menhir_faces/wood/3.png"]
+                frameStrings: ["assets/textures/menhir_faces/metal/0.png",
+                 "assets/textures/menhir_faces/metal/1.png",
+                 "assets/textures/menhir_faces/metal/2.png",
+                 "assets/textures/menhir_faces/metal/3.png"]
             - type: Transform
               position: [0, 0.5, 0]
               rotation: [0, 0, 0]

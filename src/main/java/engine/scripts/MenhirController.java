@@ -85,9 +85,11 @@ public class MenhirController extends Behaviour{
         Vec3 forward = getGameObject().getTransform().GetForward();
 
         Vec3 myPos = getGameObject().getTransform().GetWorldPosition();
-        float distance = myPos.distance(beePos);
+        Vec3 diff = Vec3.subtract(beePos, myPos);
+        float distance = Vec3.magnitude(diff);
+        Vec3 direction = Vec3.normalize(diff);
 
-        float dot = Vec3.dotProduct(forward, beePos);
+        float dot = Vec3.dotProduct(forward, direction);
         // bee is 45f degrees either side of forward
         if(distance < 5f && dot > 0.5f){
 
