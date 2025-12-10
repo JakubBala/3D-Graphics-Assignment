@@ -4,6 +4,10 @@ import engine.components.Behaviour;
 import engine.gmaths.Vec2;
 import engine.gmaths.Vec3;
 import engine.rendering.Material;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class CloudController extends Behaviour{
 

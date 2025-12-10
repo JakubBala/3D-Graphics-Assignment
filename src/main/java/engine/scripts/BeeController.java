@@ -16,6 +16,10 @@ import engine.gmaths.Vec3;
 import engine.math.ArcLengthTable;
 import engine.math.BezierCurve;
 import engine.math.BezierPath;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class BeeController extends Behaviour implements Renderable{
 

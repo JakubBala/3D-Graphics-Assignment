@@ -7,6 +7,10 @@ package engine.gmaths;
  * @version   1.0 (01/10/2017)
  */
 
+/* Altered to add fully typed construct, extractRotationTranslation, toEulerXYZ*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class Mat4 {   // row column formulation
 
   private float[][] values;

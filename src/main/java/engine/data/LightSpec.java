@@ -6,7 +6,10 @@ import engine.components.Light;
 import engine.components.core.Component;
 import engine.gmaths.Vec3;
 import engine.scene.GameObject;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class LightSpec extends ComponentSpec {
     // Light configuration from YAML
     public String lightType;        // "directional", "point", "spot"

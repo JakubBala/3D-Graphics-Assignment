@@ -5,6 +5,10 @@ import engine.components.Transform;
 import engine.gmaths.Mat4;
 import engine.gmaths.Mat4Transform;
 import engine.gmaths.Vec3;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 
 // This should be attached to the arm pivot

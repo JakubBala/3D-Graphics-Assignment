@@ -5,7 +5,10 @@ import com.jogamp.opengl.GL3;
 import engine.components.Camera;
 import engine.components.core.Component;
 import engine.scene.GameObject;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class CameraSpec extends ComponentSpec {
     public boolean movementEnabled = true;
     public boolean isMainCamera = false;

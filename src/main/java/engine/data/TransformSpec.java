@@ -8,7 +8,10 @@ import engine.components.core.Component;
 import engine.data.ComponentSpec;
 import engine.scene.GameObject;
 import engine.components.Transform;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class TransformSpec extends ComponentSpec {
     // Fields that match YAML structure
     public float[] position;  // [x, y, z]

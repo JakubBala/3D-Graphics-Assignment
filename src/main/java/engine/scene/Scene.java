@@ -18,8 +18,10 @@ import engine.math.BezierPath;
 import engine.scripts.BeeController;
 import engine.scripts.GlobalLightController;
 import engine.scripts.SpotlightController;
-
-// TODO: Must have a MainCamera that is available to all GameObjects
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class Scene {
     private String name;

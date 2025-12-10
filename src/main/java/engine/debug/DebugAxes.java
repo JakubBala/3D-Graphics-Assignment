@@ -7,7 +7,10 @@ import engine.gmaths.Vec3;
 import engine.rendering.Shader;
 import java.nio.FloatBuffer;
 import com.jogamp.common.nio.Buffers;
-
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 /**
  * Renders debug axes + forward direction line
  */

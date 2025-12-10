@@ -5,7 +5,10 @@ import engine.rendering.MeshLibrary;
 import engine.loaders.MaterialLoader;
 import engine.scene.GameObject;
 import com.jogamp.opengl.GL3;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class MeshRendererSpec extends ComponentSpec {
     // Fields map directly to YAML
     public String mesh;      

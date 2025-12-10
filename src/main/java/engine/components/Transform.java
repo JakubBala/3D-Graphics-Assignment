@@ -7,7 +7,10 @@ import engine.gmaths.Mat4;
 import engine.gmaths.Mat4Transform;
 import engine.gmaths.Vec3;
 import engine.scene.GameObject;
-
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class Transform extends Component{
     // LOCAL space (relative to parent)
     private Vec3 local_position = new Vec3(0, 0, 0);

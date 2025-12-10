@@ -12,6 +12,10 @@ import engine.gmaths.Mat4;
 import engine.gmaths.Vec3;
 import engine.rendering.Material;
 import engine.rendering.Mesh;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class Skybox{
     private Material skyboxMaterial;

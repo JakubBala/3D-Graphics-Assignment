@@ -18,6 +18,10 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class MaterialLoader {
     public static Material Load(GL3 gl, String yamlPath) {

@@ -13,7 +13,10 @@ import engine.components.core.Renderable;
 import engine.components.core.Updatable;
 import engine.gmaths.Mat4;
 import engine.gmaths.Vec3;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class GameObject {
 
     // SERIALIZED

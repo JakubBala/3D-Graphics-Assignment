@@ -5,7 +5,10 @@ import java.util.Map;
 import assets.models.*;
 
 import com.jogamp.opengl.GL3;
-
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class MeshLibrary {
 
     private static final Map<String, Mesh> meshes = new HashMap<>();

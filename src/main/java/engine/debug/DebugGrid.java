@@ -6,7 +6,10 @@ import engine.rendering.Shader;
 
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL3;
-
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class DebugGrid {
 
     private Mesh quad;

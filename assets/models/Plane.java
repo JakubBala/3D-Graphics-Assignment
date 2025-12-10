@@ -1,4 +1,8 @@
 package assets.models;
+/* I declare that this code is my own work */
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public final class Plane {
   
@@ -19,7 +23,7 @@ public final class Plane {
     };
 
     public static final int[] indices = new int[] {
-        3, 2, 0,  // First triangle: front-right → back-right → back-left (CLOCKWISE)
-        0, 1, 3   // Second triangle: back-left → front-left → front-right (CLOCKWISE)
+        3, 2, 0,  // First triangle: front-right -> back-right -> back-left (CLOCKWISE)
+        0, 1, 3   // Second triangle: back-left -> front-left -> front-right (CLOCKWISE)
     };
 }

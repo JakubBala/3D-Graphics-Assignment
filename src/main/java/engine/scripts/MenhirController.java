@@ -13,6 +13,10 @@ import engine.gmaths.Vec3;
 import engine.rendering.Material;
 import engine.rendering.Shader;
 import engine.rendering.TextureLibrary;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class MenhirController extends Behaviour{
 

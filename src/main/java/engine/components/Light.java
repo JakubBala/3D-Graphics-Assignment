@@ -1,7 +1,10 @@
 package engine.components;
 import engine.components.core.Component;
 import engine.gmaths.Vec3;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class Light extends Component{
     
     //Light types

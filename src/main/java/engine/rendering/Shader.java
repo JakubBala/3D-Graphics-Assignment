@@ -7,7 +7,10 @@ import java.nio.file.Paths;
 import java.nio.charset.Charset;
 import com.jogamp.opengl.*;
 import com.jogamp.opengl.util.glsl.*;  
-  
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class Shader {
   
   private static final boolean DISPLAY_SHADERS = false;

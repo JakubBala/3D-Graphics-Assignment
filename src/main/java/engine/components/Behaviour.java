@@ -6,6 +6,10 @@ import engine.components.core.Component;
 import engine.components.core.Updatable;
 import engine.scene.GameObject;
 import engine.scene.Scene;
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 import java.lang.reflect.Field;
 

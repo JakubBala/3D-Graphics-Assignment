@@ -1,3 +1,7 @@
+# I declare that this code is my own work
+# Author Jakub Bala 
+# jbala1@sheffield.ac.uk
+
 name: Assignment Scene
 skybox: assets/materials/skybox.yaml
 gameObjects:
@@ -120,6 +124,27 @@ gameObjects:
       rotation: [0, 0, -90]
       scale: [5, 1, 10]
       # # debugAxes: true
+
+  - name: Cactus1
+    components:
+    - type: MeshRenderer
+      mesh: assets/models/Plane.mesh
+      material: assets/materials/cactus.yaml
+    - type: Transform
+      position: [13, 1.5, 6]
+      rotation: [90, 0, 0]
+      scale: [3, 3, 3]
+      # debugAxes: true
+  - name: Cactus2
+    components:
+    - type: MeshRenderer
+      mesh: assets/models/Plane.mesh
+      material: assets/materials/cactus.yaml
+    - type: Transform
+      position: [-13, 2.5, 7]
+      rotation: [90, 0, 0]
+      scale: [5, 5, 5]
+      # debugAxes: true
 
   - name: RedLight_1
     components:

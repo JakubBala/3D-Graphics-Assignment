@@ -16,7 +16,10 @@ import engine.scene.GameObject;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.InputStream;
-
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class SceneLoader {
 
     public static Scene Load(String yamlPath, GL3 gl) {

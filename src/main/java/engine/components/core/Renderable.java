@@ -1,6 +1,11 @@
 package engine.components.core;
 import engine.components.Light;
 import engine.gmaths.*;
+/* I declare that this code is my own work */
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
+
 
 import java.util.List;
 

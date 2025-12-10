@@ -4,6 +4,10 @@ import engine.components.Behaviour;
 import engine.components.Light;
 import engine.components.Transform;
 import engine.gmaths.Vec3;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class GlobalLightController extends Behaviour {
     // attached to global light

@@ -13,7 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.lang.reflect.Type;
 import java.lang.reflect.ParameterizedType;
-
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 /**
  * Generic spec for all Behaviour scripts.
  * Dynamically instantiates the script class and populates its fields.

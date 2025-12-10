@@ -19,7 +19,10 @@ import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 import engine.input.*;
-
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class EngineWindow extends JFrame implements ActionListener{
     private GLCanvas canvas;
     private EngineGLEventListener glListener;

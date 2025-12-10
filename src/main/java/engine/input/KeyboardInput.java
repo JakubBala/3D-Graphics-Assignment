@@ -4,7 +4,10 @@ import java.awt.event.*;
 
 import engine.EngineGLEventListener;
 import engine.components.Camera;
-
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class KeyboardInput extends KeyAdapter {
     private final EngineGLEventListener context;
 

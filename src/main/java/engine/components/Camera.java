@@ -4,6 +4,10 @@ import engine.components.core.Component;
 import engine.gmaths.*;
 import java.awt.event.*;
 import com.jogamp.opengl.awt.GLCanvas;
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class Camera extends Component{
      // --- Movement Types ---

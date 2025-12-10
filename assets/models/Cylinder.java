@@ -1,5 +1,10 @@
 package assets.models;
 
+/* I declare that this code is my own work, with the help of Claude */
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
+
 public class Cylinder {
   // ***************************************************
   /* THE DATA
@@ -18,7 +23,7 @@ public class Cylinder {
     int step = 8; // x, y, z, nx, ny, nz, s, t
     
     // Vertices breakdown:
-    // - Side surface: (SEGMENTS + 1) vertices × 2 rows (top and bottom)
+    // - Side surface: (SEGMENTS + 1) vertices x 2 rows (top and bottom)
     // - Top cap: SEGMENTS + 2 (center + perimeter + closing vertex)
     // - Bottom cap: SEGMENTS + 2 (center + perimeter + closing vertex)
     
@@ -155,10 +160,10 @@ public class Cylinder {
   }
   
   private static int[] createIndices() {
-    // Side surface: SEGMENTS quads × 2 triangles × 3 indices
+    // Side surface: SEGMENTS quads x 2 triangles x 3 indices
     int sideIndices = SEGMENTS * 2 * 3;
     
-    // Each cap: SEGMENTS triangles × 3 indices
+    // Each cap: SEGMENTS triangles x 3 indices
     int capIndices = SEGMENTS * 3 * 2;
     
     int[] indices = new int[sideIndices + capIndices];

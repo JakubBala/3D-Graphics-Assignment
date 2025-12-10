@@ -11,7 +11,10 @@ import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.nodes.MappingNode;
 import org.yaml.snakeyaml.nodes.NodeTuple;
 import org.yaml.snakeyaml.nodes.ScalarNode;
-
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 /**
  * Generic YAML constructor that handles polymorphic deserialization
  * based on a discriminator field ("type").

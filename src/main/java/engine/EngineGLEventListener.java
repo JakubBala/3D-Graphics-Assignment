@@ -14,7 +14,10 @@ import engine.loaders.MaterialLoader;
 import engine.loaders.SceneLoader;
 import engine.rendering.Material;
 import engine.scene.*;
-
+/* I declare that this code is my own work, adapted from Lab Code*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class EngineGLEventListener implements GLEventListener {
 
     private double startTime;

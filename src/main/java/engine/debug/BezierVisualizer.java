@@ -12,7 +12,10 @@ import engine.gmaths.Vec3;
 import engine.math.BezierCurve;
 import engine.math.BezierPath;
 import engine.rendering.Shader;
-
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 public class BezierVisualizer {
     private Shader shader;
     private int[] vao = new int[1];

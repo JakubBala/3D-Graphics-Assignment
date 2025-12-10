@@ -4,7 +4,9 @@ import engine.gmaths.*;
 import java.nio.*;
 import com.jogamp.common.nio.*;
 import com.jogamp.opengl.*;
-
+/* Lab Code*/
+/* Author Dr Steve Maddock
+*/
 public class Mesh {
   
   private float[] vertices;

@@ -1,4 +1,8 @@
 package assets.models;
+/* 
+Author Dr Steve Maddock
+Lab Code
+*/
 
 public final class Sphere {
   

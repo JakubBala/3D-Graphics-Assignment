@@ -4,7 +4,7 @@ Compilation Instructions:
 
 Run commands in order:
 
-(Navigate to project root, where this README is)
+(Navigate to project root, where this README is, open cmd)
 
 mkdir bin
 

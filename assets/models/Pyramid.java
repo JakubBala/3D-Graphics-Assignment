@@ -1,4 +1,8 @@
 package assets.models;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public final class Pyramid {
   

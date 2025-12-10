@@ -7,6 +7,10 @@ import engine.data.ComponentSpec;
 import engine.data.GameObjectSpec;
 import engine.data.TransformSpec;
 import engine.components.core.Component;
+/* I declare that this code is my own work*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 
 public class GameObjectLoader {
 

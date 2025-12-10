@@ -3,7 +3,10 @@ package engine.loaders;
 import engine.data.*;
 import java.util.HashMap;
 import java.util.Map;
-
+/* I declare that this code is my own work with the help of StackOverflow and Claude*/
+/* Author Jakub Bala 
+jbala1@sheffield.ac.uk
+*/
 /**
  * Central registry for all polymorphic spec types in the engine.
  * Add new spec hierarchies here as your engine grows.

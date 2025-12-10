@@ -6,6 +6,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Lab Code*/
+/* Author Dr Steve Maddock
+*/
 /**
  * Loads and caches textures for reuse across materials and meshes.
  */
