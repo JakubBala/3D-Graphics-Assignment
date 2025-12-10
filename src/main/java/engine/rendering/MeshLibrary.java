@@ -37,10 +37,14 @@ public class MeshLibrary {
                 return new Mesh(gl, Plane.vertices, Plane.indices);
             case "assets/models/Cylinder.mesh":
                 return new Mesh(gl, Cylinder.createVertices(1.0f), Cylinder.indices);
+            case "assets/models/Cylinder3.mesh":
+                return new Mesh(gl, Cylinder.createVertices(3.0f), Cylinder.indices);
             case "assets/models/Cylinder5.mesh":
                 return new Mesh(gl, Cylinder.createVertices(5.0f), Cylinder.indices);
             case "assets/models/Cylinder10.mesh":
                 return new Mesh(gl, Cylinder.createVertices(10.0f), Cylinder.indices);
+            case "assets/models/Cylinder20.mesh":
+                return new Mesh(gl, Cylinder.createVertices(20.0f), Cylinder.indices);
 
             // fallback:
             default:

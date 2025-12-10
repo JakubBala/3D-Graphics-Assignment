@@ -23,7 +23,7 @@ gameObjects:
         ambient: [0.9, 0.9, 0.9]
         diffuse: [0.9, 0.9, 0.9]
         specular: [0.9, 0.9, 0.9]
-        intensity: 0.1
+        intensity: 0.3
       - type: MeshRenderer
         mesh: assets/models/Cube.mesh
         material: assets/materials/unlit_light.yaml
@@ -69,26 +69,26 @@ gameObjects:
         scale: [20, 1, 20]
 
   # Spotlight
-  - name: Spotlight
-    components:
-      - type: Light
-        lightType: spot
-        ambient:  [0.25, 0.22, 0.15]
-        diffuse:  [1.0, 0.85, 0.45]
-        specular: [1.0, 0.85, 0.45]
-        intensity: 2.0
-        # Attenuation
-        constant: 1.0
-        linear: 0.01
-        quadratic: 0.002
-        # cutoff angles
-        cutOff: 12.5
-        outerCutOff: 17.5
-      - type: Transform
-        position: [0, 8, 0]
-        rotation: [-90, 180, 0]
-        scale: [0.3, 0.3, 0.6]
-        debugAxes: true
+  # - name: Spotlight
+  #   components:
+  #     - type: Light
+  #       lightType: spot
+  #       ambient:  [0.25, 0.22, 0.15]
+  #       diffuse:  [1.0, 0.85, 0.45]
+  #       specular: [1.0, 0.85, 0.45]
+  #       intensity: 2.0
+  #       # Attenuation
+  #       constant: 1.0
+  #       linear: 0.01
+  #       quadratic: 0.002
+  #       # cutoff angles
+  #       cutOff: 12.5
+  #       outerCutOff: 17.5
+  #     - type: Transform
+  #       position: [0, 8, 0]
+  #       rotation: [-90, 180, 0]
+  #       scale: [0.3, 0.3, 0.6]
+  #       debugAxes: true
 
 
   # Menhirs
@@ -404,7 +404,165 @@ gameObjects:
                             scale: [1.0,1.0,1.0] 
                             debugAxes: false          
 
+  # Spotlight
+  - name: SpotlightBase
+    components:
+      - type: Transform
+        position: [7, 0, 7]
+        rotation: [0, 0, 0]
+        scale: [1, 1, 1]
+        debugAxes: true
+    children:
+      - name: SpotlightPole
+        components:
+        - type: MeshRenderer
+          mesh: assets/models/Cylinder20.mesh
+          material: assets/materials/spotlight/spotlight_body.yaml
+        - type: Transform
+          position: [0, 5, 0]
+          rotation: [0, 0, 0]
+          scale: [0.5, 0.5, 0.5]
+          debugAxes: true
+        children:
+        - name: SpotlightPoleTip
+          components:
+          - type: MeshRenderer
+            mesh: assets/models/Sphere.mesh
+            material: assets/materials/spotlight/spotlight_body.yaml
+          - type: Transform
+            position: [0, 10, 0]
+            rotation: [0, 0, 0]
+            scale: [1, 1, 1]
+          children:
+            - name: SpotlightArm_Pivot
+              components:
+              - type: Transform
+                position: [0, 0, 0]
+                rotation: [-45, 0, 90]
+                scale: [1, 1, 1]
+                debugAxes: true
+              children:
+              - name: SpotlightArm
+                components:
+                - type: MeshRenderer
+                  mesh: assets/models/Cylinder5.mesh
+                  material: assets/materials/spotlight/spotlight_body.yaml
+                - type: Transform
+                  position: [0, 2.5, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                children:
+                - name: SpotlightRotator_Pivot
+                  components:
+                  - type: Transform
+                    position: [0, 2, 0]
+                    rotation: [90, 0, 0]
+                    scale: [1, 1, 1]
+                    debugAxes: true
+                  - type: Behaviour
+                    script: SpotlightController
+                    refs:
+                      target: spotlight_target
+                      light_pivot: light_pivot
+                  children:
+                  - name: SpotlightRotator
+                    components:
+                    - type: MeshRenderer
+                      mesh: assets/models/Cylinder3.mesh
+                      material: assets/materials/spotlight/spotlight_body.yaml
+                    - type: Transform
+                      position: [-0.5, 0, 0]
+                      rotation: [0, -90, 90]
+                      scale: [0.5, 0.5, 0.5]
+                      # debugAxes: true
+                    children:
+                    - name: SpotlightRotatorBody_Upper
+                      components:
+                      - type: MeshRenderer
+                        mesh: assets/models/Cylinder5.mesh
+                        material: assets/materials/spotlight/spotlight_body.yaml
+                      - type: Transform
+                        position: [0, 1.5, 0]
+                        rotation: [90, 0, 90]
+                        scale: [1, 1, 1]
+                      children:
+                      - name: SpotlightRotatorBody_RightArm
+                        components:
+                        - type: MeshRenderer
+                          mesh: assets/models/Cylinder5.mesh
+                          material: assets/materials/spotlight/spotlight_body.yaml
+                        - type: Transform
+                          position: [2, -2.5, 0]
+                          rotation: [0, 0, 90]
+                          scale: [1, 1, 1]
+                      - name: SpotlightRotatorBody_LeftArm
+                        components:
+                        - type: MeshRenderer
+                          mesh: assets/models/Cylinder5.mesh
+                          material: assets/materials/spotlight/spotlight_body.yaml
+                        - type: Transform
+                          position: [2, 2.5, 0]
+                          rotation: [0, 0, 90]
+                          scale: [1, 1, 1]
+                      - name: SpotlightRotatorBody_Lower
+                        components:
+                        - type: MeshRenderer
+                          mesh: assets/models/Cylinder10.mesh
+                          material: assets/materials/spotlight/spotlight_body.yaml
+                        - type: Transform
+                          position: [4, 0, 0]
+                          rotation: [0, 0, 0]
+                          scale: [0.5, 0.5, 0.5]
+                        children:
+                        - name: SpotlightMain_Pivot
+                          components:
+                          - type: Transform
+                            id: light_pivot
+                            position: [0, 0, 0]
+                            rotation: [180, -60, 0]
+                            scale: [1, 1, 1]
+                            debugAxes: true
+                          children:
+                          - name: SpotlightMain
+                            components:
+                            - type: MeshRenderer
+                              mesh: assets/models/Cylinder.mesh
+                              material: assets/materials/spotlight/spotlight_body.yaml
+                            - type: Transform
+                              position: [0, 0, 0]
+                              rotation: [90, 180, 0]
+                              scale: [7,7,7]
+                            children:
+                              - name: SpotlightLight
+                                components:
+                                - type: Transform
+                                  position: [0, 0.5, 0]
+                                  rotation: [90, 0, 0]
+                                  scale: [1,1,1]
+                                  debugAxes: true
+                                - type: Light
+                                  lightType: spot
+                                  ambient:  [0.25, 0.22, 0.15]
+                                  diffuse:  [1.0, 0.85, 0.45]
+                                  specular: [1.0, 0.85, 0.45]
+                                  intensity: 2.0
+                                  # Attenuation
+                                  constant: 1.0
+                                  linear: 0.01
+                                  quadratic: 0.002
+                                  # cutoff angles
+                                  cutOff: 12.5
+                                  outerCutOff: 17.5
 
+  # Spotlight target                                
+  - name: SpotlightTarget
+    components:
+      - type: Transform
+        id: spotlight_target 
+        position: [0, 0, 0]
+        rotation: [0, 0, 0]
+        scale: [1,1,1]
 
+          
                 
 
