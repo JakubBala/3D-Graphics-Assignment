@@ -22,6 +22,7 @@ public class Material {
     private final Map<String, Texture> textures = new HashMap<>();
     private boolean doubleSided = false;
     private boolean transparent = false;
+    private String name;
 
     public Material(GL3 gl, String vertexShaderPath, String fragmentShaderPath) {
         this.shader = new Shader(gl, vertexShaderPath, fragmentShaderPath);
@@ -34,6 +35,13 @@ public class Material {
     public boolean isDoubleSided() {
         return doubleSided;
     }   
+
+    public void SetName(String name){
+        this.name = name;
+    }
+    public String GetName(){
+        return name;
+    }
 
     public void setTransparent(boolean transparent) {
         this.transparent = transparent;

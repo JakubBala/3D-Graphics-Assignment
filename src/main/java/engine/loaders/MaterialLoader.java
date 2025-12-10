@@ -34,6 +34,10 @@ public class MaterialLoader {
             // Create Material instance
             Material material = new Material(gl, spec.vertex, spec.fragment);
 
+            if(spec.name != null){
+                material.SetName(spec.name);
+            }
+
             // --- UNIFORMS ---
             if (spec.uniforms != null) {
                 for (Map.Entry<String, Object> entry : spec.uniforms.entrySet()) {
@@ -100,6 +104,7 @@ public class MaterialLoader {
             if (spec.transparent != null) {
                 material.setTransparent(spec.transparent);
             }
+            
 
             return material;
 

@@ -75,6 +75,7 @@ public class EngineGLEventListener implements GLEventListener {
         activeScene.findAndSetMainCamera();
         activeScene.passGLcontext(gl);
         activeScene.initDebugRenderers(gl);
+        activeScene.CallAwake();
         activeScene.Start();
         debugGrid = new DebugGrid(gl);
     }

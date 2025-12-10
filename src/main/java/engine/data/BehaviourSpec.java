@@ -8,8 +8,11 @@ import engine.scene.GameObject;
 import com.jogamp.opengl.GL3;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.lang.reflect.Type;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * Generic spec for all Behaviour scripts.
@@ -43,11 +46,12 @@ public class BehaviourSpec extends ComponentSpec {
                     Object value = entry.getValue();
                     
                     try {
+                        // only public fields
                         Field field = scriptClass.getField(fieldName);
                         field.setAccessible(true);
                         
                         // Handle type conversion
-                        Object convertedValue = convertValue(value, field.getType());
+                        Object convertedValue = convertValue(value, field);
                         field.set(behaviour, convertedValue);
                         
                         System.out.println("[BehaviourSpec]: Set " + fieldName + " = " + convertedValue);
@@ -75,7 +79,45 @@ public class BehaviourSpec extends ComponentSpec {
     /**
      * Convert YAML values to appropriate Java types
      */
-    private Object convertValue(Object value, Class<?> targetType) {
+    private Object convertValue(Object value, Field field) {
+        if (value == null) return null;
+
+        Class<?> targetType = field.getType();
+        Type genericType = field.getGenericType();
+
+        // --- Handle List<T> ---
+        if (List.class.isAssignableFrom(targetType)) {
+
+            if (!(value instanceof List<?> yamlList)) {
+                throw new IllegalArgumentException(
+                    "Expected a list for field '" + field.getName() + "'"
+                );
+            }
+
+            // Determine T (generic type parameter)
+            if (genericType instanceof ParameterizedType pType) {
+                Type elementType = pType.getActualTypeArguments()[0];
+
+                if (elementType instanceof Class<?> elementClass) {
+                    List<Object> result = new ArrayList<>();
+
+                    for (Object element : yamlList) {
+                        result.add(convertSingleValue(element, elementClass));
+                    }
+
+                    return result;
+                }
+            }
+
+            // No generic info -> return raw list
+            return value;
+        }
+
+        // --- Single value conversion (old rules) ---
+        return convertSingleValue(value, targetType);
+    }
+
+    private Object convertSingleValue(Object value, Class<?> targetType){
         if (value == null) return null;
         
         // Already correct type

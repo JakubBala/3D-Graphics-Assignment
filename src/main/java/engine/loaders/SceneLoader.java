@@ -59,7 +59,6 @@ public class SceneLoader {
             scene.resolveAllReferences();
             System.out.println("[SceneLoader] Resolved all references");
 
-
             return scene;
 
         } catch (Exception e) {

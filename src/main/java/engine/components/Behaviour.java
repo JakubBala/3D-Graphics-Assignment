@@ -12,6 +12,10 @@ import java.lang.reflect.Field;
 public class Behaviour extends Component implements Updatable {
     private Map<String, String> pendingReferences;
 
+    public void Awake(){
+        // called before Start/Rendering
+    }
+
     public void Start() {
         // Called when the component is first initialized
     }

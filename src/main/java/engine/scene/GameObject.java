@@ -36,6 +36,17 @@ public class GameObject {
         components.add(transform);
     }
 
+    public void Awake(){
+        for (Component c : components) {
+            if (c instanceof Behaviour) {
+                ((Behaviour) c).Awake();
+            }
+        }
+        for (GameObject child : children) {
+            child.Awake();
+        }
+    }
+
     public void Start() {
         for (Component c : components) {
             if (c instanceof Behaviour) {

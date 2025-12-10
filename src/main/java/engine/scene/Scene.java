@@ -52,6 +52,11 @@ public class Scene {
             go.Update();
     }
 
+    public void CallAwake(){
+        for (GameObject go : gameObjects)
+            go.Awake();
+    }
+
     public String getName(){
         return name;
     }

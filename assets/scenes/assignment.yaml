@@ -142,6 +142,11 @@ gameObjects:
               refs:
                 beeController: beeController
                 pivot: wood_pivot
+              properties:
+                frameStrings: ["assets/textures/menhir_faces/wood/0.png",
+                 "assets/textures/menhir_faces/wood/1.png",
+                 "assets/textures/menhir_faces/wood/2.png",
+                 "assets/textures/menhir_faces/wood/3.png"]
             - type: Transform
               position: [0, 0.5, 0]
               rotation: [0, 0, 0]
@@ -166,6 +171,11 @@ gameObjects:
               refs:
                 beeController: beeController
                 pivot: metal_pivot
+              properties:
+                frameStrings: ["assets/textures/menhir_faces/wood/0.png",
+                 "assets/textures/menhir_faces/wood/1.png",
+                 "assets/textures/menhir_faces/wood/2.png",
+                 "assets/textures/menhir_faces/wood/3.png"]
             - type: Transform
               position: [0, 0.5, 0]
               rotation: [0, 0, 0]
