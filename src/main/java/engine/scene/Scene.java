@@ -15,6 +15,7 @@ import engine.debug.DebugAxes;
 import engine.gmaths.*;
 import engine.math.BezierCurve;
 import engine.math.BezierPath;
+import engine.scripts.BeeController;
 import engine.scripts.SpotlightController;
 
 // TODO: Must have a MainCamera that is available to all GameObjects
@@ -29,6 +30,8 @@ public class Scene {
     private Light spotLight;
     private float baseSpotlightStrength = 1f;
     private SpotlightController spotlightController;
+
+    private BeeController beeController;
 
     private DebugAxes debugAxesRenderer;
 
@@ -55,6 +58,7 @@ public class Scene {
         spotLight = (Light)findComponentById("spotlight_light");
         baseSpotlightStrength = spotLight.getIntensity();
         spotlightController = (SpotlightController)findComponentById("spotlightController");
+        beeController = (BeeController)findComponentById("beeController");
     }
 
     public void Update() {
@@ -293,5 +297,20 @@ public class Scene {
 
     public void onSwitchToPose(int poseNumber) {
         System.out.println("Switched to Pose " + poseNumber);
+        if(poseNumber == 1){
+            beeController.setBeePose(0.05f);
+        }
+        else if(poseNumber == 2){
+            beeController.setBeePose(0.23f);
+        }
+        else if(poseNumber == 3){
+            beeController.setBeePose(0.5f);
+        }
+        else if(poseNumber == 0){
+            beeController.continuousMode();
+        }
+        else if(poseNumber == 5){
+            beeController.poseMode();
+        }
     }
 }

@@ -97,7 +97,7 @@ public class SpotlightController extends Behaviour{
             currentAngle -= (2 * Math.PI);
         }
 
-        // Calculate orbit position (x,z) using the PERSISTENT currentAngle
+        // Calculate orbit position (x,z) using the persistent currentAngle
         float x = (float) (Math.cos(currentAngle) * circling_radius);
         float z = (float) (Math.sin(currentAngle) * circling_radius);
 

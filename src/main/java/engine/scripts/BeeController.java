@@ -29,6 +29,8 @@ public class BeeController extends Behaviour implements Renderable{
     // INTERNAL
     BezierVisualizer bezierVisualizer;
     BezierPath beePath;
+    private float pathProgress = 0f;
+    private double lastFrameTime = 0;
     List<ArcLengthTable> arcLengthTables = new ArrayList<>();
     List<Float> pathLengths = new ArrayList<>();
     float totalPathLength = 0;
@@ -43,19 +45,29 @@ public class BeeController extends Behaviour implements Renderable{
     Vec3 baseEyeScale = new Vec3(0.45f ,0.7f ,0.6f);
     float fearMultipler = 0.5f;
 
+
+    private boolean poseMode = false;
+    private int pose = 1;
+
     @Override
     public void Start(){
         // Bezier visualisation shit
         GL3 glContext = getGameObject().getScene().getGLcontext();
         bezierVisualizer = new BezierVisualizer(glContext);
         fear = 0;
+        poseMode = false;
+        pose = 0;
         BuildBezierPath();
         InitializeBezierVisualizer();
     }
 
     @Override
     public void Update(){
-        BeeFollowBezier();
+        double currentTime = GameController.getElapsedTime();
+        float deltaTime = (float)(currentTime - lastFrameTime);
+        lastFrameTime = currentTime;
+
+        BeeFollowBezier(deltaTime);
         BeeOscillateVertically();
         BeeAnimationPassive();
 
@@ -68,13 +80,41 @@ public class BeeController extends Behaviour implements Renderable{
         FearEffects();
     }
 
-    private void BeeFollowBezier(){
-        float time = (float) GameController.getElapsedTime();
-        float circuitTime = baseCycleSpeed; // seconds per full loop
-        float normalized = (time % circuitTime) / circuitTime;  // 0 -> 1
+    // Called when a "Pose" button is clicked
+    // 0 = start, 0.5 = middle, 1 = end
+    public void setBeePose(float normalizedPosition) {
+        poseMode = true;
+        this.pathProgress = Math.max(0f, Math.min(normalizedPosition, 1f));
+        // Force an update immediately so the bee snaps to the new pose even if paused
+        BeeFollowBezier(0); 
+    }
 
-        // Convert normalized time to distance along path
-        float distance = normalized * totalPathLength;
+    public void continuousMode(){
+        poseMode = false;
+    }
+
+    public void poseMode(){
+        poseMode = true;
+    }
+
+    private void BeeFollowBezier(float deltaTime){
+        float circuitTime = baseCycleSpeed; // seconds per full loop
+
+        // ONLY increment progress if we are NOT in pose mode
+        if (!poseMode && circuitTime > 0) {
+            // How much of the path (0-1) did we cover this frame?
+            // (TimePassed / TotalTimeForLoop)
+            float step = deltaTime / circuitTime;
+            
+            pathProgress += step;
+
+            // Loop back to 0 if we pass 1
+            if (pathProgress > 1.0f) {
+                pathProgress -= 1.0f;
+            }
+        }
+
+        float distance = pathProgress * totalPathLength;
 
         // Find correct curve index and distance along that curve
         int curveIndex = 0;

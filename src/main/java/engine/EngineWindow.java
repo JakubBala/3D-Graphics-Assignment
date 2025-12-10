@@ -187,6 +187,7 @@ public class EngineWindow extends JFrame implements ActionListener{
                 poseButtonsPanel.setVisible(true);
                 controlPanel.revalidate();  // update layout
                 controlPanel.repaint();
+                onSwitchToPose(5);
                 break;
 
             case "Continuous Motion Mode":
@@ -195,6 +196,7 @@ public class EngineWindow extends JFrame implements ActionListener{
                 poseButtonsPanel.setVisible(false);
                 controlPanel.revalidate();  // update layout
                 controlPanel.repaint();
+                onSwitchToPose(0);
                 break;
 
             case "Pose 1":
