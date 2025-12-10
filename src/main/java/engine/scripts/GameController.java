@@ -5,6 +5,7 @@ import engine.components.Behaviour;
 public class GameController extends Behaviour {
     
     private static double startTime = 0f;
+    // 0.0 = midnight, 0.25 = dawn, 0.5 = midday, 0.75 = dusk, 1.0 = midnight
     private static float dayLightCycle = 0f;
 
     private static double prevTime = 0f;
