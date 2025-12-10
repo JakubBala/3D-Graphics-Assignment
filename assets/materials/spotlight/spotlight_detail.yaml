@@ -1,0 +1,14 @@
+name: "Spotlight Body Mat"
+id: "sptlight_body_0001"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.6, 0.6, 0.6]         
+  material.ambient: [0.05, 0.05, 0.05]      
+  material.specular: [0.5, 0.5, 0.5]        
+  material.shininess: 64.0                
+
+textures:
+  albedo: "assets/textures/metal_color.png"

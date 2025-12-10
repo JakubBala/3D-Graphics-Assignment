@@ -16,6 +16,7 @@ import engine.gmaths.*;
 import engine.math.BezierCurve;
 import engine.math.BezierPath;
 import engine.scripts.BeeController;
+import engine.scripts.GlobalLightController;
 import engine.scripts.SpotlightController;
 
 // TODO: Must have a MainCamera that is available to all GameObjects
@@ -30,6 +31,7 @@ public class Scene {
     private Light spotLight;
     private float baseSpotlightStrength = 1f;
     private SpotlightController spotlightController;
+    private GlobalLightController globalLightController;
 
     private BeeController beeController;
 
@@ -59,6 +61,7 @@ public class Scene {
         baseSpotlightStrength = spotLight.getIntensity();
         spotlightController = (SpotlightController)findComponentById("spotlightController");
         beeController = (BeeController)findComponentById("beeController");
+        globalLightController = (GlobalLightController)findComponentById("globalLightController");
     }
 
     public void Update() {
@@ -284,6 +287,7 @@ public class Scene {
 
     public void onGlobalLightStrengthChanged(float value) {
         System.out.println("Global Light Strength: " + value);
+        globalLightController.setGlobalLightIntensityMultiplier(value);
     }
 
     public void onSpotlightLightStrengthChanged(float value) {

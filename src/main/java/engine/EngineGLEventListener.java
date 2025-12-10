@@ -89,7 +89,7 @@ public class EngineGLEventListener implements GLEventListener {
         activeScene.render(gl);
 
         Camera mainCamera = activeScene.getMainCameraInstance();
-        debugGrid.render(gl, mainCamera.getViewMatrix(), mainCamera.getPerspectiveMatrix());
+        //debugGrid.render(gl, mainCamera.getViewMatrix(), mainCamera.getPerspectiveMatrix());
     }
 
     public void keyboardInput(Camera.Movement movement) {

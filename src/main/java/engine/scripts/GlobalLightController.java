@@ -22,7 +22,8 @@ public class GlobalLightController extends Behaviour {
     
 
     float baseIntensity = 1f;
-    float daytimeIntensity = 1f;
+
+    float globalLightIntensityMult = 1f;
 
     Light sunLight;
     Transform sunTransform;
@@ -32,18 +33,23 @@ public class GlobalLightController extends Behaviour {
         sunLight = getGameObject().getComponent(Light.class);
         baseIntensity = sunLight.getIntensity();
         sunTransform = getGameObject().getComponent(Transform.class);
+        globalLightIntensityMult = 1f;
     }
 
     @Override
     public void Update(){
         float cycleTime = GameController.getDayLightCycle();
         float intensityMultiplier = calculateIntensityMultiplier(cycleTime);
-        sunLight.setIntensity(baseIntensity * intensityMultiplier);
+        sunLight.setIntensity(baseIntensity * intensityMultiplier * globalLightIntensityMult);
 
         float rotationAngleX = calculateRotationAngle(cycleTime);
 
         Vec3 rotation = new Vec3(sunTransform.GetRotation());
         sunTransform.SetLocalRotation(rotationAngleX, rotation.y, rotation.z);
+    }
+
+    public void setGlobalLightIntensityMultiplier(float v){
+        globalLightIntensityMult = v;
     }
 
     private float calculateIntensityMultiplier(float cycleTime) {

@@ -20,6 +20,15 @@ PolyHaven: https://polyhaven.com/
 Licensing: https://polyhaven.com/license
 Textures:
 
+FreeStylized: https://freestylized.com/ 
+Licensing: https://freestylized.com/about-us/
+Textures:
+Ground Texture
+Tile Texture
+Stone Texture
+Metal Texture
+Wood Texture
+Wall Texture
 
 Cactus:
 https://www2.hm.com/en_gb/productpage.1145562001.html?srsltid=AfmBOorhcBlqbvfUZv26l5wq0ZgodcBtARdunHXRrLWuyvrmPxKTPD5P

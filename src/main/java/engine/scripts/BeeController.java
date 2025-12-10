@@ -298,7 +298,7 @@ public class BeeController extends Behaviour implements Renderable{
 
     @Override
     public void render(GL3 gl, Mat4 view, Mat4 projection, Vec3 cameraPosition, List<Light> lights) {
-        bezierVisualizer.updatePath(gl, beePath);
-        bezierVisualizer.render(gl, view, projection);
+        //bezierVisualizer.updatePath(gl, beePath);
+        //bezierVisualizer.render(gl, view, projection);
     }
 }

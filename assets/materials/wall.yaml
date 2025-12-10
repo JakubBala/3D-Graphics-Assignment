@@ -1,0 +1,20 @@
+# wall.yaml
+
+name: "Wall Mat"
+id: "wall001"
+
+vertex: "assets/shaders/vs_standard.vert"
+fragment: "assets/shaders/fs_standard.frag"
+
+uniforms:
+  material.diffuse: [0.8, 0.8, 0.8]       
+  material.ambient: [0.1, 0.1, 0.1]       
+  material.specular: [0.4, 0.4, 0.4]      
+  material.shininess: 16.0                        
+  tiling: [2,4]
+
+doubleSided: true
+
+textures:
+  albedo: "assets/textures/wall_color.png"
+  specular: "assets/textures/wall_specular.png"
