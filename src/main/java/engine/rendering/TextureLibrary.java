@@ -33,7 +33,7 @@ public class TextureLibrary {
             cache.put(path, tex);
             return tex;
         } catch (Exception e) {
-            System.err.println("⚠️ Failed to load texture: " + path + " (" + e.getMessage() + ")");
+            System.err.println("Failed to load texture: " + path + " (" + e.getMessage() + ")");
             return null;
         }
     }
