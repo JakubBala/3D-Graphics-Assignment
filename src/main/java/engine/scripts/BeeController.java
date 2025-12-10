@@ -23,6 +23,8 @@ public class BeeController extends Behaviour implements Renderable{
     public Transform leftWingPivot;
     public Transform rightWingPivot;
     public Transform buttPivot;
+    public Transform leftEye;
+    public Transform rightEye;
 
     // INTERNAL
     BezierVisualizer bezierVisualizer;
@@ -31,11 +33,22 @@ public class BeeController extends Behaviour implements Renderable{
     List<Float> pathLengths = new ArrayList<>();
     float totalPathLength = 0;
 
+    float baseCycleSpeed = 20f;
+
+    int detected = 0;
+    float fear = 0;
+    float fearRampUp = 0.04f;
+    float fearRampDown = 0.04f;
+
+    Vec3 baseEyeScale = new Vec3(0.45f ,0.7f ,0.6f);
+    float fearMultipler = 0.5f;
+
     @Override
     public void Start(){
         // Bezier visualisation shit
         GL3 glContext = getGameObject().getScene().getGLcontext();
         bezierVisualizer = new BezierVisualizer(glContext);
+        fear = 0;
         BuildBezierPath();
         InitializeBezierVisualizer();
     }
@@ -45,11 +58,19 @@ public class BeeController extends Behaviour implements Renderable{
         BeeFollowBezier();
         BeeOscillateVertically();
         BeeAnimationPassive();
+
+        if(detected > 0){
+            RampFearUp();
+        }
+        else{
+            RampFearDown();
+        }
+        FearEffects();
     }
 
     private void BeeFollowBezier(){
         float time = (float) GameController.getElapsedTime();
-        float circuitTime = 20.0f; // seconds per full loop
+        float circuitTime = baseCycleSpeed; // seconds per full loop
         float normalized = (time % circuitTime) / circuitTime;  // 0 -> 1
 
         // Convert normalized time to distance along path
@@ -134,6 +155,29 @@ public class BeeController extends Behaviour implements Renderable{
         buttPivot.SetLocalRotation(buttX, bRot.y, bRot.z);
     }
 
+    public void ChangeDetectedCounter(int i){
+        detected = Math.max(0, Math.min(3, detected + i));
+    }
+
+    private void RampFearUp(){
+        // increase fear per frame
+        fear = Math.min(1f, fear + fearRampUp);
+    }
+
+    private void RampFearDown(){
+        // decrease fear per frame
+        fear = Math.max(0f, fear - fearRampDown);
+    }
+
+    private void FearEffects(){
+        if(fear <= 0) return;
+
+        // increase eye size
+        float scaleMultiplier = 1 + (fear * fearMultipler);
+        Vec3 eyeScale = Vec3.multiply(baseEyeScale, scaleMultiplier);
+        leftEye.SetLocalScale(eyeScale.x, eyeScale.y, eyeScale.z);
+        rightEye.SetLocalScale(eyeScale.x, eyeScale.y, eyeScale.z);
+    }
 
     private void BuildBezierPath(){
         beePath = new BezierPath();

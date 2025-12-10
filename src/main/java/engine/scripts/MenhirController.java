@@ -106,6 +106,15 @@ public class MenhirController extends Behaviour{
         if(state == newState) return;
         stateChangeTime = (float)GameController.getElapsedTime();
         startFrameAtStateChange = currentFrameIndex;
+
+        if(newState == 1){
+            beeController.ChangeDetectedCounter(1);
+        }
+        else if(newState == 0){
+            beeController.ChangeDetectedCounter(-1);
+        }
+
+
         state = newState;
     }
 

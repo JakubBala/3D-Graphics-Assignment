@@ -31,10 +31,9 @@ public class SpotlightController extends Behaviour{
 
     private void LookAtTarget(){
         Vec3 targetPos = new Vec3(target.GetWorldPosition()); 
-
         Vec3 arm_pivot_w_pos = new Vec3(arm_pivot.GetWorldPosition());
 
-        // Get the arm's forward direction in world space (before any rotation)
+        // Get the arms forward direction in world space (before any rotation)
         Transform armParent = arm_pivot.getGameObject().getParent().getTransform();
         Mat4 parentWorld = armParent.getWorldMatrix();
         
@@ -46,28 +45,25 @@ public class SpotlightController extends Behaviour{
         );
         parentForward.normalize();
         
-        // Project target direction onto the parents forward plane
+        // project target direction onto the parents forward plane
         Vec3 toTarget = Vec3.subtract(arm_pivot_w_pos, targetPos);
         
-        // Distance along parent's forward direction
+        // distance along parents forward direction
         float forwardDist = Vec3.dotProduct(toTarget, parentForward);
         
-        // Height difference
+        // height difference
         float heightDiff = targetPos.y - arm_pivot_w_pos.y;
         
-        // Calculate pitch
+        // calculate pitch
         float pitch = (float)Math.toDegrees(Math.atan2(heightDiff, forwardDist));
         
         arm_pivot.SetLocalRotation(pitch, 0f, 0f);
-
 
         // then for the light itself, 
         light_pivot.LookAt(
             targetPos,        
             new Vec3(0, 1, 0)// world up vector
         );
-
-        System.err.println(arm_pivot.GetRotation());
     }
 
 

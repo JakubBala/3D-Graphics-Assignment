@@ -23,7 +23,7 @@ gameObjects:
         ambient: [0.9, 0.9, 0.9]
         diffuse: [0.9, 0.9, 0.9]
         specular: [0.9, 0.9, 0.9]
-        intensity: 0.3
+        intensity: 1.0
       - type: MeshRenderer
         mesh: assets/models/Cube.mesh
         material: assets/materials/unlit_light.yaml
@@ -88,7 +88,7 @@ gameObjects:
   #       position: [0, 8, 0]
   #       rotation: [-90, 180, 0]
   #       scale: [0.3, 0.3, 0.6]
-  #       debugAxes: true
+  #       # debugAxes: true
 
 
   # Menhirs
@@ -106,7 +106,7 @@ gameObjects:
             position: [-3, -0.5, 2]
             rotation: [0, 30, 0]
             scale: [2, 3, 2]
-            debugAxes: true
+            # debugAxes: true
         children: 
         - name: Stone
           components:
@@ -127,7 +127,7 @@ gameObjects:
               position: [0, 0.5, 0]
               rotation: [0, 0, 0]
               scale: [1, 1, 1]
-              debugAxes: true
+              # debugAxes: true
       - name: Wood_Pivot
         components: 
           - type: Transform
@@ -135,7 +135,7 @@ gameObjects:
             position: [4, -0.5, 5]
             rotation: [0, -30, 0]
             scale: [2, 4, 1.3]
-            debugAxes: true
+            # debugAxes: true
         children:
         - name: Wood
           components:
@@ -156,7 +156,7 @@ gameObjects:
               position: [0, 0.5, 0]
               rotation: [0, 0, 0]
               scale: [1, 1, 1]
-              debugAxes: true
+              # debugAxes: true
       - name: Metal_Pivot
         components: 
           - type: Transform
@@ -164,7 +164,7 @@ gameObjects:
             position: [2, -0.5, -2]
             rotation: [0, 10, 0]
             scale: [1.5, 3, 1]
-            debugAxes: true
+            # debugAxes: true
         children:
         - name: Metal
           components:
@@ -185,7 +185,7 @@ gameObjects:
               position: [0, 0.5, 0]
               rotation: [0, 0, 0]
               scale: [1, 1, 1]
-              debugAxes: true
+              # debugAxes: true
 
   # El Bombus
   - name: Bee
@@ -197,10 +197,12 @@ gameObjects:
           leftWingPivot: leftWingPivotTransform
           rightWingPivot: rightWingPivotTransform
           buttPivot: buttPivotTransform
+          leftEye: leftEye
+          rightEye: rightEye
       - type: Transform
         position: [0, 3, 0]
         rotation: [0,-90,0]
-        scale: [1,1,1]
+        scale: [0.3,0.3,0.3]
     children:
       - name: BeeBody
         components:
@@ -211,7 +213,7 @@ gameObjects:
           position: [0, 0, 0]
           rotation: [-90,0,0]
           scale: [1,0.9,1]
-          debugAxes: true
+          # # debugAxes: true
         children:
         - name: RightWing_Pivot
           components:
@@ -220,7 +222,7 @@ gameObjects:
             position: [0.25,0,0.35]
             rotation: [0,0,-30]
             scale: [1,1,1]
-            debugAxes: true
+            # # debugAxes: true
           children:
             - name: RightWing
               components:
@@ -238,7 +240,7 @@ gameObjects:
             position: [-0.25,0,0.35]
             rotation: [0,0,210]
             scale: [1,1,1]
-            debugAxes: true
+            # # debugAxes: true
           children:
             - name: LeftWing
               components:
@@ -257,7 +259,7 @@ gameObjects:
             position: [0, -0.25, 0]
             rotation: [20,0,0]
             scale: [1,1,1]
-            debugAxes: true
+            # debugAxes: true
           children:
           - name: BeeButt
             components:
@@ -268,7 +270,7 @@ gameObjects:
               position: [0,-0.75,0]
               rotation: [0,0,0]
               scale: [0.95,1.5,0.95]
-              debugAxes: true
+              # debugAxes: true
         - name: BeeHead_Pivot
           components:
           - type: Transform
@@ -293,18 +295,22 @@ gameObjects:
                 mesh: assets/models/Sphere.mesh
                 material: assets/materials/bee/bee_eye.yaml
               - type: Transform
+                id: leftEye
                 position: [-0.25,0.1,0.1]
                 rotation: [10,0,0]
                 scale: [0.45,0.7,0.6]
+                # debugAxes: true
             - name: RightEye
               components:
               - type: MeshRenderer
                 mesh: assets/models/Sphere.mesh
                 material: assets/materials/bee/bee_eye.yaml
               - type: Transform
+                id: rightEye
                 position: [0.25,0.1,0.1]
                 rotation: [10,0,0]
                 scale: [0.45,0.7,0.6]
+                # debugAxes: true
             - name: LeftAntenna_Pivot
               components:
                 - type: Transform
@@ -411,7 +417,7 @@ gameObjects:
         position: [7, 0, 7]
         rotation: [0, 0, 0]
         scale: [1, 1, 1]
-        debugAxes: true
+        # debugAxes: true
     children:
       - name: SpotlightPole
         components:
@@ -422,7 +428,7 @@ gameObjects:
           position: [0, 5, 0]
           rotation: [0, 0, 0]
           scale: [0.5, 0.5, 0.5]
-          debugAxes: true
+          # debugAxes: true
         children:
         - name: SpotlightPoleTip
           components:
@@ -440,7 +446,7 @@ gameObjects:
                 position: [0, 0, 0]
                 rotation: [-45, 0, 90]
                 scale: [1, 1, 1]
-                debugAxes: true
+                # debugAxes: true
               children:
               - name: SpotlightArm
                 components:
@@ -458,7 +464,7 @@ gameObjects:
                     position: [0, 2, 0]
                     rotation: [0, 0, 0]
                     scale: [1, 1, 1]
-                    debugAxes: true
+                    # debugAxes: true
                   - type: Behaviour
                     script: SpotlightController
                     refs:
@@ -474,7 +480,7 @@ gameObjects:
                       position: [-0.5, 0, 0]
                       rotation: [0, -90, 90]
                       scale: [0.5, 0.5, 0.5]
-                      # debugAxes: true
+                      # # debugAxes: true
                     children:
                     - name: SpotlightRotatorBody_Upper
                       components:
@@ -521,7 +527,7 @@ gameObjects:
                             position: [0, 0, 0]
                             rotation: [180, -60, 0]
                             scale: [1, 1, 1]
-                            debugAxes: true
+                            # debugAxes: true
                           children:
                           - name: SpotlightMain
                             components:
@@ -539,7 +545,7 @@ gameObjects:
                                   position: [0, 0.5, 0]
                                   rotation: [90, 0, 0]
                                   scale: [1,1,1]
-                                  debugAxes: true
+                                  # debugAxes: true
                                 - type: Light
                                   lightType: spot
                                   ambient:  [0.25, 0.22, 0.15]
@@ -561,7 +567,7 @@ gameObjects:
         position: [0, 0, 0]
         rotation: [0, 0, 0]
         scale: [1,1,1]
-        debugAxes: true
+        # debugAxes: true
     children:                           
     - name: SpotlightTarget
       components:
@@ -570,7 +576,7 @@ gameObjects:
           position: [0, 0, 0]
           rotation: [0, 0, 0]
           scale: [1,1,1]
-          debugAxes: true
+          # debugAxes: true
 
           
                 
