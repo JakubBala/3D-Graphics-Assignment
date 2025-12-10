@@ -33,6 +33,20 @@ public class Mat4 {   // row column formulation
       }
     }
   }
+
+  public Mat4(
+    float m00, float m01, float m02, float m03,
+    float m10, float m11, float m12, float m13,
+    float m20, float m21, float m22, float m23,
+    float m30, float m31, float m32, float m33
+  ) {
+      values = new float[4][4];
+
+      values[0][0] = m00; values[0][1] = m01; values[0][2] = m02; values[0][3] = m03;
+      values[1][0] = m10; values[1][1] = m11; values[1][2] = m12; values[1][3] = m13;
+      values[2][0] = m20; values[2][1] = m21; values[2][2] = m22; values[2][3] = m23;
+      values[3][0] = m30; values[3][1] = m31; values[3][2] = m32; values[3][3] = m33;
+  }
   
   public void set(int r, int c, float f) {
     values[r][c] = f;
@@ -158,6 +172,49 @@ public class Mat4 {   // row column formulation
     outRotation.set(3, 1, 0);
     outRotation.set(3, 2, 0);
     outRotation.set(3, 3, 1);
+  }
+
+  public Vec3 toEulerXYZ() {
+    // Read rotation matrix entries
+    float m00 = get(0,0);
+    float m01 = get(0,1);
+    float m02 = get(0,2);
+
+    float m10 = get(1,0);
+    float m11 = get(1,1);
+    float m12 = get(1,2);
+
+    float m20 = get(2,0);
+    float m21 = get(2,1);
+    float m22 = get(2,2);
+
+    float pitch;  // x
+    float yaw;    // y
+    float roll;   // z
+
+    // pitch (X-axis)
+    pitch = (float)Math.asin(-m21);
+
+    // Check gimbal lock
+    if (Math.abs(m21) < 0.999999f) {
+
+        // yaw (Y-axis)
+        yaw = (float)Math.atan2(m20, m22);
+
+        // roll (Z-axis)
+        roll = (float)Math.atan2(m01, m11);
+
+    } else {
+        // Gimbal lock fallback
+        yaw = 0;
+        roll = (float)Math.atan2(-m10, m00);
+    }
+
+    return new Vec3(
+        (float)Math.toDegrees(pitch),
+        (float)Math.toDegrees(yaw),
+        (float)Math.toDegrees(roll)
+    );
   }
   
 } // end of Mat4 class

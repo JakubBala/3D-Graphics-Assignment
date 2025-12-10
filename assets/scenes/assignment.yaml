@@ -456,7 +456,7 @@ gameObjects:
                   components:
                   - type: Transform
                     position: [0, 2, 0]
-                    rotation: [90, 0, 0]
+                    rotation: [0, 0, 0]
                     scale: [1, 1, 1]
                     debugAxes: true
                   - type: Behaviour
@@ -554,15 +554,23 @@ gameObjects:
                                   cutOff: 12.5
                                   outerCutOff: 17.5
 
-  # Spotlight target                                
-  - name: SpotlightTarget
+  # Spotlight target     
+  - name: SpotlightTargetCenter
     components:
       - type: Transform
-        id: spotlight_target 
-        position: [5, 0, 3]
+        position: [0, 0, 0]
         rotation: [0, 0, 0]
         scale: [1,1,1]
         debugAxes: true
+    children:                           
+    - name: SpotlightTarget
+      components:
+        - type: Transform
+          id: spotlight_target 
+          position: [0, 0, 0]
+          rotation: [0, 0, 0]
+          scale: [1,1,1]
+          debugAxes: true
 
           
                 
