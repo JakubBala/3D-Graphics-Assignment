@@ -27,8 +27,10 @@ public class MenhirController extends Behaviour{
     private int state = 0;   // 0 = getting less angry or not angry, 1 = getting angry or fully angry
     private float stateChangeTime = 0f;
     private float anger;
-    private float angerRampSpeed = 0.01f;
-    private float baseEmission = 0.5f;
+    private float detectionAngle = 0.5f; //22.5 deg either side of forward
+    private float detectionDistance = 3f;
+    private float angerRampSpeed = 0.02f;
+    private float baseEmission = 0.2f;
     private float maxEmission = 1.0f;
     private float baseMaldingSpeed = 10.0f;
     private float maxMaldingSpeed = 30.0f;
@@ -38,17 +40,17 @@ public class MenhirController extends Behaviour{
     private ArrayList<Texture> animationFrames;
     private int startFrameAtStateChange = 0;
     private int currentFrameIndex = 0;
-    private float frameInterval = 0.5f;
+    private float frameInterval = 0.15f;
 
     @Override
     public void Awake(){
         LoadAnimationFrames();
+        mr = getGameObject().getComponent(MeshRenderer.class);
     }
 
     @Override
     public void Start(){
         anger = 0f;
-        mr = getGameObject().getComponent(MeshRenderer.class);
     }
 
     @Override
@@ -91,7 +93,7 @@ public class MenhirController extends Behaviour{
 
         float dot = Vec3.dotProduct(forward, direction);
         // bee is 45f degrees either side of forward
-        if(distance < 5f && dot > 0.5f){
+        if(distance < detectionDistance && dot > detectionAngle){
 
             ChangeState(1);
             return;

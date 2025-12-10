@@ -11,7 +11,7 @@ uniforms:
   material.ambient: [0.05, 0.05, 0.05]      
   material.specular: [0.5, 0.5, 0.5]        # almost white specular highlights
   material.shininess: 64.0                 # High shininess for sharp highlights
-  emissionStrength: 0.5
+  emissionStrength: 0.2
 
 textures:
   albedo: "assets/textures/metal_color.png"

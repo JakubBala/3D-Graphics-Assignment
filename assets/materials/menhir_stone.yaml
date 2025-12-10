@@ -11,7 +11,7 @@ uniforms:
   material.ambient: [0.1, 0.1, 0.1]       # Low ambient to keep it subtle
   material.specular: [0.4, 0.4, 0.4]      # Low specular for rough surface
   material.shininess: 16.0                  # Low shininess for a dull finish       
-  emissionStrength: 0.5
+  emissionStrength: 0.2
 
 textures:
   albedo: "assets/textures/desert_stone_color.png"

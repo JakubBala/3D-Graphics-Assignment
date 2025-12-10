@@ -11,7 +11,7 @@ uniforms:
   material.ambient: [0.1, 0.1, 0.1]       
   material.specular: [0.4, 0.35, 0.3]     # Slightly warm specular for subtle shine
   material.shininess: 32.0                # Moderate shininess for smooth wood surface  
-  emissionStrength: 0.5 
+  emissionStrength: 0.2
 
 textures:
   albedo: "assets/textures/wood_color.png"
