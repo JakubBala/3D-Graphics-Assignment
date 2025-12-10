@@ -19,7 +19,6 @@ import com.jogamp.opengl.*;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.util.FPSAnimator;
 import engine.input.*;
-import engine.components.Camera;
 
 public class EngineWindow extends JFrame implements ActionListener{
     private GLCanvas canvas;
@@ -36,12 +35,11 @@ public class EngineWindow extends JFrame implements ActionListener{
     private JButton keyPose2Button;
     private JButton keyPose3Button;
 
-    private boolean isPoseMode = true;
+    private boolean isPoseMode = false;
 
-    private JPanel controlPanel;      // Parent panel containing all controls
-    private JPanel poseButtonsPanel;  // Panel containing the key pose buttons
+    private JPanel controlPanel; // Parent panel containing all controls
+    private JPanel poseButtonsPanel; // Panel containing the key pose buttons
 
-    // Constants for layout
     private static final int SIDEBAR_WIDTH = 280;
 
     public EngineWindow(String title, int width, int height) {
@@ -55,7 +53,7 @@ public class EngineWindow extends JFrame implements ActionListener{
         canvas.addMouseMotionListener(new MouseInput(glListener));
         canvas.addKeyListener(new KeyboardInput(glListener));
         
-        // Add Canvas to Center (it will take up all remaining space)
+        // Add Canvas to Center
         add(canvas, BorderLayout.CENTER);
 
         // --- Control Panel Setup ---
@@ -150,11 +148,9 @@ public class EngineWindow extends JFrame implements ActionListener{
 
         controlPanel.add(poseButtonsPanel);
         poseButtonsPanel.setVisible(isPoseMode);
-
-        // Add Glue to push everything to the top (prevents vertical spreading if window is tall)
         controlPanel.add(Box.createVerticalGlue());
 
-        // Add Control Panel to the Right (East)
+        // Add Control Panel to the RIGHT
         add(controlPanel, BorderLayout.EAST);
 
         addWindowListener(new WindowAdapter() {
@@ -177,7 +173,7 @@ public class EngineWindow extends JFrame implements ActionListener{
         JLabel label = new JLabel(labelText);
         label.setHorizontalAlignment(JLabel.CENTER);
         panel.add(label, BorderLayout.NORTH);
-        panel.setMaximumSize(new Dimension(SIDEBAR_WIDTH, 60)); // Limit height
+        panel.setMaximumSize(new Dimension(SIDEBAR_WIDTH, 60));
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
         return panel;
     }
@@ -225,23 +221,19 @@ public class EngineWindow extends JFrame implements ActionListener{
     }
 
     private void onGlobalLightStrengthChanged(float value) {
-        System.out.println("Global Light Strength: " + value);
-        // TODO: call your engine function here
+        glListener.onGlobalLightStrengthChanged(value);
     }
 
     private void onSpotlightLightStrengthChanged(float value) {
-        System.out.println("Spotlight Light Strength: " + value);
-        // TODO: call your engine function here
+        glListener.onSpotlightLightStrengthChanged(value);
     }
 
     private void onSpotlightMotionToggled(boolean enabled) {
-        System.out.println("Spotlight Motion toggled: " + enabled);
-        // TODO: call your engine function here
+        glListener.onSpotlightMotionToggled(enabled);
     }
 
     private void onSwitchToPose(int poseNumber) {
-        System.out.println("Switched to Pose " + poseNumber);
-        // TODO: implement switching bee pose here
+        glListener.onSwitchToPose(poseNumber);
     }
 
     public void run() {

@@ -84,8 +84,6 @@ public class EngineGLEventListener implements GLEventListener {
         gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
         activeScene.passGLcontext(gl);
-        // float dayLightCycle = (float)((getSeconds() - startTime) / 20.0 % 1.0); // 60 seconds for full cycle
-        // activeScene.GetSkybox().SetTimeOfDay(dayLightCycle);
 
         activeScene.Update();
         activeScene.render(gl);
@@ -100,5 +98,22 @@ public class EngineGLEventListener implements GLEventListener {
 
     public void mouseInput(float dx, float dy) {
         activeScene.mouseInput(dx, dy);
+    }
+
+
+    public void onGlobalLightStrengthChanged(float value) {
+        activeScene.onGlobalLightStrengthChanged(value);
+    }
+
+    public void onSpotlightLightStrengthChanged(float value) {
+        activeScene.onSpotlightLightStrengthChanged(value);
+    }
+
+    public void onSpotlightMotionToggled(boolean enabled) {
+        activeScene.onSpotlightMotionToggled(enabled);
+    }
+
+    public void onSwitchToPose(int poseNumber) {
+        activeScene.onSwitchToPose(poseNumber);
     }
 }

@@ -443,6 +443,7 @@ gameObjects:
                     scale: [1, 1, 1]
                     # debugAxes: true
                   - type: Behaviour
+                    id: spotlightController
                     script: SpotlightController
                     refs:
                       target: spotlight_target
@@ -524,6 +525,7 @@ gameObjects:
                                   scale: [1,1,1]
                                   # debugAxes: true
                                 - type: Light
+                                  id: spotlight_light
                                   lightType: spot
                                   ambient:  [0.25, 0.22, 0.15]
                                   diffuse:  [1.0, 0.85, 0.45]

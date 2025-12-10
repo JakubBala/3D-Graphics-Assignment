@@ -18,15 +18,32 @@ public class SpotlightController extends Behaviour{
     public Transform arm_pivot;
     private float circling_radius = 3f;
     private float circle_speed = 3f;
+
+    private boolean enabledMove = true;
+    private float currentAngle = 0f;
+    private double lastTime = 0;
+
     @Override
     public void Start(){
         arm_pivot = getGameObject().getTransform();
+        enabledMove = true;
     }
 
     @Override
     public void Update(){
-        MoveSpotlightTarget();
+
+        double currentTime = GameController.getElapsedTime();
+        float deltaTime = (float)(currentTime - lastTime);
+        lastTime = currentTime;
+
+        if(enabledMove){
+            MoveSpotlightTarget(deltaTime);
+        }
         LookAtTarget();
+    }
+
+    public void setMovementEnabled(boolean enabled){
+        enabledMove = enabled;
     }
 
     private void LookAtTarget(){
@@ -68,19 +85,23 @@ public class SpotlightController extends Behaviour{
 
 
     // moves the spotlight target around the center (its parent) at a radius and speed
-    private void MoveSpotlightTarget(){
-        float time = (float)GameController.getElapsedTime();
-        // convert real time to normalize 0 -> 1 cycle
-        float normalized = (time % circle_speed) / circle_speed;
+    private void MoveSpotlightTarget(float deltaTime){
+        // Calculate how fast we should be rotating
+        float radiansPerSecond = (float)(2 * Math.PI) / circle_speed;
 
-        // Convert normalized progress to radians
-        float angle = normalized * (float)(2 * Math.PI);
+        // Increment the current angle based on how much time passed this frame
+        currentAngle += radiansPerSecond * deltaTime;
 
-        // Calculate orbit position (x,z)
-        float x = (float) (Math.cos(angle) * circling_radius);
-        float z = (float) (Math.sin(angle) * circling_radius);
+        // Keep angle within 0 - 2PI to prevent float numbers getting too huge (overkill but oh well)
+        if (currentAngle > (2 * Math.PI)) {
+            currentAngle -= (2 * Math.PI);
+        }
 
-        // Apply to the SpotlightTarget's transform
+        // Calculate orbit position (x,z) using the PERSISTENT currentAngle
+        float x = (float) (Math.cos(currentAngle) * circling_radius);
+        float z = (float) (Math.sin(currentAngle) * circling_radius);
+
+        // Apply to the spotlighttarget transform
         Vec3 tPos = new Vec3(target.GetPosition());
         target.SetLocalPosition(x, tPos.y, z);
 

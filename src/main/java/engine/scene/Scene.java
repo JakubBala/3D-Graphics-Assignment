@@ -15,6 +15,7 @@ import engine.debug.DebugAxes;
 import engine.gmaths.*;
 import engine.math.BezierCurve;
 import engine.math.BezierPath;
+import engine.scripts.SpotlightController;
 
 // TODO: Must have a MainCamera that is available to all GameObjects
 
@@ -23,6 +24,11 @@ public class Scene {
     private List<GameObject> gameObjects = new ArrayList<>();
     private Skybox skybox;
     private Camera mainCamera;
+
+
+    private Light spotLight;
+    private float baseSpotlightStrength = 1f;
+    private SpotlightController spotlightController;
 
     private DebugAxes debugAxesRenderer;
 
@@ -45,6 +51,10 @@ public class Scene {
     public void Start() {
         for (GameObject go : gameObjects)
             go.Start();
+
+        spotLight = (Light)findComponentById("spotlight_light");
+        baseSpotlightStrength = spotLight.getIntensity();
+        spotlightController = (SpotlightController)findComponentById("spotlightController");
     }
 
     public void Update() {
@@ -265,5 +275,23 @@ public class Scene {
         for (GameObject child : go.getChildren()) {
             renderDebugAxesRecursive(gl, child, view, perspective, cameraPos);
         }
+    }
+
+
+    public void onGlobalLightStrengthChanged(float value) {
+        System.out.println("Global Light Strength: " + value);
+    }
+
+    public void onSpotlightLightStrengthChanged(float value) {
+        System.out.println("Spotlight Light Strength: " + value);
+        spotLight.setIntensity(baseSpotlightStrength * value);
+    }
+
+    public void onSpotlightMotionToggled(boolean enabled) {
+        spotlightController.setMovementEnabled(enabled);
+    }
+
+    public void onSwitchToPose(int poseNumber) {
+        System.out.println("Switched to Pose " + poseNumber);
     }
 }
